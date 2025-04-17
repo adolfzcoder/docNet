@@ -1,16 +1,19 @@
+CREATE DATABASE docnot;
+USE docnet;
+
 CREATE TABLE user(
     userID INT PRIMARY KEY AUTO_INCREMENT,
     firstName VARCHAR(100),
     lastName VARCHAR(100),
-    phoneNumber INT,
-    telephone INT,
+    phoneNumber VARCHAR(10),
+    telephone VARCHAR(10),
     dob DATE,
     isApproved BIT,
     userType ENUM("doctor", "patient", "admin"),
     
     email VARCHAR(100) UNIQUE,
     password VARCHAR(255),
-    gender CHAR(1)
+    gender ENUM("male", "female")
      
 );
 
@@ -63,7 +66,7 @@ CREATE TABLE waitingList(
 CREATE TABLE rating(
     ratingID INT PRIMARY KEY AUTO_INCREMENT,
     review VARCHAR(255),
-    score INT,
+    score ENUM(1, 2, 3, 4, 5),
 
     patientID INT,
     doctorID INT,
