@@ -1,4 +1,4 @@
-CREATE DATABASE docnot;
+CREATE DATABASE docnet;
 USE docnet;
 
 CREATE TABLE user(
