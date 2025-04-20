@@ -10,7 +10,7 @@ CREATE TABLE user(
     
     email VARCHAR(100) UNIQUE,
     password VARCHAR(255),
-    gender CHAR(1)
+    gender CHAR(10)
      
 );
 
