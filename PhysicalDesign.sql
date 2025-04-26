@@ -36,6 +36,14 @@ CREATE TABLE doctor(
     CONSTRAINT fk_doctor_user_id FOREIGN KEY (userID) REFERENCES user(userID)
 );
 
+CREATE TABLE admin(
+    adminID INT PRIMARY KEY AUTO_INCREMENT,
+
+    userID INT,
+    CONSTRAINT fk_admin_user_id FOREIGN KEY (userID) REFERENCES user(userID)
+
+)
+
 CREATE TABLE medicine(
     medicineID INT PRIMARY KEY AUTO_INCREMENT,
     medicineName VARCHAR(255),
