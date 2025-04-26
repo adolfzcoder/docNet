@@ -6,13 +6,13 @@ package AdolfsPackage;// create admin, inherit from user, but set the user type 
 import java.util.ArrayList;
 
 public class Admin extends User {
-
+    private int adminID;
     private ArrayList<Doctor> approvedDoctors = new ArrayList<>();
     private ArrayList<Doctor> notApprovedDoctors = new ArrayList<>();
 
 
 
-    public Admin(int userID, String firstName, String lastName, String telephone, String dob, boolean isApproved, String userType, String email, String password, String gender){
+    public Admin(int userID, int adminID, String firstName, String lastName, String telephone, String dob, boolean isApproved, String userType, String email, String password, String gender){
         super(userID, firstName, lastName, telephone, dob, isApproved, userType, email, password, gender);
 
     }
