@@ -3,12 +3,14 @@ package AdolfsPackage;// create admin, inherit from user, but set the user type 
 
 // lets assume just one admin
 
+import SystemManager.SystemManager;
+
 import java.util.ArrayList;
 
 public class Admin extends User {
     private int adminID;
-    private ArrayList<Doctor> approvedDoctors = new ArrayList<>();
-    private ArrayList<Doctor> notApprovedDoctors = new ArrayList<>();
+    SystemManager sys = new SystemManager();
+
 
 
 
@@ -24,12 +26,12 @@ public class Admin extends User {
     to see if its legit
  */
     public void addToApprovedList(Doctor dr){
-        approvedDoctors.add(dr);
+        SystemManager.addDoctor(dr);
     }
 
-    public void addToNotApprovedList(Doctor dr){
-        notApprovedDoctors.add(dr);
-    }
+//    public void addToNotApprovedList(Doctor dr){
+//        notApprovedDoctors.add(dr);
+//    }
     public void verifyDoctor(Doctor doctor){
         if(doctor.getMedicalCertificate() != null && ! doctor.getMedicalCertificate().isEmpty()){
             doctor.setApproved(true);
@@ -37,7 +39,7 @@ public class Admin extends User {
 
             System.out.println("Doctor has been approved, added to approved list");
         }else {
-            notApprovedDoctors.add(doctor); // add this rejected doctor to list of rejected doctors
+            // notApprovedDoctors.add(doctor); // add this rejected doctor to list of rejected doctors
 
             System.out.println("Doctor "+ doctor.getFirstName() + " "+ doctor.getLastName()+" has invalid certificate");
 
@@ -45,24 +47,5 @@ public class Admin extends User {
 
     }
 
-    public ArrayList<Doctor> approvedDoctors(){
-        return approvedDoctors;
-    }
-    public ArrayList<Doctor> notApprovedDoctors(){
-        return notApprovedDoctors;
 
-    }
-
-    public void displayApprovedDoctors(){
-        for(Doctor dr: approvedDoctors){
-            System.out.println(dr);
-        }
-    }
-
-    public void displayNotApprovedDoctors(){
-        for(Doctor dr: notApprovedDoctors){
-            System.out.println(dr.getFirstName());
-
-        }
-    }
 }
