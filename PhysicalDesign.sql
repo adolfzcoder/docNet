@@ -13,7 +13,7 @@ CREATE TABLE user(
     
     email VARCHAR(100) UNIQUE,
     password VARCHAR(255),
-    gender ENUM("male", "female")
+    gender CHAR(10)
      
 );
 
