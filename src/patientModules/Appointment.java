@@ -1,7 +1,7 @@
 package patientModules;
 
 import doctorModules.Doctor;
-import userModules.User;
+import models.User;
 
 import java.util.ArrayList;
 

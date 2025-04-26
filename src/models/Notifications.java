@@ -1,6 +1,6 @@
-package functions;
+package models;
 
-import userModules.User;
+import SystemManager.SystemManager;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -10,7 +10,7 @@ public class Notifications {
     private String message;
     private boolean isRead;
 
-    private HashMap<String, ArrayList<Notifications>> userNotifications = new HashMap<>();
+    private static ArrayList<Notifications> usersNotifications = new ArrayList<>();
 
     public Notifications(User user, String message){
         this.user = user;
@@ -18,8 +18,8 @@ public class Notifications {
 
     }
 
-    public void addNotification(String email, Notifications notification){
-
+    public void addNotification(Notifications notification){
+        SystemManager.addNotification(notification);
     }
     public User getUser(){
         return user;

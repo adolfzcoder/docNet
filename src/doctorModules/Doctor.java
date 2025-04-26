@@ -1,6 +1,6 @@
 package doctorModules;
 
-import userModules.User;
+import models.User;
 import SystemManager.SystemManager;
 import validations.DoctorValidate;
 

@@ -1,6 +1,9 @@
-package userModules;
+package models;
 
 import validations.UserValidation;
+
+import java.util.ArrayList;
+import java.util.HashMap;
 
 public class User {
     private int userID;
@@ -175,4 +178,6 @@ public class User {
     public void setGender(String gender) {
         this.gender = gender;
     }
+
+
 }

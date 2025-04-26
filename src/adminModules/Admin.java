@@ -4,18 +4,20 @@ package adminModules;// create admin, inherit from user, but set the user type t
 // lets assume just one admin
 
 import doctorModules.Doctor;
-import userModules.User;
+import models.User;
 import SystemManager.SystemManager;
 
 public class Admin extends User {
     private int adminID;
-    SystemManager sys = new SystemManager();
+    // SystemManager sys = new SystemManager();
 
 
 
 
     public Admin(int userID, int adminID, String firstName, String lastName, String telephone, String dob, boolean isApproved, String userType, String email, String password, String gender){
         super(userID, firstName, lastName, telephone, dob, isApproved, userType, email, password, gender);
+
+        SystemManager.addAdmin(this);
 
     }
 
@@ -26,11 +28,14 @@ public class Admin extends User {
     to see if its legit
  */
     public void addToApprovedList(Doctor dr){
-        SystemManager.addDoctor(dr);
+        SystemManager.addApprovedDoctor(dr);
         // alert user of approval status
         dr.notify();
     }
 
+    public static void addToAllDoctors(Doctor dr){
+        SystemManager.addDoctor(dr);
+    }
 //    public void addToNotApprovedList(Doctor dr){
 //        notApprovedDoctors.add(dr);
 //    }
