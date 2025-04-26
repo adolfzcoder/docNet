@@ -1,4 +1,4 @@
-package AdolfsPackage;
+package userModules;
 
 import validations.UserValidation;
 
@@ -18,13 +18,12 @@ public class User {
     private String gender;
     public UserValidation validate= new  UserValidation();
 
-    // private ArrayList<AdolfsPackage.User> notifications = new ArrayList<>();
-
+    // Notifications notification = new Notifications();
 
 
     public User(int userID, String firstName, String lastName, String telephone, String dob, boolean isApproved, String userType, String email, String password, String gender) {
 
-
+    // this.notifications = new ArrayList<>();
 
     }
 
@@ -32,7 +31,9 @@ public class User {
 
     }
 
-
+//    public void notify(String message) {
+//        notifications.add(new Notifications(message));
+//    }
     public UserValidation getValidate() {
         return validate;
     }

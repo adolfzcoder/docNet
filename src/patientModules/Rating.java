@@ -1,7 +1,4 @@
-package RatosPackage;
-
-import AdolfsPackage.Doctor;
-import AdolfsPackage.Patient;
+package patientModules;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
