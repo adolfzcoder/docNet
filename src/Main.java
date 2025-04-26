@@ -1,8 +1,3 @@
-import AdolfsPackage.Admin;
-import AdolfsPackage.Doctor;
-
-import java.util.Scanner;
-
 public class Main {
 
     public static void main(String[] args){

@@ -1,5 +1,6 @@
-package AdolfsPackage;
+package doctorModules;
 
+import userModules.User;
 import SystemManager.SystemManager;
 import validations.DoctorValidate;
 
@@ -12,6 +13,7 @@ public class Doctor extends User {
     private String specialisation;
     private double totalRating;
     private int numberOfRatings;
+    private boolean isBooked=false;
 
     public static ArrayList<Doctor> allDoctors = new ArrayList<>();
 

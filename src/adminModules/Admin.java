@@ -1,11 +1,11 @@
-package AdolfsPackage;// create admin, inherit from user, but set the user type to admin, allow them to approve
+package adminModules;// create admin, inherit from user, but set the user type to admin, allow them to approve
 // and not approve users
 
 // lets assume just one admin
 
+import doctorModules.Doctor;
+import userModules.User;
 import SystemManager.SystemManager;
-
-import java.util.ArrayList;
 
 public class Admin extends User {
     private int adminID;
@@ -27,6 +27,8 @@ public class Admin extends User {
  */
     public void addToApprovedList(Doctor dr){
         SystemManager.addDoctor(dr);
+        // alert user of approval status
+        dr.notify();
     }
 
 //    public void addToNotApprovedList(Doctor dr){

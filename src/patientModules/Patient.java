@@ -1,5 +1,6 @@
-package AdolfsPackage;
+package patientModules;
 
+import doctorModules.Doctor;
 import SystemManager.SystemManager;
 
 import java.util.ArrayList;
@@ -42,5 +43,9 @@ public class Patient {
         for(Doctor doc: SystemManager.getApprovedDoctors()){
             System.out.println(doc.toString());
         }
+    }
+
+    public void bookAppointment(String doctorsEmail, String startTime, String endTime){
+
     }
 }

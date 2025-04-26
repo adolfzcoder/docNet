@@ -1,10 +1,10 @@
 package SystemManager;
 
-import AdolfsPackage.Admin;
-import AdolfsPackage.Doctor;
-import AdolfsPackage.Patient;
+import adminModules.Admin;
+import doctorModules.Doctor;
+import functions.Notifications;
+import patientModules.Patient;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class SystemManager {
@@ -15,6 +15,7 @@ public class SystemManager {
     private static ArrayList<Doctor> pendingDoctors = new ArrayList<>();
     private static ArrayList<Admin> admins= new ArrayList<>();
     private static ArrayList<Patient> patients = new ArrayList<>();
+    private static ArrayList<Notifications> allNotifications = new ArrayList<>();
 
     public static void addToPendingDoctorList(Doctor dr){
         pendingDoctors.add(dr);
