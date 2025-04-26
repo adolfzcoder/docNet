@@ -11,6 +11,7 @@ public class Doctor extends User {
     // AdolfsPackage.User user = new AdolfsPackage.User();
 
     public DoctorValidate validate = new DoctorValidate();
+
     public Doctor(int userID, int doctorID, String medicalCertificate, int yearsOfXP, String specialisation, String firstName, String lastName, String telephone, String dob, boolean isApproved, String userType, String email, String password, String gender) {
         super(userID,firstName, lastName, telephone, dob, isApproved, userType, email, password, gender);
         setMedicalCertificate(medicalCertificate);
@@ -22,6 +23,7 @@ public class Doctor extends User {
     @Override
     public String toString() {
         return "Doctor{" +
+                "doctorID='" + doctorID + '\'' +
                 "medicalCertificate='" + medicalCertificate + '\'' +
                 ", yearsOfXP=" + yearsOfXP +
                 ", specialisation='" + specialisation + '\'' +

@@ -8,6 +8,12 @@ public class Main {
     public static void main(String[] args){
 
 
+
+
+        /*
+        TESTING ADMIN-DOCTOR FUNCTIONS
+
+
         // creating a new doctor user {3 user types, admin, patient, doctor}
         Scanner scan = new Scanner(System.in);
         // for admins, keep a default admin, which means they will always be approved
@@ -35,9 +41,10 @@ public class Main {
         root.verifyDoctor(userDoctor);
         // doctor.createUser(firstName, lastName, telephone, dob, userType, email);
 
-        root.displayApprovedDoctors();
-        root.displayNotApprovedDoctors();
+        // root.displayApprovedDoctors();
+        // root.displayNotApprovedDoctors();
 
+        */
 
 
 
