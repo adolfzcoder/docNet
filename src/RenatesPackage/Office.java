@@ -1,5 +1,8 @@
 package RenatesPackage;
 
+import doctorModules.Doctor;
+import patientModules.Appointment;
+
 import java.util.ArrayList;
 import java.util.List;
 
