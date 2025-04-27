@@ -2,7 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/docNet.iml" filepath="$PROJECT_DIR$/docNet.iml" />
+
+      <module fileurl="file://$PROJECT_DIR$/docnet-git.iml" filepath="$PROJECT_DIR$/docnet-git.iml" />
     </modules>
   </component>
 </project>
