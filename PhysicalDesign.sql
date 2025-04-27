@@ -10,18 +10,17 @@ CREATE TABLE user(
     dob DATE,
     isApproved BIT,
     userType ENUM("doctor", "patient", "admin"),
-    
     email VARCHAR(100) UNIQUE,
     password VARCHAR(255),
     gender CHAR(10)
-     
+
 );
 
 CREATE TABLE patient(
     patientID INT PRIMARY KEY AUTO_INCREMENT,
     medicalAidNumber INT,
     balance DECIMAL(10, 2),
-    
+
     userID INT,
     CONSTRAINT fk_patient_user_id FOREIGN KEY (userID) REFERENCES user(userID)
 );
@@ -42,7 +41,7 @@ CREATE TABLE admin(
     userID INT,
     CONSTRAINT fk_admin_user_id FOREIGN KEY (userID) REFERENCES user(userID)
 
-)
+);
 
 CREATE TABLE medicine(
     medicineID INT PRIMARY KEY AUTO_INCREMENT,
@@ -74,7 +73,7 @@ CREATE TABLE waitingList(
 CREATE TABLE rating(
     ratingID INT PRIMARY KEY AUTO_INCREMENT,
     review VARCHAR(255),
-    score ENUM(1, 2, 3, 4, 5),
+    score ENUM('1', '2', '3', '4', '5'),
 
     patientID INT,
     doctorID INT,
@@ -109,7 +108,7 @@ CREATE TABLE appointment(
     CONSTRAINT fk_appointment_doctor_id FOREIGN KEY (doctorID) REFERENCES doctor(doctorID)
 );
 
--- modeled the payment to have the appointment ID 
+-- modeled the payment to have the appointment ID
 CREATE TABLE payment(
     paymentID INT PRIMARY KEY AUTO_INCREMENT,
     paymentStatus ENUM("completed", "rejected"),
