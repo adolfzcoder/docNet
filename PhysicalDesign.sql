@@ -9,7 +9,7 @@ CREATE TABLE user(
     telephone VARCHAR(10),
     dob DATE,
     isApproved BIT,
-    userType ENUM("doctor", "patient", "admin"),
+    userType ENUM("DOCTOR", "PATIENT", "ADMIN"),
     
     email VARCHAR(100) UNIQUE,
     password VARCHAR(255),
@@ -32,10 +32,21 @@ CREATE TABLE doctor(
     yearsOfExperience INT,
     specialisation VARCHAR(255),
 
+    officeID INT,
     userID INT,
-    CONSTRAINT fk_doctor_user_id FOREIGN KEY (userID) REFERENCES user(userID)
+    CONSTRAINT fk_doctor_office_id FOREIGN KEY (userID) REFERENCES user(userID),
+    CONSTRAINT fk_doctor_user_id FOREIGN KEY (officeID) REFERENCES office(officeID)
 );
 
+CREATE TABLE office(
+    officeID INT PRIMARY KEY AUTO_INCREMENT,
+    name VARCHAR(255),
+    location VARCHAR(255),
+    openingHours TIME,
+    closingHours TIME,
+    accountBalance DECIMAL(10, 2),
+
+);
 CREATE TABLE admin(
     adminID INT PRIMARY KEY AUTO_INCREMENT,
 
@@ -47,7 +58,7 @@ CREATE TABLE admin(
 CREATE TABLE medicine(
     medicineID INT PRIMARY KEY AUTO_INCREMENT,
     medicineName VARCHAR(255),
-    medicineType ENUM("capsule", "liquid", "tablet")
+    medicineType ENUM("CAPSULE", "LIQUID", "TABLET")
 );
 
 
@@ -64,7 +75,7 @@ CREATE TABLE doctorsSchedule(
 CREATE TABLE waitingList(
     waitingListID INT PRIMARY KEY AUTO_INCREMENT,
     dateAdded DATE,
-    status ENUM("waiting", "completed"),
+    status ENUM("WAITING", "COMPLETED"),
 
     patientID INT,
     CONSTRAINT fk_waiting_list_patient_id FOREIGN KEY (patientID) REFERENCES patient(patientID)
@@ -74,7 +85,7 @@ CREATE TABLE waitingList(
 CREATE TABLE rating(
     ratingID INT PRIMARY KEY AUTO_INCREMENT,
     review VARCHAR(255),
-    score ENUM(1, 2, 3, 4, 5),
+    score ENUM('1', '2', '3', '4', '5'),
 
     patientID INT,
     doctorID INT,
@@ -86,13 +97,11 @@ CREATE TABLE rating(
 CREATE TABLE notification(
     notificationID INT PRIMARY KEY AUTO_INCREMENT,
     notificationDate DATE,
-    status ENUM ("read", "unread"),
-    userType ENUM("doctor", "patient", "admin"),
+    status ENUM ("READ", "UNREAD"),
 
-    patientID INT,
-    doctorID INT,
-    CONSTRAINT fk_notification_patient_id FOREIGN KEY (patientID) REFERENCES patient(patientID),
-    CONSTRAINT fk_notification_doctor_id FOREIGN KEY (doctorID) REFERENCES doctor(doctorID)
+    userID INT,
+
+    CONSTRAINT fk_notification_user_id FOREIGN KEY (userID) REFERENCES user(userID)
 );
 
 
@@ -100,7 +109,7 @@ CREATE TABLE appointment(
     appointmentID INT PRIMARY KEY AUTO_INCREMENT,
     appointmentDate DATE,
     reasonForVisit VARCHAR(255),
-    status ENUM("pending", "accepted", "rejected", "completed"),
+    status ENUM("PENDING", "ACCEPTED", "REJECTED", "COMPLETED"),
     appointmentTime TIME,
 
     patientID INT,
@@ -112,7 +121,7 @@ CREATE TABLE appointment(
 -- modeled the payment to have the appointment ID 
 CREATE TABLE payment(
     paymentID INT PRIMARY KEY AUTO_INCREMENT,
-    paymentStatus ENUM("completed", "rejected"),
+    paymentStatus ENUM("COMPLETED", "REJECTED"),
     amount DECIMAL(10, 2),
 
     appointmentID INT,

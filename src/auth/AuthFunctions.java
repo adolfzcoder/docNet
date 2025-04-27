@@ -79,6 +79,10 @@ public class AuthFunctions {
 
     }
 
+    public static void logout(){
+        SystemManager.flushSession();
+        System.out.println("User logged out successfully");
+    }
     public static String hashPassword(String pass){
         // implement hashing functionality
         return "";

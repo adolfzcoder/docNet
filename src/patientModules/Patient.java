@@ -22,6 +22,9 @@ public class Patient extends User {
 
     }
 
+    public static void addAppointment(Doctor doctor, String beginTime, String endTime, String date, String dayOfWeek){
+
+    }
     public int getPatientID() {
         return patientID;
     }
