@@ -1,19 +1,34 @@
 package patientModules;
 
+import auth.AuthFunctions;
 import doctorModules.Doctor;
 import SystemManager.SystemManager;
+import models.User;
 
 import java.util.ArrayList;
 
-public class Patient {
+public class Patient extends User {
     private String medicalAidNumber;
+    private int patientID;
 
 
-    public Patient(){
+    public Patient(int userID, int patientID, String medicalAidNumber, String firstName, String lastName, String telephone, String dob, boolean isApproved, String userType, String email, String password, String gender){
+        super(userID,firstName, lastName, telephone, dob, isApproved, userType, email, password, gender);
 
-        SystemManager.addPatient(this);
+        this.medicalAidNumber = medicalAidNumber;
+        this.patientID = patientID;
+
+        AuthFunctions.signUp(this);
+
     }
 
+    public int getPatientID() {
+        return patientID;
+    }
+
+    public void setPatientID(int patientID) {
+        this.patientID = patientID;
+    }
 
     public String getMedicalAidNumber(){
         return this.medicalAidNumber;

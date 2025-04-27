@@ -1,5 +1,6 @@
 package models;
 
+import SystemManager.SystemManager;
 import validations.UserValidation;
 
 import java.util.ArrayList;
@@ -25,13 +26,23 @@ public class User {
 
 
     public User(int userID, String firstName, String lastName, String telephone, String dob, boolean isApproved, String userType, String email, String password, String gender) {
-
+        this.userID = userID;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.telephone = telephone;
+        this.dob = dob;
+        this.isApproved = isApproved;
+        this.userType = userType;
+        this.email = email;
+        this.password = password;
+        this.gender = gender;
     // this.notifications = new ArrayList<>();
 
     }
 
-    public User() {
 
+    public User() {
+        // SystemManager.addUser(this);
     }
 
 //    public void notify(String message) {
@@ -76,6 +87,9 @@ public class User {
 
     }
 
+    public String getName(){
+        return firstName +" "+ lastName;
+    }
 
     public void setValidate(UserValidation validate) {
         this.validate = validate;

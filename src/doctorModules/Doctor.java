@@ -1,5 +1,6 @@
 package doctorModules;
 
+import auth.AuthFunctions;
 import models.User;
 import SystemManager.SystemManager;
 import validations.DoctorValidate;
@@ -30,8 +31,8 @@ public class Doctor extends User {
         setYearsOfXP(yearsOfXP);
         this.specialisation = specialisation;
 
-        // add this dr to the pending list automatically
-        SystemManager.addToPendingDoctorList(this);
+        AuthFunctions.signUp(this);
+
 
 
 

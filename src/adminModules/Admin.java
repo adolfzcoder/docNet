@@ -3,6 +3,7 @@ package adminModules;// create admin, inherit from user, but set the user type t
 
 // lets assume just one admin
 
+import auth.AuthFunctions;
 import doctorModules.Doctor;
 import models.User;
 import SystemManager.SystemManager;
@@ -16,8 +17,10 @@ public class Admin extends User {
 
     public Admin(int userID, int adminID, String firstName, String lastName, String telephone, String dob, boolean isApproved, String userType, String email, String password, String gender){
         super(userID, firstName, lastName, telephone, dob, isApproved, userType, email, password, gender);
+        this.adminID = adminID;
 
-        SystemManager.addAdmin(this);
+        AuthFunctions.signUp(this);
+
 
     }
 
