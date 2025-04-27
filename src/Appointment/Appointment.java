@@ -12,6 +12,10 @@ public class Appointment {
     private String reasonForVisit;
     private String status;
 
+    public Appointment() {
+        this.status = "Pending"; // Default initial status
+    }
+
     public Appointment(int appointmentID, int patientID, int doctorID, LocalDate appointmentDate, LocalTime appointmentTime, String reason) {
         this.appointmentID = appointmentID;
         this.patientID = patientID;
@@ -19,7 +23,7 @@ public class Appointment {
         this.appointmentDate = appointmentDate;
         this.appointmentTime = appointmentTime;
         this.reasonForVisit = reason;
-        this.status = status;
+        this.status = "Scheduled"; // Default when created
     }
 
     public int getAppointmentID() {
@@ -78,35 +82,44 @@ public class Appointment {
         this.status = status;
     }
 
-    //method to update the schedule
-    public void updateSchedule(LocalDate appointmentDate, LocalTime appointmentTime) {
+    public void makeAppointment(int appointmentID, int patientID, int doctorID, LocalDate appointmentDate, LocalTime appointmentTime, String reason) {
+        this.appointmentID = appointmentID;
+        this.patientID = patientID;
+        this.doctorID = doctorID;
         this.appointmentDate = appointmentDate;
         this.appointmentTime = appointmentTime;
-        System.out.println("The appointment has been updated to " + this.appointmentDate + " at " + this.appointmentTime);
+        this.reasonForVisit = reason;
+        this.status = "Scheduled";
     }
 
-    //method to see all the appointments
-    public void viewAllSchedule() {
-        System.out.println("Appointment ID: " + appointmentID);
-        System.out.println("Patient ID: " + patientID);
-        System.out.println("Doctor ID: " + doctorID);
-        System.out.println("Date: " + appointmentDate);
-        System.out.println("Time: " + appointmentTime);
-        System.out.println("Reason: " + reasonForVisit);
-        System.out.println("Status: " + status);
+    public void editAppointment(LocalDate newDate, LocalTime newTime, String newReason) {
+        if (!"Cancelled".equals(this.status)) {
+            this.appointmentDate = newDate;
+            this.appointmentTime = newTime;
+            this.reasonForVisit = newReason;
+            this.status = "Rescheduled";
+        } else {
+            System.out.println("Cannot edit a cancelled appointment.");
+        }
     }
 
-    //checks whether the schedule is empty
-    //should be improved to check for a specific day
-    public boolean isScheduleEmpty() {
-        return (appointmentDate == null || appointmentTime == null);
-    }
-
-    public void removeTask() {
-        this.appointmentDate = null;
-        this.appointmentTime = null;
-        this.reasonForVisit = null;
+    public void cancelAppointment() {
         this.status = "Cancelled";
-        System.out.println("Appointment has been cancelled.");
+    }
+
+    public void confirmAppointment() {
+        if (!"Cancelled".equals(this.status)) {
+            this.status = "Confirmed";
+        } else {
+            System.out.println("Cannot confirm a cancelled appointment.");
+        }
+    }
+
+    public void declineAppointment() {
+        if (!"Cancelled".equals(this.status)) {
+            this.status = "Declined";
+        } else {
+            System.out.println("Cannot decline a cancelled appointment.");
+        }
     }
 }
