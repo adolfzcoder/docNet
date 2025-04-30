@@ -15,8 +15,8 @@ public class Admin extends User {
 
 
 
-    public Admin(int userID, int adminID, String firstName, String lastName, String telephone, String dob, boolean isApproved, String userType, String email, String password, String gender){
-        super(userID, firstName, lastName, telephone, dob, isApproved, userType, email, password, gender);
+    public Admin(int userID, int adminID, String firstName, String lastName, String phoneNumber, String telephone, String dob, boolean isApproved, String userType, String email, String password, String gender){
+        super(userID, firstName, lastName, phoneNumber, telephone, dob, isApproved, userType, email, password, gender);
         this.adminID = adminID;
 
         AuthFunctions.signUp(this);
@@ -24,12 +24,15 @@ public class Admin extends User {
 
     }
 
-/*
-    we need an actual algorithm or way to verify the doctor, right now it jsut checks if the
-    submission is not empty or not submitted, possible ones could be
-    check the submitted documents, so we handle file uploads, admin can then check the file
-    to see if its legit
- */
+    public Admin(int adminID, int userID) {
+    }
+
+    /*
+        we need an actual algorithm or way to verify the doctor, right now it jsut checks if the
+        submission is not empty or not submitted, possible ones could be
+        check the submitted documents, so we handle file uploads, admin can then check the file
+        to see if its legit
+     */
     public void addToApprovedList(Doctor dr){
         SystemManager.addApprovedDoctor(dr);
         // alert user of approval status

@@ -8,7 +8,7 @@ CREATE TABLE user(
                      lastName VARCHAR(100),
                      phoneNumber VARCHAR(10),
                      telephone VARCHAR(10),
-                     dob DATE,
+                     dob VARCHAR(15),
                      isApproved BIT,
                      userType ENUM("DOCTOR", "PATIENT", "ADMIN"),
 

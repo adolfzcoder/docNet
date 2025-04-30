@@ -12,8 +12,8 @@ public class Patient extends User {
     private int patientID;
 
 
-    public Patient(int userID, int patientID, String medicalAidNumber, String firstName, String lastName, String telephone, String dob, boolean isApproved, String userType, String email, String password, String gender){
-        super(userID,firstName, lastName, telephone, dob, isApproved, userType, email, password, gender);
+    public Patient(int userID, int patientID, String medicalAidNumber, String firstName, String lastName, String phoneNumber, String telephone, String dob, boolean isApproved, String userType, String email, String password, String gender){
+        super(userID,firstName, lastName, phoneNumber, telephone, dob, isApproved, userType, email, password, gender);
 
         this.medicalAidNumber = medicalAidNumber;
         this.patientID = patientID;

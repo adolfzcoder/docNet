@@ -16,10 +16,10 @@ import java.util.List;
     public class DataBaseManager {
         private static final String DB_URL = "jdbc:mysql://localhost:3306/docnet";
         private static final String DB_USER = "root";
-        private static final String DB_PASSWORD = "2005";
+        private static final String DB_PASSWORD = "";
 
-        public List<User> getUsers() {
-            List<User> users = new ArrayList<>();
+        public static ArrayList<User> getUsers() {
+            ArrayList<User> users = new ArrayList<>();
             try (Connection conn = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
                  Statement stmt = conn.createStatement();
                  ResultSet rs = stmt.executeQuery("SELECT * FROM user")) {
@@ -31,7 +31,7 @@ import java.util.List;
                             rs.getString("lastName"),
                             rs.getString("phoneNumber"),
                             rs.getString("telephone"),
-                            rs.getDate("dob"),
+                            rs.getString("dob"),
                             rs.getBoolean("isApproved"),
                             rs.getString("userType"),
                             rs.getString("email"),
@@ -46,8 +46,8 @@ import java.util.List;
             return users;
         }
 
-        public List<Admin> getAdmins() {
-            List<Admin> admins = new ArrayList<>();
+        public static ArrayList<Admin> getAdmins() {
+            ArrayList<Admin> admins = new ArrayList<>();
             try (Connection conn = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
                  Statement stmt = conn.createStatement();
                  ResultSet rs = stmt.executeQuery("SELECT * FROM admin")) {
@@ -65,6 +65,7 @@ import java.util.List;
             return admins;
         }
 
+        /*
         public List<Patient> getPatients() {
             List<Patient> patients = new ArrayList<>();
             try (Connection conn = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
@@ -232,6 +233,10 @@ import java.util.List;
                 e.printStackTrace();
             }
         }
+
+
+
     }
+         */
 
 }

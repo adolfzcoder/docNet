@@ -22,11 +22,11 @@ public class Doctor extends User {
 
     public DoctorValidate validate = new DoctorValidate();
 
-    public Doctor(int userID, int doctorID, String medicalCertificate, int yearsOfXP, String specialisation, String firstName, String lastName, String telephone, String dob, boolean isApproved, String userType, String email, String password, String gender) {
+    public Doctor(int userID, int doctorID, String medicalCertificate, int yearsOfXP, String specialisation, String firstName, String lastName, String phoneNumber, String telephone, String dob, boolean isApproved, String userType, String email, String password, String gender) {
 
 
 
-        super(userID,firstName, lastName, telephone, dob, isApproved, userType, email, password, gender);
+        super(userID,firstName, lastName, phoneNumber, telephone, dob, isApproved, userType, email, password, gender);
         setMedicalCertificate(medicalCertificate);
         setYearsOfXP(yearsOfXP);
         this.specialisation = specialisation;

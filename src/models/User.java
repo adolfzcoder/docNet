@@ -3,6 +3,7 @@ package models;
 import SystemManager.SystemManager;
 import validations.UserValidation;
 
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -25,7 +26,13 @@ public class User {
     // Notifications notification = new Notifications();
 
 
-    public User(int userID, String firstName, String lastName, String telephone, String dob, boolean isApproved, String userType, String email, String password, String gender) {
+
+
+    public User() {
+        // SystemManager.addUser(this);
+    }
+
+    public User(int userID, String firstName, String lastName, String phoneNumber, String telephone, String dob, boolean isApproved, String userType, String email, String password, String gender) {
         this.userID = userID;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -36,16 +43,10 @@ public class User {
         this.email = email;
         this.password = password;
         this.gender = gender;
-    // this.notifications = new ArrayList<>();
-
+        this.phoneNumber = phoneNumber;
     }
 
-
-    public User() {
-        // SystemManager.addUser(this);
-    }
-
-//    public void notify(String message) {
+    //    public void notify(String message) {
 //        notifications.add(new Notifications(message));
 //    }
     public UserValidation getValidate() {

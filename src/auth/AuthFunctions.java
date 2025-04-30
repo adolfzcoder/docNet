@@ -58,21 +58,22 @@ public class AuthFunctions {
         if( !emailExists ){
             SystemManager.addUser(registeringUser);
 
-//            if(registeringUser.getUserType().equalsIgnoreCase("DOCTOR")){
-//
-//                SystemManager.addDoctor((Doctor) registeringUser);
-//                SystemManager.addToPendingDoctorList((Doctor) registeringUser);
-//
-//            }else if(registeringUser.getUserType().equalsIgnoreCase("PATIENT")){
-//
-//                SystemManager.addPatient((Patient)registeringUser);
-//
-//            } else {
-//                // admin
-//
-//                SystemManager.addAdmin((Admin) registeringUser);
-//
-//            }
+            if(registeringUser.getUserType().equalsIgnoreCase("DOCTOR")){
+
+                SystemManager.addDoctor((Doctor) registeringUser);
+                SystemManager.addToPendingDoctorList((Doctor) registeringUser);
+
+            }else if(registeringUser.getUserType().equalsIgnoreCase("PATIENT")){
+
+                SystemManager.addPatient((Patient)registeringUser);
+
+            } else {
+                // admin
+
+                SystemManager.addAdmin((Admin) registeringUser);
+
+            }
+            // SystemManager.addUser(registeringUser);
             System.out.println(registeringUser.getUserType());
             System.out.println("User has signed up, now login");
         }
@@ -88,18 +89,13 @@ public class AuthFunctions {
         return "";
     }
 
-    public static boolean checkIfEmailExists(String registeringUsersEmail){
-        ArrayList<User> users = SystemManager.getUsers();
-
-        for(User userDB: users){
-            if(registeringUsersEmail.equalsIgnoreCase(userDB.getEmail())){
+    public static boolean checkIfEmailExists(String email) {
+        for (User userDB : SystemManager.getUsers()) {
+            if (email.equalsIgnoreCase(userDB.getEmail())) {
                 return true;
-            }
-            else{
-                System.out.println("Login, email exists!");
-                return false;
             }
         }
         return false;
     }
+
 }

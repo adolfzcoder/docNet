@@ -1,5 +1,6 @@
 package SystemManager;
 
+import Storage.DataBaseManager;
 import adminModules.Admin;
 import doctorModules.Doctor;
 import models.Notifications;
@@ -20,7 +21,7 @@ public class SystemManager {
     private static ArrayList<Patient> patients = new ArrayList<>();
     private static ArrayList<Doctor> doctors = new ArrayList<>();
     private static ArrayList<Notifications> allNotifications = new ArrayList<>();
-    private static ArrayList<User> users = new ArrayList<>();
+    private static ArrayList<User> users = DataBaseManager.getUsers();
     private static ArrayList<Appointment> pendingAppointments = new ArrayList<>();
     private static ArrayList<Appointment> approvedAppointments = new ArrayList<>();
     private static ArrayList<Appointment> declinedAppointments = new ArrayList<>();
