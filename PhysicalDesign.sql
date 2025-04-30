@@ -2,6 +2,7 @@ CREATE DATABASE docnet;
 USE docnet;
 
 CREATE TABLE user(
+
                      userID INT PRIMARY KEY AUTO_INCREMENT,
                      firstName VARCHAR(100),
                      lastName VARCHAR(100),
@@ -26,9 +27,11 @@ CREATE TABLE office(
                        closingHours TIME,
                        accountBalance DECIMAL(10, 2)
 
+
 );
 
 CREATE TABLE patient(
+
                         patientID INT PRIMARY KEY AUTO_INCREMENT,
                         medicalAidNumber INT,
                         balance DECIMAL(10, 2),
@@ -85,6 +88,7 @@ CREATE TABLE waitingList(
 
 
 CREATE TABLE rating(
+
                        ratingID INT PRIMARY KEY AUTO_INCREMENT,
                        review VARCHAR(255),
                        score ENUM('1', '2', '3', '4', '5'),
@@ -120,7 +124,7 @@ CREATE TABLE appointment(
                             CONSTRAINT fk_appointment_doctor_id FOREIGN KEY (doctorID) REFERENCES doctor(doctorID)
 );
 
--- modeled the payment to have the appointment ID 
+-- modeled the payment to have the appointment ID
 CREATE TABLE payment(
                         paymentID INT PRIMARY KEY AUTO_INCREMENT,
                         paymentStatus ENUM("COMPLETED", "REJECTED"),
@@ -138,6 +142,7 @@ CREATE TABLE prescription(
                              medicineID INT,
                              appointmentID INT,
                              patientID INT,
+
 
                              CONSTRAINT fk_prescription_medicine_id FOREIGN KEY (medicineID) REFERENCES medicine(medicineID),
                              CONSTRAINT fk_prescription_appointment_id FOREIGN KEY (appointmentID) REFERENCES appointment(appointmentID),
