@@ -11,17 +11,20 @@ public class Appointment {
     private String beginTime;
     private String endTime;
     private String date;
+    private String dayOfWeek;
     private String status="PENDING";
+    private int appointmentID;
 
 
-    ArrayList<Appointment> appointments = new ArrayList<>();
-
-    public Appointment(User user, Doctor doctor, String beginTime, String endTime, String date) {
+    public Appointment(int appointmentID, User user, Doctor doctor, String beginTime, String endTime, String date, String dayOfWeek, String status) {
+        this.appointmentID = appointmentID;
         this.doctor = doctor;
         this.user = user;
         this.beginTime = beginTime;
         this.endTime = endTime;
+        this.dayOfWeek = dayOfWeek;
         this.date = date;
+        this.status = status;
     }
 
 
@@ -62,7 +65,7 @@ public class Appointment {
         return status;
     }
 
-    public void setStatus(String status) {
+    public void updateStatus(String status) {
         this.status = status;
     }
 }

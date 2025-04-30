@@ -1,6 +1,6 @@
-package RenatesPackage;
+package doctorModules;
 
-import doctorModules.Doctor;
+import SystemManager.SystemManager;
 import patientModules.Appointment;
 
 import java.util.ArrayList;
@@ -18,7 +18,7 @@ public class Office {
 
     public Office() {
         doctors = new ArrayList<>();
-        appointments = new ArrayList<>();
+        appointments = SystemManager.getAppointments();
     }
 
     // Getters
