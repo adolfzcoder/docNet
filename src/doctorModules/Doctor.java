@@ -2,7 +2,6 @@ package doctorModules;
 
 import auth.AuthFunctions;
 import models.User;
-import SystemManager.SystemManager;
 import validations.DoctorValidate;
 
 import java.util.ArrayList;
@@ -50,7 +49,10 @@ public class Doctor extends User {
                 ", validate=" + validate +
                 '}';
     }
-
+    // @Override
+    void displayRole() {
+        System.out.println("Signed up as DOCTOR");
+    }
 
 
     public String getMedicalCertificate() {

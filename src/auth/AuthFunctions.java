@@ -1,5 +1,6 @@
 package auth;
 
+import Storage.DataBaseManager;
 import SystemManager.SystemManager;
 import adminModules.Admin;
 import doctorModules.Doctor;
@@ -57,8 +58,11 @@ public class AuthFunctions {
 
         if( !emailExists ){
             SystemManager.addUser(registeringUser);
+            DataBaseManager.insertUser(registeringUser);
 
             if(registeringUser.getUserType().equalsIgnoreCase("DOCTOR")){
+
+
 
                 SystemManager.addDoctor((Doctor) registeringUser);
                 SystemManager.addToPendingDoctorList((Doctor) registeringUser);

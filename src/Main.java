@@ -1,6 +1,7 @@
 import adminModules.Admin;
 import auth.AuthFunctions;
 import doctorModules.Doctor;
+import models.User;
 import patientModules.Patient;
 
 
@@ -31,19 +32,27 @@ public class Main {
         Scanner scan = new Scanner(System.in);
         System.out.println("WELCOME TO Doc NET, PRESS anything to continure, press q to exit");
 
-        String quit = scan.next();
+        String quit = "2";
         while(!quit.equals("q")){
-            System.out.println("Enter email: ");
-            String email = scan.next();
-            System.out.println("Enter password: ");
-            String pass = scan.next();
+            quit = scan.next();
 
-            boolean login = AuthFunctions.authenticateUser(email, pass);
-            if(login){
-                System.out.println("Successfully logged in");
-            }else{
-                System.out.println("login unsuccessful");
+            System.out.println("Enter 1 to login: ");
+            System.out.println("Enter 2 to register: ");
+            System.out.println("Enter 3 to logout: ");
+            int choice = scan.nextInt();
+
+            if(choice == 1){
+                login();
+            } else if (choice == 2) {
+                signup();
+            }else if(choice == 3){
+                AuthFunctions.logout();
             }
+            else{
+                System.out.println("Wrong input, try again or press q to exit");
+            }
+
+
         }
 
 
@@ -53,4 +62,92 @@ public class Main {
 
     }
 
+
+    public static void login(){
+        Scanner scan = new Scanner(System.in);
+        System.out.println("Enter email: ");
+        String email = scan.next();
+        System.out.println("Enter password: ");
+        String pass = scan.next();
+
+        boolean login = AuthFunctions.authenticateUser(email, pass);
+        if(login){
+            System.out.println("Successfully logged in");
+        }else{
+            System.out.println("login unsuccessful");
+        }
+
+
+    }
+    public static void signup() {
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.print("Enter First Name: ");
+        String firstName = scanner.nextLine();
+
+        System.out.print("Enter Last Name: ");
+        String lastName = scanner.nextLine();
+
+        System.out.print("Enter Phone Number: ");
+        String phoneNumber = scanner.nextLine();
+
+        System.out.print("Enter Telephone: ");
+        String telephone = scanner.nextLine();
+
+        System.out.print("Enter Date of Birth (YYYY-MM-DD): ");
+        String dob = scanner.nextLine();
+
+        System.out.print("Enter Gender (MALE/FEMALE): ");
+        String gender = scanner.nextLine();
+
+        System.out.print("Enter Email: ");
+        String email = scanner.nextLine();
+
+        System.out.print("Enter Password: ");
+        String password = scanner.nextLine();
+
+        System.out.print("Enter User Type (DOCTOR / PATIENT / ADMIN): ");
+        String userType = scanner.nextLine().trim().toUpperCase();
+
+        int userID = 0;
+
+        switch (userType) {
+            case "DOCTOR":
+                System.out.print("Enter Medical Certificate Path: ");
+                String certificate = scanner.nextLine();
+
+                System.out.print("Enter Years of Experience: ");
+                int yearsXP = Integer.parseInt(scanner.nextLine());
+
+                System.out.print("Enter Specialisation: ");
+                String specialisation = scanner.nextLine();
+
+                int doctorID = 0;
+                new Doctor(userID, doctorID, certificate, yearsXP, specialisation, firstName, lastName,
+                        phoneNumber, telephone, dob, false, "DOCTOR", email, password, gender);
+                break;
+
+            case "PATIENT":
+                System.out.print("Enter Medical Aid Number: ");
+                String medAidNumber = scanner.nextLine();
+                int patientID = 0;
+
+                new Patient(userID, patientID, medAidNumber, firstName, lastName, phoneNumber, telephone,
+                        dob, false, "PATIENT", email, password, gender);
+                break;
+
+            case "ADMIN":
+                int adminID = 0;
+
+                new Admin(userID, adminID, firstName, lastName, phoneNumber, telephone,
+                        dob, true, "ADMIN", email, password, gender);
+                break;
+
+            default:
+                System.out.println("Invalid user type.");
+        }
+
+    }
 }
+
+

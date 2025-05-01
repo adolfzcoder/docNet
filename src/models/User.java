@@ -155,6 +155,10 @@ public class User {
         return isApproved;
     }
 
+
+    public boolean getApproved(){
+        return this.isApproved;
+    }
     public void setApproved(boolean approved) {
         isApproved = approved;
     }

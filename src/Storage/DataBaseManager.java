@@ -156,8 +156,8 @@ import java.util.List;
             return offices;
         }
 
-
-        public void insertUser(User user) {
+*/
+        public static void insertUser(User user) {
             String query = "INSERT INTO user (firstName, lastName, phoneNumber, telephone, dob, isApproved, userType, email, password, gender) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
             try (Connection conn = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
@@ -167,8 +167,8 @@ import java.util.List;
                 ps.setString(2, user.getLastName());
                 ps.setString(3, user.getPhoneNumber());
                 ps.setString(4, user.getTelephone());
-                ps.setDate(5, new java.sql.Date(user.getDob().getTime()));
-                ps.setBoolean(6, user.getIsApproved());
+                ps.setString(5, user.getDob());
+                ps.setBoolean(6, user.getApproved());
                 ps.setString(7, user.getUserType());
                 ps.setString(8, user.getEmail());
                 ps.setString(9, user.getPassword());
@@ -179,7 +179,7 @@ import java.util.List;
                 e.printStackTrace();
             }
         }
-
+/*
 
         public void insertPatient(Patient patient) {
             String query = "INSERT INTO patient (medicalAidNumber, balance, userID) VALUES (?, ?, ?)";
