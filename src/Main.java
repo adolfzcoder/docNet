@@ -32,29 +32,40 @@ public class Main {
         Scanner scan = new Scanner(System.in);
         System.out.println("WELCOME TO Doc NET, PRESS anything to continure, press q to exit");
 
-        String quit = "2";
-        while(!quit.equals("q")){
-            quit = scan.next();
+        String quit = "";
 
+        while (!quit.equalsIgnoreCase("q")) {
             System.out.println("Enter 1 to login: ");
             System.out.println("Enter 2 to register: ");
             System.out.println("Enter 3 to logout: ");
-            int choice = scan.nextInt();
+            System.out.println("Press 'q' to exit");
 
-            if(choice == 1){
-                login();
-            } else if (choice == 2) {
-                signup();
-            }else if(choice == 3){
-                AuthFunctions.logout();
+            String input = scan.next();
+
+            if (input.equalsIgnoreCase("q")) {
+                quit = "q";
+                System.out.println("Exiting...");
+            } else {
+                try {
+                    int choice = Integer.parseInt(input);
+                    switch (choice) {
+                        case 1:
+                            login();
+                            break;
+                        case 2:
+                            signup();
+                            break;
+                        case 3:
+                            AuthFunctions.logout();
+                            break;
+                        default:
+                            System.out.println("Invalid input. Try again.");
+                    }
+                } catch (NumberFormatException e) {
+                    System.out.println("Invalid input. Please enter a number or 'q' to quit.");
+                }
             }
-            else{
-                System.out.println("Wrong input, try again or press q to exit");
-            }
-
-
         }
-
 
 
 
