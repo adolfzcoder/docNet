@@ -109,6 +109,8 @@ public class Main {
         System.out.print("Enter User Type (DOCTOR / PATIENT / ADMIN): ");
         String userType = scanner.nextLine().trim().toUpperCase();
 
+
+        // make method do get the last inserted id, then incremenet (generateID)
         int userID = 0;
 
         switch (userType) {
