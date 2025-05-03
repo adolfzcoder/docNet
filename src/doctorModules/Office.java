@@ -25,6 +25,7 @@ public class Office {
         this.accountBalance = accountBalance;
         this.doctorID = doctorID;
 
+
         ArrayList<Doctor> doctors = SystemManager.getOfficeDoctors(officeID);
 
 
