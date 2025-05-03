@@ -3,6 +3,7 @@ package models;
 import Storage.DataBaseManager;
 import adminModules.Admin;
 import doctorModules.Doctor;
+import doctorModules.Office;
 import patientModules.Appointment;
 import patientModules.Patient;
 
@@ -25,6 +26,9 @@ public class SystemManager {
     private static ArrayList<Appointment> declinedAppointments = new ArrayList<>();
     private static ArrayList<Appointment> appointments = new ArrayList<>();
     private static ArrayList<User> session = new ArrayList<>(); // stores the logged in users details
+    private static ArrayList<Doctor> officeDoctors = new ArrayList<>();
+    private static ArrayList<Office> offices = new ArrayList<>();
+
 
 
     public static void startSession(User user){
@@ -32,6 +36,38 @@ public class SystemManager {
     }
     public static ArrayList<User> getSession(){
         return session;
+    }
+
+    public static ArrayList<Doctor> getOfficeDoctors(int officeID){
+
+        for(Office office: offices){
+
+            if(office.getOfficeID() ==  officeID){
+                int doctorID = office.getDoctorID;
+                officeDoctors.add(findDoctor(doctorID));
+
+
+            }else{
+                System.out.println("Office id not found");
+            }
+        }
+        return officeDoctors;
+    }
+
+
+    public static Doctor findDoctor(int doctorID){
+        for(Doctor dr: doctors){
+            if(dr.getDoctorID() == doctorID){
+                return dr;
+            }
+            else{
+                System.out.println("Doctor ID not found");;
+            }
+        }
+        return null;
+    }
+    public static ArrayList<Office> getOffices(){
+        return offices;
     }
 
     public static ArrayList<Appointment> getPendingAppointments(int doctorID) {

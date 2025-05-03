@@ -6,6 +6,7 @@ import patientModules.Appointment;
 import java.util.ArrayList;
 import java.util.List;
 
+
 public class Office {
     private int officeID;
     private String officeName;
@@ -15,13 +16,31 @@ public class Office {
     private double accountBalance;
     private int doctorID;
     private ArrayList<Appointment> appointments;
+    public Office(int officeID, String officeName, String officeLocation, String openingHours, String closingHours, double accountBalance, int doctorID) {
+        this.officeID = officeID;
+        this.officeName = officeName;
+        this.officeLocation = officeLocation;
+        this.openingHours = openingHours;
+        this.closingHours = closingHours;
+        this.accountBalance = accountBalance;
+        this.doctorID = doctorID;
 
-    public Office() {
-        doctors = new ArrayList<>();
+        ArrayList<Doctor> doctors = SystemManager.getOfficeDoctors(officeID);
+
+
         appointments = SystemManager.getAppointments();
+
+
+
+
     }
 
+//    public Office() {
+//
+//    }
+
     // Getters
+    public int getDoctorID;
     public int getOfficeID() { return officeID; }
     public String getOfficeName() { return officeName; }
     public String getOfficeLocation() { return officeLocation; }
@@ -36,20 +55,6 @@ public class Office {
     public void setOpeningHours(String openingHours) { this.openingHours = openingHours; }
     public void setClosingHours(String closingHours) { this.closingHours = closingHours; }
     public void setAccountBalance(double accountBalance) { this.accountBalance = accountBalance; }
-
-    // Main Methods
-    public String addDoctor(Doctor doctor) {
-        doctors.add(doctor);
-        return "Doctor successfully added to the office.";
-    }
-
-    public String removeDoctor(Doctor doctor) {
-        if (doctors.remove(doctor)) {
-            return "Doctor successfully removed from the office.";
-        } else {
-            return "Doctor not found.";
-        }
-    }
 
     public String scheduleAppointment(Appointment appointment) {
         appointments.add(appointment);
@@ -69,11 +74,11 @@ public class Office {
                "\nOpening Hours: " + openingHours + "\nClosing Hours: " + closingHours;
     }
 
-    public String listDoctors() {
-        StringBuilder list = new StringBuilder("Doctors in Office:\n");
-        for (Doctor doctor : doctors) {
-            list.append(doctor.getFirstName()).append(" ").append(doctor.getLastName()).append("\n");
-        }
-        return list.toString();
-    }
+//    public String listDoctors() {
+//        StringBuilder list = new StringBuilder("Doctors in Office:\n");
+//        for (Doctor doctor : doctors) {
+//            list.append(doctor.getFirstName()).append(" ").append(doctor.getLastName()).append("\n");
+//        }
+//        return list.toString();
+//    }
 }
