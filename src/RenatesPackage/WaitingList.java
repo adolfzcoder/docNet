@@ -1,7 +1,10 @@
 package RenatesPackage;
 
+import patientModules.Appointment;
 import patientModules.Patient;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -12,8 +15,12 @@ public class WaitingList {
     private int maxCapacity = 50; // Default max size
     private Date dateCreated;
     private String status;
+    private Appointment appointment;
 
-    public WaitingList() {
+    public WaitingList(Appointment appt) {
+
+        this.appointment = appt;
+
         waitingPatients = new ArrayList<>();
         dateCreated = new Date();
         status = "Active";

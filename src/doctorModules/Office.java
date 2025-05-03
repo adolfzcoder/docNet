@@ -3,6 +3,8 @@ package doctorModules;
 import models.SystemManager;
 import patientModules.Appointment;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,19 +13,17 @@ public class Office {
     private int officeID;
     private String officeName;
     private String officeLocation;
-    private String openingHours;
-    private String closingHours;
+    private LocalDate openingHours;
+    private LocalDate closingHours;
     private double accountBalance;
-    private int doctorID;
     private ArrayList<Appointment> appointments;
-    public Office(int officeID, String officeName, String officeLocation, String openingHours, String closingHours, double accountBalance, int doctorID) {
+    public Office(int officeID, String officeName, String officeLocation, LocalTime openingHours, LocalTime closingHours, double accountBalance) {
         this.officeID = officeID;
         this.officeName = officeName;
         this.officeLocation = officeLocation;
-        this.openingHours = openingHours;
-        this.closingHours = closingHours;
+        this.openingHours = LocalDate.from(openingHours);
+        this.closingHours = LocalDate.from(closingHours);
         this.accountBalance = accountBalance;
-        this.doctorID = doctorID;
 
 
         //
@@ -47,16 +47,16 @@ public class Office {
     public int getOfficeID() { return officeID; }
     public String getOfficeName() { return officeName; }
     public String getOfficeLocation() { return officeLocation; }
-    public String getOpeningHours() { return openingHours; }
-    public String getClosingHours() { return closingHours; }
+    public LocalDate getOpeningHours() { return openingHours; }
+    public LocalDate getClosingHours() { return closingHours; }
     public double getAccountBalance() { return accountBalance; }
 
     // Setters
     public void setOfficeID(int officeID) { this.officeID = officeID; }
     public void setOfficeName(String officeName) { this.officeName = officeName; }
     public void setOfficeLocation(String officeLocation) { this.officeLocation = officeLocation; }
-    public void setOpeningHours(String openingHours) { this.openingHours = openingHours; }
-    public void setClosingHours(String closingHours) { this.closingHours = closingHours; }
+    public void setOpeningHours(String openingHours) { this.openingHours = LocalDate.parse(openingHours); }
+    public void setClosingHours(String closingHours) { this.closingHours = LocalDate.parse(closingHours); }
     public void setAccountBalance(double accountBalance) { this.accountBalance = accountBalance; }
 
     public String scheduleAppointment(Appointment appointment) {

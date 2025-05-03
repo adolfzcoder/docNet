@@ -3,12 +3,17 @@ package Storage;
 
 
 import adminModules.Admin;
+import doctorModules.Doctor;
+import doctorModules.Office;
 import env.EnvLoader;
 import models.User;
+import patientModules.Appointment;
+import patientModules.Patient;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 public class DataBaseManager {
         static HashMap<String, String> env = EnvLoader.loadEnv(".env");
@@ -64,52 +69,93 @@ public class DataBaseManager {
             return admins;
         }
 
-        /*
-        public List<Patient> getPatients() {
-            List<Patient> patients = new ArrayList<>();
+
+        public static ArrayList<Patient> getPatients() {
+            ArrayList<Patient> patients = new ArrayList<>();
+
+            String patientQuery = "SELECT * FROM patient";
+            String userQuery = "SELECT * FROM user WHERE userID = ?";
+
             try (Connection conn = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
                  Statement stmt = conn.createStatement();
-                 ResultSet rs = stmt.executeQuery("SELECT * FROM patient")) {
+                 ResultSet patientRs = stmt.executeQuery(patientQuery)) {
 
-                while (rs.next()) {
-                    Patient patient = new Patient(
-                            rs.getInt("patientID"),
-                            rs.getInt("medicalAidNumber"),
-                            rs.getDouble("balance"),
-                            rs.getInt("userID")
-                    );
-                    patients.add(patient);
+                while (patientRs.next()) {
+                    int userID = patientRs.getInt("userID");
+                    int patientID = patientRs.getInt("patientID");
+                    int medicalAidNumber = patientRs.getInt("medicalAidNumber");
+                    double balance = patientRs.getDouble("balance");
+
+                    try (PreparedStatement userStmt = conn.prepareStatement(userQuery)) {
+                        userStmt.setInt(1, userID);
+                        ResultSet userRs = userStmt.executeQuery();
+
+                        if (userRs.next()) {
+                            String firstName = userRs.getString("firstName");
+                            String lastName = userRs.getString("lastName");
+                            String phoneNumber = userRs.getString("phoneNumber");
+                            String telephone = userRs.getString("telephone");
+                            String dob = userRs.getString("dob");
+                            boolean isApproved = userRs.getBoolean("isApproved");
+                            String userType = userRs.getString("userType");
+                            String email = userRs.getString("email");
+                            String password = userRs.getString("password");
+                            String gender = userRs.getString("gender");
+
+                            Patient patient = new Patient(userID, patientID, medicalAidNumber, firstName, lastName, phoneNumber, telephone, dob, isApproved, userType, email, password, gender, balance);
+                            patients.add(patient);
+                        }
+                    }
                 }
+
             } catch (SQLException e) {
                 e.printStackTrace();
             }
+
             return patients;
         }
 
-        public List<Doctor> getDoctors() {
-            List<Doctor> doctors = new ArrayList<>();
+
+        public static ArrayList<Doctor> getDoctors() {
+            ArrayList<Doctor> doctors = new ArrayList<>();
+            String query = "SELECT d.*, u.* FROM doctor d JOIN user u ON d.userID = u.userID";
+
             try (Connection conn = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
                  Statement stmt = conn.createStatement();
-                 ResultSet rs = stmt.executeQuery("SELECT * FROM doctor")) {
+                 ResultSet rs = stmt.executeQuery(query)) {
 
                 while (rs.next()) {
                     Doctor doctor = new Doctor(
+                            rs.getInt("userID"),
                             rs.getInt("doctorID"),
                             rs.getString("medicalCertificatePath"),
                             rs.getInt("yearsOfExperience"),
                             rs.getString("specialisation"),
-                            rs.getInt("userID")
+
+                            rs.getString("firstName"),
+                            rs.getString("lastName"),
+                            rs.getString("phoneNumber"),
+                            rs.getString("telephone"),
+                            rs.getString("dob"),
+                            rs.getBoolean("isApproved"),
+                            rs.getString("userType"),
+                            rs.getString("email"),
+                            rs.getString("password"),
+                            rs.getString("gender"),
+                            rs.getBoolean("isBooked")
                     );
                     doctors.add(doctor);
                 }
             } catch (SQLException e) {
                 e.printStackTrace();
             }
+
             return doctors;
         }
 
-        public List<Appointment> getAppointments() {
-            List<Appointment> appointments = new ArrayList<>();
+
+        public static ArrayList<Appointment> getAppointments() {
+            ArrayList<Appointment> appointments = new ArrayList<>();
             try (Connection conn = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
                  Statement stmt = conn.createStatement();
                  ResultSet rs = stmt.executeQuery("SELECT * FROM appointment")) {
@@ -117,12 +163,12 @@ public class DataBaseManager {
                 while (rs.next()) {
                     Appointment appointment = new Appointment(
                             rs.getInt("appointmentID"),
-                            rs.getDate("appointmentDate"),
-                            rs.getString("reasonForVisit"),
-                            rs.getString("status"),
-                            rs.getTime("appointmentTime"),
                             rs.getInt("patientID"),
-                            rs.getInt("doctorID")
+                            rs.getInt("doctorID"),
+                            rs.getDate("appointmentDate").toLocalDate(),
+                            rs.getTime("appointmentTime").toLocalTime(),
+                            rs.getString("reasonForVisit"),
+                            rs.getString("status")
                     );
                     appointments.add(appointment);
                 }
@@ -132,8 +178,8 @@ public class DataBaseManager {
             return appointments;
         }
 
-        public List<Office> getOffices() {
-            List<Office> offices = new ArrayList<>();
+        public static ArrayList<Office> getOffices() {
+            ArrayList<Office> offices = new ArrayList<>();
             try (Connection conn = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
                  Statement stmt = conn.createStatement();
                  ResultSet rs = stmt.executeQuery("SELECT * FROM office")) {
@@ -143,8 +189,8 @@ public class DataBaseManager {
                             rs.getInt("officeID"),
                             rs.getString("name"),
                             rs.getString("location"),
-                            rs.getTime("openingHours"),
-                            rs.getTime("closingHours"),
+                            rs.getTime("openingHours").toLocalTime(),
+                            rs.getTime("closingHours").toLocalTime(),
                             rs.getDouble("accountBalance")
                     );
                     offices.add(office);
@@ -155,7 +201,7 @@ public class DataBaseManager {
             return offices;
         }
 
-*/
+
         public static void insertUser(User user) {
             String query = "INSERT INTO user (firstName, lastName, phoneNumber, telephone, dob, isApproved, userType, email, password, gender) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
@@ -178,9 +224,9 @@ public class DataBaseManager {
                 e.printStackTrace();
             }
         }
-/*
 
-        public void insertPatient(Patient patient) {
+
+        public static void insertPatient(Patient patient) {
             String query = "INSERT INTO patient (medicalAidNumber, balance, userID) VALUES (?, ?, ?)";
 
             try (Connection conn = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
@@ -197,33 +243,34 @@ public class DataBaseManager {
         }
 
 
-        public void insertDoctor(Doctor doctor) {
-            String query = "INSERT INTO doctor (medicalCertificatePath, yearsOfExperience, specialisation, userID) VALUES (?, ?, ?, ?)";
+        public static void insertDoctor(Doctor doctor) {
+                String query = "INSERT INTO doctor (medicalCertificatePath, yearsOfExperience, specialisation, userID) VALUES (?, ?, ?, ?)";
 
-            try (Connection conn = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
-                 PreparedStatement ps = conn.prepareStatement(query)) {
+                try (Connection conn = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
+                     PreparedStatement ps = conn.prepareStatement(query)) {
 
-                ps.setString(1, doctor.getMedicalCertificatePath());
-                ps.setInt(2, doctor.getYearsOfExperience());
-                ps.setString(3, doctor.getSpecialisation());
-                ps.setInt(4, doctor.getUserID());
+                    ps.setString(1, doctor.getMedicalCertificate());
+                    ps.setInt(2, doctor.getYearsOfXP());
+                    ps.setString(3, doctor.getSpecialisation());
+                    ps.setInt(4, doctor.getUserID());
 
-                ps.executeUpdate();
-            } catch (SQLException e) {
-                e.printStackTrace();
+                    ps.executeUpdate();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
             }
-        }
 
-        public void insertAppointment(Appointment appointment) {
+
+     public static void insertAppointment(Appointment appointment) {
             String query = "INSERT INTO appointment (appointmentDate, reasonForVisit, status, appointmentTime, patientID, doctorID) VALUES (?, ?, ?, ?, ?, ?)";
 
             try (Connection conn = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
                  PreparedStatement ps = conn.prepareStatement(query)) {
 
-                ps.setDate(1, new java.sql.Date(appointment.getAppointmentDate().getTime()));
+                ps.setDate(1, java.sql.Date.valueOf(appointment.getAppointmentDate()));
                 ps.setString(2, appointment.getReasonForVisit());
                 ps.setString(3, appointment.getStatus());
-                ps.setTime(4, appointment.getAppointmentTime());
+                ps.setTime(4, java.sql.Time.valueOf(appointment.getAppointmentTime()));
                 ps.setInt(5, appointment.getPatientID());
                 ps.setInt(6, appointment.getDoctorID());
 
@@ -235,7 +282,9 @@ public class DataBaseManager {
 
 
 
-    }
-         */
+
+
+
+
 
 }

@@ -1,5 +1,7 @@
 package patientModules;
 
+import models.SystemManager;
+
 import java.time.LocalDate;
 import java.time.LocalTime;
 
@@ -12,18 +14,33 @@ public class Appointment {
     private String reasonForVisit;
     private String status;
 
-    public Appointment() {
-        this.status = "Pending"; // Default initial status
-    }
 
-    public Appointment(int appointmentID, int patientID, int doctorID, LocalDate appointmentDate, LocalTime appointmentTime, String reason) {
+    public Appointment(int appointmentID, int patientID, int doctorID, LocalDate appointmentDate, LocalTime appointmentTime, String reason, String status) {
+
         this.appointmentID = appointmentID;
         this.patientID = patientID;
         this.doctorID = doctorID;
         this.appointmentDate = appointmentDate;
         this.appointmentTime = appointmentTime;
         this.reasonForVisit = reason;
-        this.status = "Scheduled"; // Default when created
+        this.status = status;
+
+        if( !SystemManager.findDoctor(doctorID).isBooked() ){
+            this.status = "PENDING";
+            System.out.println("Successfully booked");
+
+            SystemManager.addAppointment(this);
+
+
+        }else{
+
+            System.out.println("Doctor is booked, added to waiting list. ");
+
+        }
+
+
+
+
     }
 
     public int getAppointmentID() {
@@ -89,7 +106,7 @@ public class Appointment {
         this.appointmentDate = appointmentDate;
         this.appointmentTime = appointmentTime;
         this.reasonForVisit = reason;
-        this.status = "Scheduled";
+        this.status = "PENDING";
     }
 
     public void editAppointment(LocalDate newDate, LocalTime newTime, String newReason) {

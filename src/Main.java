@@ -7,6 +7,8 @@ import patientModules.Appointment;
 import patientModules.Patient;
 
 
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Scanner;
 public class Main {
@@ -81,10 +83,12 @@ public class Main {
                     case "DOCTOR":
                         break;
                     case "ADMIN":
-
                         adminChoices();
+
                         break;
                     case "PATIENT":
+                        patientChoices();
+
                         break;
                     default:
                         System.out.println("UNKNOWN user type");
@@ -98,6 +102,68 @@ public class Main {
 
     }
 
+    public static void patientChoices(){
+
+        Scanner scan = new Scanner(System.in);
+
+        System.out.println("Welcome Patient!");
+        System.out.println("What would you like to do?");
+
+        System.out.println("1 Make appointment. ");
+        System.out.println("2 View all appointments. ");
+        System.out.println("3 View Prescriptions. ");
+        System.out.println("4 View Prescription. ");
+        int choice = scan.nextInt();
+
+        switch(choice){
+            case 1:
+                makeAppointment(scan);
+                break;
+            case 2:
+                break;
+            case 3:
+                break;
+            case 4:
+                break;
+            default:
+                System.out.println("invalid choice, please try again. ");
+
+        }
+
+    }
+    public static void makeAppointment(Scanner scanner){
+            int patientID = sessionUser.getUserTypeID();
+
+            System.out.println("Enter Doctor ID: ");
+            int doctorID = scanner.nextInt();
+
+            System.out.println("Enter Appointment Date (YYYY-MM-DD): ");
+            String dateString = scanner.next();
+            LocalDate appointmentDate = LocalDate.parse(dateString);
+
+            System.out.println("Enter Appointment Time (HH:mm): ");
+            String timeString = scanner.next();
+            LocalTime appointmentTime = LocalTime.parse(timeString);
+
+            scanner.nextLine();
+
+            System.out.println("Enter Reason for Visit: ");
+            String reason = scanner.nextLine();
+
+            Appointment newAppointment = new Appointment(0, patientID, doctorID, appointmentDate, appointmentTime, reason, "PENDING");
+
+
+            System.out.println("Appointment Created Successfully!");
+
+            System.out.println("Appointment ID: " + newAppointment.getAppointmentID());
+            System.out.println("Patient ID: " + newAppointment.getPatientID());
+            System.out.println("Doctor ID: " + newAppointment.getDoctorID());
+            System.out.println("Appointment Date: " + newAppointment.getAppointmentDate());
+            System.out.println("Appointment Time: " + newAppointment.getAppointmentTime());
+            System.out.println("Reason for Visit: " + newAppointment.getReasonForVisit());
+            System.out.println("Status: " + newAppointment.getStatus());
+
+    }
 
     public static void adminChoices(){
         Scanner scan = new Scanner(System.in);
@@ -110,7 +176,7 @@ public class Main {
         System.out.println("3 Add an office. ");
         System.out.println("4 View office balance. ");
         System.out.println("5 View all appointments. ");
-
+        System.out.println("6 Make prescription");
 
 
         int choice = scan.nextInt();
@@ -204,6 +270,7 @@ public class Main {
                 String specialisation = scanner.nextLine();
                 boolean isBooked = false;
 
+
                 int doctorID = 0;
                 new Doctor(userID, doctorID, certificate, yearsXP, specialisation, firstName, lastName,
                         phoneNumber, telephone, dob, false, "DOCTOR", email, password, gender, isBooked);
@@ -211,11 +278,16 @@ public class Main {
 
             case "PATIENT":
                 System.out.print("Enter Medical Aid Number: ");
-                String medAidNumber = scanner.nextLine();
+                int medAidNumber = scanner.nextInt();
                 int patientID = 0;
+                System.out.println("Enter balance: ");
+
+                double balance = scanner.nextDouble();
+
+
 
                 new Patient(userID, patientID, medAidNumber, firstName, lastName, phoneNumber, telephone,
-                        dob, false, "PATIENT", email, password, gender);
+                        dob, false, "PATIENT", email, password, gender, balance);
                 break;
 
             case "ADMIN":
