@@ -1,10 +1,8 @@
-package SystemManager;
+package models;
 
 import Storage.DataBaseManager;
 import adminModules.Admin;
 import doctorModules.Doctor;
-import models.Notifications;
-import models.User;
 import patientModules.Appointment;
 import patientModules.Patient;
 
@@ -36,8 +34,15 @@ public class SystemManager {
         return session;
     }
 
-    public static ArrayList<Appointment> getPendingAppointments() {
-        return pendingAppointments;
+    public static ArrayList<Appointment> getPendingAppointments(int doctorID) {
+        ArrayList<Appointment> appts = new ArrayList<>();
+
+        for(Appointment appt: pendingAppointments){
+            if(appt.getDoctorID() == doctorID){
+                appts.add(appt);
+            }
+        }
+        return appts;
     }
 
     public static void addPendingAppointments(ArrayList<Appointment> pendingAppointments) {

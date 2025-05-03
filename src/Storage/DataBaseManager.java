@@ -3,20 +3,19 @@ package Storage;
 
 
 import adminModules.Admin;
-import doctorModules.Doctor;
-import doctorModules.Office;
+import env.EnvLoader;
 import models.User;
-import patientModules.Appointment;
-import patientModules.Patient;
 
 import java.sql.*;
 import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
 
-    public class DataBaseManager {
-        private static final String DB_URL = "jdbc:mysql://localhost:3306/docnet";
-        private static final String DB_USER = "root";
-        private static final String DB_PASSWORD = "";
+public class DataBaseManager {
+        static HashMap<String, String> env = EnvLoader.loadEnv(".env");
+
+        static String DB_URL = env.get("DB_URL");
+        static String DB_USER = env.get("DB_USER");
+        static String DB_PASSWORD = env.get("DB_PASSWORD");
 
         public static ArrayList<User> getUsers() {
             ArrayList<User> users = new ArrayList<>();

@@ -1,13 +1,18 @@
+import models.SystemManager;
 import adminModules.Admin;
 import auth.AuthFunctions;
 import doctorModules.Doctor;
 import models.User;
+import patientModules.Appointment;
 import patientModules.Patient;
 
 
+import java.util.ArrayList;
 import java.util.Scanner;
 public class Main {
+    public static User sessionUser = SystemManager.getSession().getFirst();
 
+    public static String loggedInUserType = sessionUser.getUserType();
     public static void main(String[] args){
 
         // creating a new doctor user {3 user types, admin, patient, doctor}
@@ -30,39 +35,59 @@ public class Main {
 
 
         Scanner scan = new Scanner(System.in);
-        System.out.println("WELCOME TO Doc NET, PRESS anything to continure, press q to exit");
+        System.out.println("WELCOME TO Doc NET, PRESS anything to continue, press q to exit");
 
         String quit = "";
 
         while (!quit.equalsIgnoreCase("q")) {
-            System.out.println("Enter 1 to login: ");
-            System.out.println("Enter 2 to register: ");
-            System.out.println("Enter 3 to logout: ");
-            System.out.println("Press 'q' to exit");
+            // if user isnt logged in, then ask whether they want to login or reg
+            if( SystemManager.getSession().isEmpty() ){
+                System.out.println("Enter 1 to login: ");
+                System.out.println("Enter 2 to register: ");
+                System.out.println("Enter 3 to logout: ");
+                System.out.println("Press 'q' to exit");
 
-            String input = scan.next();
+                String input = scan.next();
 
-            if (input.equalsIgnoreCase("q")) {
-                quit = "q";
-                System.out.println("Exiting...");
-            } else {
-                try {
-                    int choice = Integer.parseInt(input);
-                    switch (choice) {
-                        case 1:
-                            login();
-                            break;
-                        case 2:
-                            signup();
-                            break;
-                        case 3:
-                            AuthFunctions.logout();
-                            break;
-                        default:
-                            System.out.println("Invalid input. Try again.");
+                if (input.equalsIgnoreCase("q")) {
+                    quit = "q";
+                    System.out.println("Exiting...");
+                } else {
+                    try {
+                        int choice = Integer.parseInt(input);
+                        switch (choice) {
+                            case 1:
+                                login();
+                                break;
+                            case 2:
+                                signup();
+                                break;
+                            case 3:
+                                AuthFunctions.logout();
+                                break;
+                            default:
+                                System.out.println("Invalid input. Try again.");
+                        }
+                    } catch (NumberFormatException e) {
+                        System.out.println("Invalid input. Please enter a number or 'q' to quit.");
                     }
-                } catch (NumberFormatException e) {
-                    System.out.println("Invalid input. Please enter a number or 'q' to quit.");
+            }
+
+            }
+            else{
+
+
+                switch(loggedInUserType){
+                    case "DOCTOR":
+                        break;
+                    case "ADMIN":
+
+                        adminChoices();
+                        break;
+                    case "PATIENT":
+                        break;
+                    default:
+                        System.out.println("UNKNOWN user type");
                 }
             }
         }
@@ -74,6 +99,49 @@ public class Main {
     }
 
 
+    public static void adminChoices(){
+        Scanner scan = new Scanner(System.in);
+
+        System.out.println("Welcome Admin!");
+        System.out.println("What would you like to do?");
+
+        System.out.println("1 Approve appointments. ");
+        System.out.println("2 Approve Doctors. ");
+        System.out.println("3 Add an office. ");
+        System.out.println("4 View office balance. ");
+        System.out.println("5 View all appointments. ");
+
+
+
+        int choice = scan.nextInt();
+
+        switch (choice){
+            case 1:
+                ArrayList<Appointment> pendingAppts = SystemManager.getPendingAppointments(sessionUser.getUserTypeID());
+                for(Appointment appt: pendingAppts ){
+                    System.out.println(appt);
+                }
+
+                System.out.println("Pending appointments displayed");
+                break;
+            case 2:
+                System.out.println("Doctor has been displayed");
+                break;
+            case 3:
+                System.out.println("Office has been added");
+                break;
+            case 4:
+                System.out.println("Office balance displayed");
+                break;
+            case 5:
+                System.out.println("All appointmenets displayed");
+                break;
+            default:
+                System.out.println("invalid entry try again");
+
+
+        }
+    }
     public static void login(){
         Scanner scan = new Scanner(System.in);
         System.out.println("Enter email: ");
@@ -134,10 +202,11 @@ public class Main {
 
                 System.out.print("Enter Specialisation: ");
                 String specialisation = scanner.nextLine();
+                boolean isBooked = false;
 
                 int doctorID = 0;
                 new Doctor(userID, doctorID, certificate, yearsXP, specialisation, firstName, lastName,
-                        phoneNumber, telephone, dob, false, "DOCTOR", email, password, gender);
+                        phoneNumber, telephone, dob, false, "DOCTOR", email, password, gender, isBooked);
                 break;
 
             case "PATIENT":

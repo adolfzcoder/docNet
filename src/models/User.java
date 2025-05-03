@@ -1,11 +1,6 @@
 package models;
 
-import SystemManager.SystemManager;
 import validations.UserValidation;
-
-import java.sql.Date;
-import java.util.ArrayList;
-import java.util.HashMap;
 
 public class User {
     private int userID;
@@ -155,7 +150,9 @@ public class User {
         return isApproved;
     }
 
-
+    public  int getUserTypeID(){
+        return 0;
+    }
     public boolean getApproved(){
         return this.isApproved;
     }

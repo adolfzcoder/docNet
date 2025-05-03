@@ -1,6 +1,6 @@
 package doctorModules;
 
-import SystemManager.SystemManager;
+import models.SystemManager;
 import patientModules.Appointment;
 
 import java.util.ArrayList;
@@ -13,8 +13,8 @@ public class Office {
     private String openingHours;
     private String closingHours;
     private double accountBalance;
-    private List<Doctor> doctors;
-    private List<Appointment> appointments;
+    private int doctorID;
+    private ArrayList<Appointment> appointments;
 
     public Office() {
         doctors = new ArrayList<>();

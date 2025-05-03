@@ -6,7 +6,7 @@ package adminModules;// create admin, inherit from user, but set the user type t
 import auth.AuthFunctions;
 import doctorModules.Doctor;
 import models.User;
-import SystemManager.SystemManager;
+import models.SystemManager;
 
 public class Admin extends User {
     private int adminID;
@@ -59,6 +59,9 @@ public class Admin extends User {
         }
 
     }
-
+    @Override
+    public int getUserTypeID(){
+        return adminID;
+    }
 
 }

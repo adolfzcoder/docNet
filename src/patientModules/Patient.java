@@ -2,7 +2,7 @@ package patientModules;
 
 import auth.AuthFunctions;
 import doctorModules.Doctor;
-import SystemManager.SystemManager;
+import models.SystemManager;
 import models.User;
 
 import java.util.ArrayList;
@@ -65,5 +65,10 @@ public class Patient extends User {
 
     public void bookAppointment(String doctorsEmail, String startTime, String endTime){
 
+    }
+
+    @Override
+    public int getUserTypeID(){
+        return patientID;
     }
 }

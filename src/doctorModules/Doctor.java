@@ -4,8 +4,6 @@ import auth.AuthFunctions;
 import models.User;
 import validations.DoctorValidate;
 
-import java.util.ArrayList;
-
 public class Doctor extends User {
     private int doctorID;
     private String medicalCertificate;
@@ -15,20 +13,23 @@ public class Doctor extends User {
     private int numberOfRatings;
     private boolean isBooked=false;
 
-    public static ArrayList<Doctor> allDoctors = new ArrayList<>();
+    private int officeID;
 
-    // AdolfsPackage.User user = new AdolfsPackage.User();
+
+
 
     public DoctorValidate validate = new DoctorValidate();
 
-    public Doctor(int userID, int doctorID, String medicalCertificate, int yearsOfXP, String specialisation, String firstName, String lastName, String phoneNumber, String telephone, String dob, boolean isApproved, String userType, String email, String password, String gender) {
+    public Doctor(int userID, int doctorID, String medicalCertificate, int yearsOfXP, String specialisation, String firstName, String lastName, String phoneNumber, String telephone, String dob, boolean isApproved, String userType, String email, String password, String gender, boolean isBooked) {
 
 
 
         super(userID,firstName, lastName, phoneNumber, telephone, dob, isApproved, userType, email, password, gender);
         setMedicalCertificate(medicalCertificate);
         setYearsOfXP(yearsOfXP);
+        this.doctorID = doctorID;
         this.specialisation = specialisation;
+        this.isBooked = isBooked;
 
         AuthFunctions.signUp(this);
 
@@ -37,6 +38,21 @@ public class Doctor extends User {
 
     }
 
+    public int getDoctorID() {
+        return doctorID;
+    }
+
+    public void setDoctorID(int doctorID) {
+        this.doctorID = doctorID;
+    }
+
+    public boolean isBooked() {
+        return isBooked;
+    }
+
+    public void setBooked(boolean booked) {
+        isBooked = booked;
+    }
 
     @Override
     public String toString() {
@@ -65,6 +81,10 @@ public class Doctor extends User {
 
 
 
+    @Override
+    public int getUserTypeID(){
+        return doctorID;
+    }
     public void addRating(int rating){
         totalRating+=rating;
         numberOfRatings ++;

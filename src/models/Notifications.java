@@ -1,9 +1,6 @@
 package models;
 
-import SystemManager.SystemManager;
-
 import java.util.ArrayList;
-import java.util.HashMap;
 
 public class Notifications {
     private User user;

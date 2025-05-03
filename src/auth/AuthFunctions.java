@@ -1,13 +1,12 @@
 package auth;
 
 import Storage.DataBaseManager;
-import SystemManager.SystemManager;
+import models.SystemManager;
 import adminModules.Admin;
 import doctorModules.Doctor;
 import models.User;
 import patientModules.Patient;
 
-import java.util.ArrayList;
 import java.util.Optional;
 
 public class AuthFunctions {
