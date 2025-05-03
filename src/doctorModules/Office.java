@@ -26,6 +26,8 @@ public class Office {
         this.doctorID = doctorID;
 
 
+        //
+
         ArrayList<Doctor> doctors = SystemManager.getOfficeDoctors(officeID);
 
 
