@@ -57,22 +57,24 @@ public class AuthFunctions {
 
         if( !emailExists ){
             SystemManager.addUser(registeringUser);
-            DataBaseManager.insertUser(registeringUser);
 
             if(registeringUser.getUserType().equalsIgnoreCase("DOCTOR")){
 
 
+                // the doctor is inserted into the system manager list, which also inserts into the db
 
                 SystemManager.addDoctor((Doctor) registeringUser);
                 SystemManager.addToPendingDoctorList((Doctor) registeringUser);
 
+
             }else if(registeringUser.getUserType().equalsIgnoreCase("PATIENT")){
+                // the admin is inserted into the system manager list, which also inserts into the db
 
                 SystemManager.addPatient((Patient)registeringUser);
 
             } else {
                 // admin
-
+                // the admin is inserted into the system manager list, which also inserts into the db
                 SystemManager.addAdmin((Admin) registeringUser);
 
             }

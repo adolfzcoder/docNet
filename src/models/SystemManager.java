@@ -8,6 +8,7 @@ import doctorModules.Prescription;
 import patientModules.Appointment;
 import patientModules.Patient;
 
+import javax.xml.crypto.Data;
 import java.util.ArrayList;
 import java.util.Optional;
 
@@ -181,6 +182,7 @@ public class SystemManager {
 
     public static String addUser(User user) {
         users.add(user);
+        DataBaseManager.insertUser(user);
         String message = "User has been added to user list";
         return message;
     }
@@ -221,6 +223,7 @@ public class SystemManager {
 
     public static void addAdmin(Admin ad){
         admins.add(ad);
+        DataBaseManager.insertAdmin(ad);
     }
 
     public static String addNotification(Notifications notif){

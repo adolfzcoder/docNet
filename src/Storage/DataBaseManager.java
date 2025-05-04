@@ -304,10 +304,18 @@ public class DataBaseManager {
         }
 
 
+    public static void insertAdmin(Admin ad) {
+        String query = "INSERT INTO admin (userID) VALUES (?)";
+
+        try (Connection conn = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
+             PreparedStatement ps = conn.prepareStatement(query)) {
+
+            ps.setInt(1, ad.getUserTypeID());
 
 
-
-
-
-
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 }
