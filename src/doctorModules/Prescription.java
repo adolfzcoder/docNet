@@ -19,7 +19,7 @@ public class Prescription {
             setDoctorID(doctorID);
             setPatientID(patientID);
             setAppointmentID(appointmentID);
-           setIssueDate(issueDate);
+            setIssueDate(issueDate);
         }
 
         // Getters

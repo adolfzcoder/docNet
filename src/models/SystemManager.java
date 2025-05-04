@@ -4,6 +4,7 @@ import Storage.DataBaseManager;
 import adminModules.Admin;
 import doctorModules.Doctor;
 import doctorModules.Office;
+import doctorModules.Prescription;
 import patientModules.Appointment;
 import patientModules.Patient;
 
@@ -19,6 +20,7 @@ public class SystemManager {
     private static ArrayList<Patient> patients = fetchPatients();
     private static ArrayList<Doctor> doctors = fetchDoctors();
     private static ArrayList<Appointment> appointments = fetchAppointments();
+    private static ArrayList<Prescription> prescriptions = fetchPrescriptions();
 
     private static ArrayList<Doctor> approvedDoctors = new ArrayList<>();
     private static ArrayList<Doctor> pendingDoctors = new ArrayList<>();
@@ -31,6 +33,7 @@ public class SystemManager {
 
 
 
+
     public static void startSession(User user){
         session.add(user);
     }
@@ -39,7 +42,9 @@ public class SystemManager {
     }
 
 
-
+    public static ArrayList<Prescription> fetchPrescriptions(){
+        return DataBaseManager.getPrescriptions();
+    }
     public static ArrayList<User> fetchUsers(){
         return DataBaseManager.getUsers();
     }
@@ -94,6 +99,14 @@ public class SystemManager {
         return offices;
     }
 
+    public static ArrayList<Prescription> getPrescriptions(){
+        return prescriptions;
+    }
+
+    public static void addPrescription(Prescription pst){
+        prescriptions.add(pst);
+        System.out.println("Prescription has been added. ");
+    }
     public static ArrayList<Appointment> getPendingAppointments(int doctorID) {
         ArrayList<Appointment> appts = new ArrayList<>();
 

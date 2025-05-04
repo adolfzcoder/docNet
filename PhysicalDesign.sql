@@ -142,9 +142,12 @@ CREATE TABLE prescription(
                              medicineID INT,
                              appointmentID INT,
                              patientID INT,
+                             doctorID INT,
 
 
                              CONSTRAINT fk_prescription_medicine_id FOREIGN KEY (medicineID) REFERENCES medicine(medicineID),
                              CONSTRAINT fk_prescription_appointment_id FOREIGN KEY (appointmentID) REFERENCES appointment(appointmentID),
-                             CONSTRAINT fk_prescription_patient_id FOREIGN KEY (patientID) REFERENCES patient(patientID)
+                             CONSTRAINT fk_prescription_patient_id FOREIGN KEY (patientID) REFERENCES patient(patientID),
+                             CONSTRAINT fk_prescription_doctor_id FOREIGN KEY (doctorID) REFERENCES doctor(doctorID)
+
 );

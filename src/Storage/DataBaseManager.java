@@ -5,6 +5,7 @@ package Storage;
 import adminModules.Admin;
 import doctorModules.Doctor;
 import doctorModules.Office;
+import doctorModules.Prescription;
 import env.EnvLoader;
 import models.User;
 import patientModules.Appointment;
@@ -200,6 +201,28 @@ public class DataBaseManager {
             }
             return offices;
         }
+
+    public static ArrayList<Prescription> getPrescriptions() {
+        ArrayList<Prescription> prescriptions = new ArrayList<>();
+        try (Connection conn = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
+             Statement stmt = conn.createStatement();
+             ResultSet rs = stmt.executeQuery("SELECT * FROM prescription")) {
+
+            while (rs.next()) {
+                Prescription prescription = new Prescription(
+                        rs.getInt("prescriptionID"),
+                        rs.getString("instruction"),
+                        rs.getInt("doctorID"),
+                        rs.getInt("patientID"),
+                        rs.getInt("appointmentID"),
+                        rs.getDate("issueDate"));
+                prescriptions.add(prescription);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return prescriptions;
+    }
 
 
         public static void insertUser(User user) {
