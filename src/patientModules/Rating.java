@@ -1,4 +1,4 @@
-package RatosPackage;
+package patientModules;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -12,6 +12,8 @@ class Rating {
    private LocalDateTime dateTime;
 
    //constructor
+    /*
+    old rating constructor
    public Rating (int ratingID, int doctorID, String review,double score, LocalDateTime dateTime ){
        setRatingID(ratingID);
        setDoctorID(doctorID);
@@ -19,6 +21,8 @@ class Rating {
        setScore(score);
        setDateTime(dateTime);
    }
+   */
+
 
    //add rating method
    public static void addRating(Rating rating){

@@ -1,4 +1,4 @@
-package AdolfsPackage;
+package models;
 
 import validations.UserValidation;
 
@@ -18,21 +18,32 @@ public class User {
     private String gender;
     public UserValidation validate= new  UserValidation();
 
-    // private ArrayList<AdolfsPackage.User> notifications = new ArrayList<>();
+    // Notifications notification = new Notifications();
 
 
 
-    public User(int userID, String firstName, String lastName, String telephone, String dob, boolean isApproved, String userType, String email, String password, String gender) {
-
-
-
-    }
 
     public User() {
-
+        // SystemManager.addUser(this);
     }
 
+    public User(int userID, String firstName, String lastName, String phoneNumber, String telephone, String dob, boolean isApproved, String userType, String email, String password, String gender) {
+        this.userID = userID;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.telephone = telephone;
+        this.dob = dob;
+        this.isApproved = isApproved;
+        this.userType = userType;
+        this.email = email;
+        this.password = password;
+        this.gender = gender;
+        this.phoneNumber = phoneNumber;
+    }
 
+    //    public void notify(String message) {
+//        notifications.add(new Notifications(message));
+//    }
     public UserValidation getValidate() {
         return validate;
     }
@@ -72,6 +83,9 @@ public class User {
 
     }
 
+    public String getName(){
+        return firstName +" "+ lastName;
+    }
 
     public void setValidate(UserValidation validate) {
         this.validate = validate;
@@ -136,6 +150,12 @@ public class User {
         return isApproved;
     }
 
+    public  int getUserTypeID(){
+        return 0;
+    }
+    public boolean getApproved(){
+        return this.isApproved;
+    }
     public void setApproved(boolean approved) {
         isApproved = approved;
     }
@@ -174,4 +194,6 @@ public class User {
     public void setGender(String gender) {
         this.gender = gender;
     }
+
+
 }
