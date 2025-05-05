@@ -1,7 +1,6 @@
-package doctorModules;
+package Models;
 
 import auth.AuthFunctions;
-import models.User;
 import validations.DoctorValidate;
 
 public class Doctor extends User {

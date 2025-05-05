@@ -2,19 +2,18 @@ package Storage;
 
 
 
-import adminModules.Admin;
-import doctorModules.Doctor;
-import doctorModules.Office;
-import doctorModules.Prescription;
+import Models.Admin;
+import Models.Doctor;
+import Models.Office;
+import Models.Prescription;
 import env.EnvLoader;
-import models.User;
-import patientModules.Appointment;
-import patientModules.Patient;
+import Models.User;
+import Models.Appointment;
+import Models.Patient;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 
 public class DataBaseManager {
         static HashMap<String, String> env = EnvLoader.loadEnv(".env");
@@ -186,7 +185,7 @@ public class DataBaseManager {
                  ResultSet rs = stmt.executeQuery("SELECT * FROM office")) {
 
                 while (rs.next()) {
-                    doctorModules.Office office = new doctorModules.Office(
+                    Office office = new Office(
                             rs.getInt("officeID"),
                             rs.getString("name"),
                             rs.getString("location"),

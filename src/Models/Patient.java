@@ -1,9 +1,6 @@
-package patientModules;
+package Models;
 
 import auth.AuthFunctions;
-import doctorModules.Doctor;
-import models.SystemManager;
-import models.User;
 
 import java.util.ArrayList;
 

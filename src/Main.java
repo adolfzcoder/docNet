@@ -1,10 +1,10 @@
-import models.SystemManager;
-import adminModules.Admin;
+import Models.SystemManager;
+import Models.Admin;
 import auth.AuthFunctions;
-import doctorModules.Doctor;
-import models.User;
-import patientModules.Appointment;
-import patientModules.Patient;
+import Models.Doctor;
+import Models.User;
+import Models.Appointment;
+import Models.Patient;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
