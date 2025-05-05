@@ -1,3 +1,5 @@
+package Controllers;
+
 import auth.AuthFunctions;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;

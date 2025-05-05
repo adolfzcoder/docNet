@@ -1,4 +1,4 @@
-package patientModules;
+package Models;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;

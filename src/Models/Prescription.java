@@ -1,4 +1,4 @@
-package doctorModules;
+package Models;
 
 import java.util.Date;
 

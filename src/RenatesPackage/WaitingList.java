@@ -1,10 +1,8 @@
 package RenatesPackage;
 
-import patientModules.Appointment;
-import patientModules.Patient;
+import Models.Appointment;
+import Models.Patient;
 
-import java.time.LocalDate;
-import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;

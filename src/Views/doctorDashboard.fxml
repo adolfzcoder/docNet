@@ -22,7 +22,7 @@
       </Text>
       <ImageView fitHeight="35.0" fitWidth="46.0" layoutX="536.0" layoutY="14.0">
          <image>
-            <Image url="@image/icons8-user-24.png" />
+            <Image url="@../image/icons8-user-24.png" />
          </image>
       </ImageView>
       <Text fill="#1f2937" layoutX="168.0" layoutY="70.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Dashboard" wrappingWidth="144.13671875">
@@ -61,17 +61,17 @@
             </Text>
             <ImageView fitHeight="29.0" fitWidth="34.0" layoutX="13.0" layoutY="19.0">
                <image>
-                  <Image url="@image/icons8-doctor-giving-advice-100.png" />
+                  <Image url="@../image/icons8-doctor-giving-advice-100.png" />
                </image>
             </ImageView>
             <ImageView fitHeight="35.0" fitWidth="40.0" layoutX="5.0" layoutY="109.0">
                <image>
-                  <Image url="@image/icons8-dashboard-96.png" />
+                  <Image url="@../image/icons8-dashboard-96.png" />
                </image>
             </ImageView>
             <ImageView fitHeight="29.0" fitWidth="34.0" layoutX="5.0" layoutY="154.0">
                <image>
-                  <Image url="@image/icons8-appointment-64.png" />
+                  <Image url="@../image/icons8-appointment-64.png" />
                </image>
             </ImageView>
             <Text fx:id="dash1" fill="#f8fafc" layoutX="41.0" layoutY="173.0" onMouseClicked="#findDoc" strokeType="OUTSIDE" strokeWidth="0.0" text="Appointments" wrappingWidth="120.13671875">
@@ -99,7 +99,7 @@
          <left>
             <ImageView fitHeight="35.0" fitWidth="40.0" BorderPane.alignment="CENTER">
                <image>
-                  <Image url="@image/icons8-appointment-64.png" />
+                  <Image url="@../image/icons8-appointment-64.png" />
                </image>
             </ImageView>
          </left>
@@ -138,7 +138,7 @@
          <left>
             <ImageView fitHeight="35.0" fitWidth="40.0" BorderPane.alignment="CENTER">
                <image>
-                  <Image url="@image/icons8-clock-96.png" />
+                  <Image url="@../image/icons8-clock-96.png" />
                </image>
             </ImageView>
          </left>
@@ -161,7 +161,7 @@
          <left>
             <ImageView fitHeight="35.0" fitWidth="40.0" BorderPane.alignment="CENTER">
                <image>
-                  <Image url="@image/icons8-denied-64.png" />
+                  <Image url="@../image/icons8-denied-64.png" />
                </image>
             </ImageView>
          </left>
@@ -184,7 +184,7 @@
          <left>
             <ImageView fitHeight="35.0" fitWidth="40.0" BorderPane.alignment="CENTER">
                <image>
-                  <Image url="@image/icons8-verified-account-64.png" />
+                  <Image url="@../image/icons8-verified-account-64.png" />
                </image>
             </ImageView>
          </left>
@@ -207,7 +207,7 @@
          <left>
             <ImageView fitHeight="35.0" fitWidth="40.0" BorderPane.alignment="CENTER">
                <image>
-                  <Image url="@image/icons8-calendar-64.png" />
+                  <Image url="@../image/icons8-calendar-64.png" />
                </image>
             </ImageView>
          </left>
