@@ -1,3 +1,4 @@
+import doctorModules.Prescription;
 import models.SystemManager;
 import adminModules.Admin;
 import auth.AuthFunctions;
@@ -98,7 +99,7 @@ public class Main {
         System.out.println("1 Make appointment. ");
         System.out.println("2 View all appointments. ");
         System.out.println("3 View Prescriptions. ");
-        System.out.println("4 View Prescription. ");
+        System.out.println("4 View Prescription (Enter a prescription ID). ");
         int choice = scan.nextInt();
 
         switch(choice){
@@ -106,9 +107,10 @@ public class Main {
                 makeAppointment(scan);
                 break;
             case 2:
-
+                viewAppointments();
                 break;
             case 3:
+                viewPrescription(scan);
                 break;
             case 4:
                 break;
@@ -119,9 +121,33 @@ public class Main {
 
     }
 
-    private static void viewAppointments(Scanner scan) {
+    public static void viewPrescription(Scanner scan){
+        ArrayList<Prescription> prescriptions = SystemManager.getPrescriptions();
+        System.out.println("Enter a Prescription ID");
 
+        int presctiptionID = scan.nextInt();
+
+
+
+        for(Prescription prescription: prescriptions){
+            if(prescription.getPrescriptionID() == presctiptionID){
+                System.out.println("presction found");
+                System.out.println(prescription);
+            }
+            else{
+                System.out.println("Prescrition id not found");
+            }
+        }
     }
+    public static void viewAppointments() {
+            ArrayList<Appointment> appointmentList = SystemManager.getAppointments();
+
+            for(Appointment appointment: appointmentList){
+                System.out.println(appointment);
+            }
+    }
+
+
 
     public static void makeAppointment(Scanner scanner){
             int patientID =  SystemManager.getSession().getFirst().getUserTypeID();
