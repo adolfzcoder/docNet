@@ -16,7 +16,7 @@ public class Admin extends User {
         super(userID, firstName, lastName, phoneNumber, telephone, dob, isApproved, userType, email, password, gender);
         this.adminID = adminID;
 
-        AuthFunctions.signUp(this);
+        // AuthFunctions.signUp(this);
 
 
     }

@@ -17,7 +17,7 @@ public class Patient extends User {
         this.patientID = patientID;
         this.balance = balance;
 
-        AuthFunctions.signUp(this);
+        // AuthFunctions.signUp(this);
 
     }
 

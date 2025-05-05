@@ -30,7 +30,7 @@ public class Doctor extends User {
         this.specialisation = specialisation;
         this.isBooked = isBooked;
 
-        AuthFunctions.signUp(this);
+        // AuthFunctions.signUp(this);
 
 
 
