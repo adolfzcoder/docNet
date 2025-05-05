@@ -84,6 +84,37 @@ public class SystemManager {
         return officeDoctors;
     }
 
+    public static Patient findPatient(int patientID){
+        for(Patient pt: patients){
+            if(pt.getPatientID() == patientID){
+                return pt;
+            }
+            else{
+                System.out.println("Doctor ID not found");
+            }
+        }
+        return null;
+    }
+    public static Appointment findAppointment(int appointmentID) {
+        for (Appointment appt : appointments) {
+            if (appt.getAppointmentID() == appointmentID) {
+                return appt;
+            }
+        }
+        System.out.println("Appointment ID not found");
+        return null;
+    }
+
+    public static ArrayList<Appointment> returnAppointmentsByPatientID(int patientID){
+        ArrayList<Appointment> a = new ArrayList<>();
+        for(Appointment appt: appointments){
+            if(appt.getPatientID() == patientID){
+                a.add(appt);
+            }
+        }
+        return a;
+    }
+
 
     public static Doctor findDoctor(int doctorID){
         for(Doctor dr: doctors){
