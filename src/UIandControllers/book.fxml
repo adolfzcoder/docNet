@@ -16,7 +16,7 @@
 <?import javafx.scene.text.Text?>
 
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="UIandControllers.patientBookingController ">
    <children>
       <Pane prefHeight="400.0" prefWidth="161.0" style="-fx-background-color: #1d5d9b;">
          <children>
@@ -49,12 +49,12 @@
             </Text>
             <ImageView fitHeight="29.0" fitWidth="34.0" layoutX="13.0" layoutY="19.0">
                <image>
-                  <Image url="@image/icons8-doctor-giving-advice-100.png" />
+                  <Image url="@../image/icons8-doctor-giving-advice-100.png" />
                </image>
             </ImageView>
             <ImageView fitHeight="21.0" fitWidth="26.0" layoutX="7.0" layoutY="154.0">
                <image>
-                  <Image url="@image/icons8-search-100.png" />
+                  <Image url="@../image/icons8-search-100.png" />
                </image>
             </ImageView>
             <Text fill="#1f2937" layoutX="174.0" layoutY="71.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Booking" wrappingWidth="144.13671875">
@@ -69,7 +69,7 @@
             </Text>
             <ImageView fitHeight="25.0" fitWidth="26.0" layoutX="4.0" layoutY="116.0">
                <image>
-                  <Image url="@image/icons8-dashboard-96.png" />
+                  <Image url="@../image/icons8-dashboard-96.png" />
                </image>
             </ImageView>
          </children>
@@ -81,7 +81,7 @@
       </Text>
       <ImageView fitHeight="35.0" fitWidth="46.0" layoutX="536.0" layoutY="14.0">
          <image>
-            <Image url="@image/icons8-user-24.png" />
+            <Image url="@../image/icons8-user-24.png" />
          </image>
       </ImageView>
       <Text fill="#1f2937" layoutX="173.0" layoutY="125.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Doctor Name:" wrappingWidth="144.13671875">
@@ -89,7 +89,7 @@
             <Font size="14.0" />
          </font>
       </Text>
-      <TextField fx:id="docName" editable="false" layoutX="270.0" layoutY="108.0" prefHeight="25.0" prefWidth="286.0" />
+      <TextField fx:id="docName" editable="false" layoutX="270.0" layoutY="108.0" prefHeight="25.0" prefWidth="297.0" />
       <Text fill="#1f2937" layoutX="173.0" layoutY="166.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Specialisation:" wrappingWidth="144.13671875">
          <font>
             <Font size="14.0" />
@@ -108,7 +108,7 @@
          </font>
       </Text>
       <ComboBox fx:id="comboBox" layoutX="270.0" layoutY="236.0" prefHeight="25.0" prefWidth="113.0" AnchorPane.bottomAnchor="139.0" AnchorPane.leftAnchor="270.0" AnchorPane.rightAnchor="217.0" AnchorPane.topAnchor="236.0" />
-      <Text fill="#1f2937" layoutX="173.0" layoutY="293.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Reason for Visit:" wrappingWidth="113.0">
+      <Text fill="#1f2937" layoutX="175.0" layoutY="294.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Reason for Visit:" wrappingWidth="113.0">
          <font>
             <Font size="14.0" />
          </font>

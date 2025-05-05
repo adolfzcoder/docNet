@@ -13,7 +13,7 @@
 <?import javafx.scene.text.Text?>
 
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="382.0" style="-fx-background-color: #F8FAFC;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="382.0" style="-fx-background-color: #F8FAFC;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="UIandControllers.loginController">
    <children>
       <Pane layoutX="40.0" layoutY="68.0" prefHeight="276.0" prefWidth="308.0" style="-fx-background-color: #1d5d9b; -fx-background-radius: 8;">
          <children>
@@ -45,13 +45,13 @@
             </Text>
             <ImageView fitHeight="29.0" fitWidth="34.0" layoutX="8.0" layoutY="14.0">
                <image>
-                  <Image url="@image/icons8-doctor-giving-advice-100.png" />
+                  <Image url="@../image/icons8-doctor-giving-advice-100.png" />
                </image>
             </ImageView>
             <Button fx:id="login" layoutX="14.0" layoutY="240.0" mnemonicParsing="false" onAction="#logoutButtonClicked" prefHeight="27.0" prefWidth="113.0" style="-fx-background-color: #F8fafc; -fx-background-radius: 5;" text="Logout" textFill="#1f2937" />
             <Button fx:id="signup" layoutX="169.0" layoutY="240.0" mnemonicParsing="false" onAction="#signUpButtonClicked" prefHeight="27.0" prefWidth="113.0" style="-fx-background-color: #F8fafc; -fx-background-radius: 5;" text="Sign up" textFill="#1f2937" />
             <TextField fx:id="password" layoutX="23.0" layoutY="173.0" prefHeight="25.0" prefWidth="259.0" />
-            <TextField layoutX="23.0" layoutY="110.0" prefHeight="25.0" prefWidth="259.0" />
+            <TextField fx:id="email" layoutX="23.0" layoutY="110.0" prefHeight="25.0" prefWidth="259.0" />
             <Text layoutX="25.0" layoutY="167.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-fill: #F8fafc;" text="Password" />
             <Text layoutX="25.0" layoutY="106.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-fill: #F8fafc;" text="Email" />
          </children>
