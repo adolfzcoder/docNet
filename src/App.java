@@ -13,7 +13,7 @@ public class App extends Application {
     @Override
     public void start(Stage primaryStage) throws IOException {
         // Your UI setup goes here
-        Parent root = FXMLLoader.load(getClass().getResource("login.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("patientSignUp.fxml"));
 
         // Label label = new Label("Hello, JavaFX!");
         // StackPane root = new StackPane(label);
