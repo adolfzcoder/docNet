@@ -17,17 +17,16 @@ public class Appointment {
 
     public Appointment(int appointmentID, int patientID, int doctorID, LocalDate appointmentDate, LocalTime appointmentTime, String reason, String status) {
 
-        this.appointmentID = appointmentID;
-        this.patientID = patientID;
-        this.doctorID = doctorID;
-        this.appointmentDate = appointmentDate;
-        this.appointmentTime = appointmentTime;
-        this.reasonForVisit = reason;
-        this.status = status;
 
-        if( !SystemManager.findDoctor(doctorID).isBooked() ){
-            this.status = "PENDING";
-            System.out.println("Successfully booked");
+
+        if( checkBookingsDates(appointmentDate) ){ // check if there are any bookings on that day
+            this.appointmentID = appointmentID;
+            this.patientID = patientID;
+            this.doctorID = doctorID;
+            this.appointmentDate = appointmentDate;
+            this.appointmentTime = appointmentTime;
+            this.reasonForVisit = reason;
+            this.status = status;
 
             SystemManager.addAppointment(this);
 
@@ -42,6 +41,23 @@ public class Appointment {
 
 
     }
+    public boolean checkBookingsDates(LocalDate date) {
+        for (Appointment appt : SystemManager.getAppointments()) {
+            if (appt.getDoctorID() == this.doctorID && appt.getAppointmentDate().equals(date)) {
+
+                long minutesBetween = Math.abs(java.time.Duration.between(appt.getAppointmentTime(), this.appointmentTime).toMinutes());
+                // all appotinments last 1 hour (our business rule)
+                if (minutesBetween < 60) {
+                    System.out.println("Doctor has another appointment within an hour. Try another time or day.");
+                    return false;
+                }
+            }
+        }
+
+        System.out.println("Appointment slot is available.");
+        return true;
+    }
+
 
     public int getAppointmentID() {
         return appointmentID;

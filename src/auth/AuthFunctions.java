@@ -86,6 +86,7 @@ public class AuthFunctions {
     }
 
     public static void logout(){
+        System.out.println("Logging out");
         SystemManager.flushSession();
         System.out.println("User logged out successfully");
     }
