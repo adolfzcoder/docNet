@@ -1,6 +1,4 @@
-package patientModules;
-
-import models.SystemManager;
+package Models;
 
 import java.time.LocalDate;
 import java.time.LocalTime;

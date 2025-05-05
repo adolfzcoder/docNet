@@ -1,29 +1,33 @@
-import models.SystemManager;
-import adminModules.Admin;
+import Models.SystemManager;
+import Models.Admin;
 import auth.AuthFunctions;
-import doctorModules.Doctor;
-import models.User;
-import patientModules.Appointment;
-import patientModules.Patient;
-import javax.swing.*;
+import Models.Doctor;
+import Models.User;
+import Models.Appointment;
+import Models.Patient;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-
 public class Main {
-
 
     // public static User sessionUser = SystemManager.getSession().getFirst();
     // public static String loggedInUserType = sessionUser.getUserType();
+
+    // Centralized error handling function
+    private static void displayError(String errorMessage, String errorType) {
+        System.err.println("[" + errorType + "] " + errorMessage);
+        // In a real application, you could replace this with your custom error display mechanism
+        // For example: ErrorDialog.show(errorMessage, errorType);
+    }
 
     public static void main(String[] args) {
         try {
             User sessionUser = SystemManager.getSession().getFirst();
             String loggedInUserType = sessionUser.getUserType();
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Error: " + e.getMessage(), "Start up error", JOptionPane.ERROR_MESSAGE);
+            displayError("Error: " + e.getMessage(), "Start up error");
         }
 
         // creating a new doctor user {3 user types, admin, patient, doctor}
@@ -38,7 +42,6 @@ public class Main {
 //        Patient patient1 = new Patient(6, 1, "AID123456", "Jane", "Doe", "0815670003", "0815670003", "1998/03/12", false, "PATIENT", "janedoe@gmail.com", "Jane@456", "FEMALE");
 //        Patient patient2 = new Patient(7, 2, "AID654321", "Tom", "Hardy", "0815670003", "0816780004", "1995/07/08", false, "PATIENT", "tomhardy@gmail.com", "Tom@789", "MALE");
 //        Patient patient3 = new Patient(8, 3, "AID111222", "Emily", "Blunt", "0815670003", "0817890005", "1992/11/22", false, "PATIENT", "emilyblunt@gmail.com", "Emily@123", "FEMALE");
-
 
         Scanner scan = new Scanner(System.in);
         System.out.println("WELCOME TO Doc NET, PRESS anything to continue, press q to exit");
@@ -73,44 +76,35 @@ public class Main {
                                 AuthFunctions.logout();
                                 break;
                             default:
-                                JOptionPane.showMessageDialog(null, "Invalid option. Try again.", "Input Error", JOptionPane.WARNING_MESSAGE);
+                                displayError("Invalid option. Try again.", "Input Error");
                         }
                     } catch (NumberFormatException e) {
-                        JOptionPane.showMessageDialog(null, "Please enter a valid number or 'q' to quit.", "Input Format Error", JOptionPane.ERROR_MESSAGE);
+                        displayError("Please enter a valid number or 'q' to quit.", "Input Format Error");
                     } catch (Exception e) {
-                        JOptionPane.showMessageDialog(null, "An unexpected error occurred: " + e.getMessage(), "General Error", JOptionPane.ERROR_MESSAGE);
+                        displayError("An unexpected error occurred: " + e.getMessage(), "General Error");
                         e.printStackTrace();
                     }
-
-
                 }
 
             } else {
-
-
                 switch (SystemManager.getSession().getFirst().getUserType()) {
                     case "DOCTOR":
                         break;
                     case "ADMIN":
                         adminChoices();
-
                         break;
                     case "PATIENT":
                         patientChoices();
-
                         break;
                     default:
                         System.out.println("UNKNOWN user type");
                 }
             }
         }
-
     }
 
-
-    public static void patientChoices(){
+    public static void patientChoices() {
         try {
-
             Scanner scan = new Scanner(System.in);
 
             System.out.println("Welcome Patient!");
@@ -134,14 +128,13 @@ public class Main {
                     break;
                 default:
                     System.out.println("invalid choice, please try again. ");
-
             }
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Error in patientChoices() :" + e.getMessage(), "Patient error", JOptionPane.ERROR_MESSAGE);
+            displayError("Error in patientChoices(): " + e.getMessage(), "Patient error");
         }
-
     }
-    public static void makeAppointment(Scanner scanner){
+
+    public static void makeAppointment(Scanner scanner) {
         try {
             int patientID = SystemManager.getSession().getFirst().getUserTypeID();
 
@@ -163,7 +156,6 @@ public class Main {
 
             Appointment newAppointment = new Appointment(0, patientID, doctorID, appointmentDate, appointmentTime, reason, "PENDING");
 
-
             System.out.println("Appointment Created Successfully!");
 
             System.out.println("Appointment ID: " + newAppointment.getAppointmentID());
@@ -173,13 +165,13 @@ public class Main {
             System.out.println("Appointment Time: " + newAppointment.getAppointmentTime());
             System.out.println("Reason for Visit: " + newAppointment.getReasonForVisit());
             System.out.println("Status: " + newAppointment.getStatus());
-        }catch(Exception e) {JOptionPane.showMessageDialog(null,"Error in makeAppointment" + e.getMessage(), "Appointment error",JOptionPane.ERROR_MESSAGE);
+        } catch (Exception e) {
+            displayError("Error in makeAppointment: " + e.getMessage(), "Appointment error");
         }
-
     }
 
-    public static void adminChoices(){
-        try{
+    public static void adminChoices() {
+        try {
             Scanner scan = new Scanner(System.in);
 
             System.out.println("Welcome Admin!");
@@ -192,7 +184,6 @@ public class Main {
             System.out.println("5 View all appointments. ");
             System.out.println("6 Make prescription");
 
-
             int choice = scan.nextInt();
 
             switch (choice) {
@@ -201,7 +192,6 @@ public class Main {
                     for (Appointment appt : pendingAppts) {
                         System.out.println(appt);
                     }
-
                     System.out.println("Pending appointments displayed");
                     break;
                 case 2:
@@ -214,18 +204,17 @@ public class Main {
                     System.out.println("Office balance displayed");
                     break;
                 case 5:
-                    System.out.println("All appointmenets displayed");
+                    System.out.println("All appointments displayed");
                     break;
                 default:
                     System.out.println("invalid entry try again");
             }
-
-
         } catch (RuntimeException e) {
-            JOptionPane.showMessageDialog(null, "Error in adminChoices(): " + e.getMessage(), "Admin Error", JOptionPane.ERROR_MESSAGE);
+            displayError("Error in adminChoices(): " + e.getMessage(), "Admin Error");
         }
     }
-    public static void login(){
+
+    public static void login() {
         try {
             Scanner scan = new Scanner(System.in);
             System.out.println("Enter email: ");
@@ -239,15 +228,11 @@ public class Main {
             } else {
                 System.out.println("login unsuccessful");
             }
-        } catch (Exception e){
-            JOptionPane.showMessageDialog(null,
-                    "Error in login(): " + e.getMessage(),
-                    "Login Error",
-                    JOptionPane.ERROR_MESSAGE);
+        } catch (Exception e) {
+            displayError("Error in login(): " + e.getMessage(), "Login Error");
         }
-
-
     }
+
     public static void signup() {
         try {
             Scanner scanner = new Scanner(System.in);
@@ -279,7 +264,6 @@ public class Main {
             System.out.print("Enter User Type (DOCTOR / PATIENT / ADMIN): ");
             String userType = scanner.nextLine().trim().toUpperCase();
 
-
             // make method do get the last inserted id, then incremenet (generateID)
             int userID = 0;
 
@@ -295,7 +279,6 @@ public class Main {
                     String specialisation = scanner.nextLine();
                     boolean isBooked = false;
 
-
                     int doctorID = 0;
                     new Doctor(userID, doctorID, certificate, yearsXP, specialisation, firstName, lastName,
                             phoneNumber, telephone, dob, false, "DOCTOR", email, password, gender, isBooked);
@@ -306,10 +289,7 @@ public class Main {
                     int medAidNumber = scanner.nextInt();
                     int patientID = 0;
                     System.out.println("Enter balance: ");
-
                     double balance = scanner.nextDouble();
-
-
 
                     new Patient(userID, patientID, medAidNumber, firstName, lastName, phoneNumber, telephone,
                             dob, false, "PATIENT", email, password, gender, balance);
@@ -317,7 +297,6 @@ public class Main {
 
                 case "ADMIN":
                     int adminID = 0;
-
                     new Admin(userID, adminID, firstName, lastName, phoneNumber, telephone,
                             dob, true, "ADMIN", email, password, gender);
                     break;
@@ -325,17 +304,8 @@ public class Main {
                 default:
                     System.out.println("Invalid user type.");
             }
-
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null,
-                    "Error in signup(): " + e.getMessage(),
-                    "Signup Error",
-                    JOptionPane.ERROR_MESSAGE);
+            displayError("Error in signup(): " + e.getMessage(), "Signup Error");
         }
     }
-
-
-
 }
-
-

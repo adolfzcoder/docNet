@@ -1,14 +1,7 @@
-package models;
+package Models;
 
 import Storage.DataBaseManager;
-import adminModules.Admin;
-import doctorModules.Doctor;
-import doctorModules.Office;
-import doctorModules.Prescription;
-import patientModules.Appointment;
-import patientModules.Patient;
 
-import javax.xml.crypto.Data;
 import java.util.ArrayList;
 import java.util.Optional;
 
