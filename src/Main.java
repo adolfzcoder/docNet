@@ -1,7 +1,7 @@
-import Models.SystemManager;
-import Models.Admin;
-import auth.AuthFunctions;
-import Models.Doctor;
+import Storage.SystemManager;
+import AdminModules.Admin;
+import Authentication.AuthFunctions;
+import DoctorModules.Doctor;
 import Models.User;
 import Models.Appointment;
 import Models.Patient;

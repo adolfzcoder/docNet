@@ -1,27 +1,31 @@
-package UIandControllers;
+package PatientModules;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
-import javafx.scene.control.ScrollBar;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.DatePicker;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
-import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Text;
 
-public class searchDoctorController {
+public class patientBookingController  {
 
     @FXML
     private Button bookButton;
 
     @FXML
+    private ComboBox<?> comboBox;
+
+    @FXML
     private Text dash;
 
     @FXML
-    private ScrollBar docList;
+    private DatePicker datePicker;
 
     @FXML
-    private Text docName;
+    private TextField docName;
 
     @FXML
     private Text findDoc;
@@ -30,19 +34,10 @@ public class searchDoctorController {
     private Button logout;
 
     @FXML
-    private Text operating;
+    private TextArea reason;
 
     @FXML
-    private Text rate;
-
-    @FXML
-    private ImageView searchButton;
-
-    @FXML
-    private TextField searchbar;
-
-    @FXML
-    private Text spec;
+    private TextField spec;
 
     @FXML
     private Text userHandle;

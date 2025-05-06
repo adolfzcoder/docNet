@@ -1,6 +1,8 @@
-package Models;
+package Storage;
 
-import Storage.DataBaseManager;
+import AdminModules.Admin;
+import DoctorModules.Doctor;
+import Models.*;
 
 import java.util.ArrayList;
 import java.util.Optional;

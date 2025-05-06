@@ -1,6 +1,7 @@
 package Models;
 
-import auth.AuthFunctions;
+import DoctorModules.Doctor;
+import Storage.SystemManager;
 
 import java.util.ArrayList;
 

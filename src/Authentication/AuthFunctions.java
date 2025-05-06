@@ -1,8 +1,8 @@
-package auth;
+package Authentication;
 
-import Models.SystemManager;
-import Models.Admin;
-import Models.Doctor;
+import Storage.SystemManager;
+import AdminModules.Admin;
+import DoctorModules.Doctor;
 import Models.User;
 import Models.Patient;
 

@@ -11,7 +11,7 @@ public class App extends Application {
     @Override
     public void start(Stage primaryStage) throws IOException {
         // Your UI setup goes here
-        Parent root = FXMLLoader.load(getClass().getResource("Views/patientSignUp.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("Authentication/login.fxml"));
 
         // Label label = new Label("Hello, JavaFX!");
         // StackPane root = new StackPane(label);

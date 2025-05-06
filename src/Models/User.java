@@ -1,6 +1,6 @@
 package Models;
 
-import validations.UserValidation;
+import Validations.UserValidation;
 
 public class User {
     private int userID;

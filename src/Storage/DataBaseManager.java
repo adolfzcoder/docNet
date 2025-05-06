@@ -2,11 +2,11 @@ package Storage;
 
 
 
-import Models.Admin;
-import Models.Doctor;
+import AdminModules.Admin;
+import DoctorModules.Doctor;
 import Models.Office;
 import Models.Prescription;
-import env.EnvLoader;
+import Storage.EnvLoader;
 import Models.User;
 import Models.Appointment;
 import Models.Patient;

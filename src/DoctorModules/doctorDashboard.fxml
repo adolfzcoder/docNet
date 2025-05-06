@@ -13,7 +13,7 @@
 <?import javafx.scene.text.Text?>
 
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #F8FAFC;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="DoctorDashboard">
+<AnchorPane prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #F8FAFC;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="DoctorModules.DoctorDashboardController">
    <children>
       <Text fx:id="userHandle" fill="#1f2937" layoutX="524.0" layoutY="59.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Username " wrappingWidth="78.13671875">
          <font>

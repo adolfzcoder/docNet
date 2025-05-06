@@ -1,9 +1,11 @@
-package Models;// create admin, inherit from user, but set the user type to admin, allow them to approve
+package AdminModules;// create admin, inherit from user, but set the user type to admin, allow them to approve
 // and not approve users
 
 // lets assume just one admin
 
-import auth.AuthFunctions;
+import DoctorModules.Doctor;
+import Storage.SystemManager;
+import Models.User;
 
 public class Admin extends User {
     private int adminID;

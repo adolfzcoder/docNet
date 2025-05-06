@@ -1,4 +1,4 @@
-package Controllers;
+package PatientModules;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.*;

@@ -1,4 +1,4 @@
-package validations;
+package Validations;
 
 public class DoctorValidate {
     public boolean validateYearsOfXP(int yearXP){

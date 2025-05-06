@@ -1,27 +1,20 @@
-package UIandControllers;
+package Authentication;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 
-public class loginController {
+public class LoginController {
 
     @FXML
     private TextField email;
 
     @FXML
-    private Button login;
-
-    @FXML
     private TextField password;
 
     @FXML
-    private Button signup;
-
-    @FXML
     void logoutButtonClicked(ActionEvent event) {
-
+        AuthFunctions.logout();
     }
 
     @FXML

@@ -1,5 +1,7 @@
 package Models;
 
+import Storage.SystemManager;
+
 import java.util.ArrayList;
 
 public class Notifications {
