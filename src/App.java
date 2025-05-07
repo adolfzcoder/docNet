@@ -7,23 +7,27 @@ import javafx.stage.Stage;
 import java.io.IOException;
 
 public class App extends Application {
+    private static Stage primaryStage;
 
     @Override
-    public void start(Stage primaryStage) throws IOException {
-        // Your UI setup goes here
-        Parent root = FXMLLoader.load(getClass().getResource("Authentication/login.fxml"));
+    public void start(Stage stage) throws IOException {
+        primaryStage = stage;
+        loadScene("auth/login.fxml", "Login");
 
-        // Label label = new Label("Hello, JavaFX!");
-        // StackPane root = new StackPane(label);
-        Scene scene = new Scene(root);
-
-        primaryStage.setTitle("JavaFX App");
-        primaryStage.setScene(scene);
-        primaryStage.show();
     }
 
+    public static void loadScene(String fxmlPath, String title) {
+        try {
+            Parent root = FXMLLoader.load(App.class.getResource(fxmlPath));
+            primaryStage.setScene(new Scene(root));
+            primaryStage.setTitle(title);
+            primaryStage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
     public static void main(String[] args) {
-        System.out.println("test");
+        // System.out.println("test");
         launch(args); // Launches the JavaFX application
     }
 }
