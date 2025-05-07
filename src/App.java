@@ -3,6 +3,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import storage.SystemManager;
 
 import java.io.IOException;
 
@@ -26,8 +27,15 @@ public class App extends Application {
             e.printStackTrace();
         }
     }
+
+
+
     public static void main(String[] args) {
         // System.out.println("test");
+
+        // SystemManager.initializeLists();
+
+
         launch(args); // Launches the JavaFX application
     }
 }

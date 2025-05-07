@@ -12,6 +12,8 @@ public class SystemManager {
 
     // this class stores array lists of our data, it also has helper methods to get or add data, like addDoctor()
     private static ArrayList<User> users = fetchUsers(); //fetch all users from the db
+
+
     private static ArrayList<Office> offices = fetchOffices(); // goes to db and fetches all the offices
     private static ArrayList<Admin> admins= fetchAdmins();
     private static ArrayList<Patient> patients = fetchPatients();
@@ -29,6 +31,21 @@ public class SystemManager {
     private static ArrayList<Doctor> officeDoctors = new ArrayList<>();
 
 
+
+
+
+    public static void initializeLists() {
+        doctors = getDoctors();
+        patients = getPatients();
+        admins = getAdmins();
+        users = getUsers();
+
+        appointments = getAppointments();
+        offices = getOffices();
+        prescriptions = getPrescriptions();
+
+
+    }
 
 
     public static void startSession(User user){
@@ -76,7 +93,7 @@ public class SystemManager {
             }
             return offices;
         } catch (Exception e) {
-            AlertHelper.showError("Error", "Error fetching patients: " + e.getMessage());
+            AlertHelper.showError("Error", "Error fetching Offices: " + e.getMessage());
 
             System.err.println("Error fetching offices: " + e.getMessage());
             return new ArrayList<>();
@@ -142,6 +159,40 @@ public class SystemManager {
             return new ArrayList<>();
         }
     }
+
+
+
+
+
+    public static Optional<Doctor> findDoctorByEmail(String email) {
+        for (Doctor doctor : doctors) {
+            if (doctor.getEmail().equalsIgnoreCase(email)) {
+                return Optional.of(doctor);
+            }
+        }
+        return Optional.empty();
+    }
+
+    public static Optional<Patient> findPatientByEmail(String email) {
+        for (Patient patient : patients) {
+            if (patient.getEmail().equalsIgnoreCase(email)) {
+                return Optional.of(patient);
+            }
+        }
+        return Optional.empty();
+    }
+
+    public static Optional<Admin> findAdminByEmail(String email) {
+        for (Admin admin : admins) {
+            if (admin.getEmail().equalsIgnoreCase(email)) {
+                return Optional.of(admin);
+            }
+        }
+        return Optional.empty();
+    }
+
+
+
 
 
     public static ArrayList<Doctor> getOfficeDoctors(int officeID){

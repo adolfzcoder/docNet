@@ -10,6 +10,10 @@ import models.User;
 import models.Patient;
 import utils.AlertHelper;
 
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import java.security.SecureRandom;
+import java.util.Base64;
 import java.util.Optional;
 
 public class AuthFunctions {
@@ -41,7 +45,7 @@ public class AuthFunctions {
 
         if( !checkIfEmailExists(registeringUser.getEmail()) ){
             SystemManager.addUser(registeringUser);
-
+            registeringUser.setPassword( hash( registeringUser.getPassword() ) ); // hash the password you get froom user before signing up
             if(registeringUser.getUserType().equalsIgnoreCase("DOCTOR")){
 
 
@@ -64,64 +68,72 @@ public class AuthFunctions {
             }
             // SystemManager.addUser(registeringUser);
             System.out.println(registeringUser.getUserType());
-            System.out.println("User has signed up, now login");
+            // System.out.println("User has signed up, now login");
         }
 
     }
 
-    public static boolean authenticateUser(String email, String pass) {
-
-
+    public static boolean authenticateUser(String email, String pass){
+        // first check if the email exists
+        //if email exists, check if passwords match
         try {
+            if (checkIfEmailExists(email)) {
+
+                // check if passwords match
+                Optional<User> userLoggin = SystemManager.findUser(email);
 
 
-            if (!checkIfEmailExists(email)) {
+                if (userLoggin.isPresent()) {
+                    User foundUser = userLoggin.get();
+                    if (foundUser.getPassword().equals( hash(pass) )) {
+                        System.out.println("logged in user");
+                        System.out.println("Starting session...");
+                        // SystemManager.startSession(foundUser);
+
+                        // System.out.println(foundUser.getName());
+                        System.out.println("User is a: " + foundUser.getUserType());
+
+
+                        decideUserJourney(foundUser);
+                        return true;
+                    } else {
+                        System.out.println("Passwords do not match");
+                        AlertHelper.showError("Error", "Passwords do not match");
+
+                    }
+                } else {
+                    System.out.println("User is not found");
+                    AlertHelper.showError("User is not found");
+                    return false;
+
+                }
+
+
+            } else {
+                AlertHelper.showError("Email does not exist");
                 System.out.println("Email does not exist");
-                AlertHelper.showError("Error", "Email does not exist");
                 return false;
             }
-
-            Optional<User> userLoggin = SystemManager.findUser(email);
-            if (userLoggin.isEmpty()) {
-                System.out.println("User not found");
-                AlertHelper.showError("Error", "User not found");
-                return false;
-            }
-
-            User foundUser = userLoggin.get();
-
-            if (!foundUser.getPassword().equalsIgnoreCase(pass)) {
-                System.out.println("Passwords do not match");
-                AlertHelper.showError("Error", "Passwords do not match");
-                return false;
-            }
-
-            // Authentication successful
-            System.out.println("Logged in user");
-            System.out.println("Starting session...");
-            System.out.println("User is a: " + foundUser.getUserType());
-
-            decideUserJourney(foundUser);
-            return true;
+            return false;
         }
-        catch (Exception e) {
-            System.err.println("Authentication error: " + e.getMessage());
+        catch(Exception e){
             e.printStackTrace();
-            AlertHelper.showError("Error", "Something went wrong during login.");
+            AlertHelper.showError("Unexpected Error", "An unexpected error occurred during login.");
             return false;
         }
     }
 
-    public static void decideUserJourney(User foundUser){
-        switch(foundUser.getUserType()){
+
+    public static void decideUserJourney(User u){
+        switch(u.getUserType()){
             case "ADMIN":
-                new AdminDashboard((Admin) foundUser);
+                new AdminDashboard( (Admin) u);
                 break;
             case "DOCTOR":
-                new DoctorDashboard((Doctor) foundUser);
+                new DoctorDashboard( (Doctor) u);
                 break;
             case "PATIENT":
-                new PatientDashboard((Patient)foundUser);
+                new PatientDashboard( (Patient) u);
                 break;
             default:
                 System.out.println("User type not found");
@@ -132,9 +144,30 @@ public class AuthFunctions {
         SystemManager.flushSession();
         System.out.println("User logged out successfully");
     }
-    public static String hashPassword(String pass){
-        // implement hashing functionality
-        return "";
+
+
+
+
+    public static String hash(String input) {
+        try {
+            // Create a MessageDigest instance for SHA-256
+            MessageDigest digest = MessageDigest.getInstance("SHA-256");
+
+            // Perform hashing
+            byte[] hashBytes = digest.digest(input.getBytes());
+
+            // Convert byte array to hex string
+            StringBuilder hexString = new StringBuilder();
+            for (byte b : hashBytes) {
+                String hex = Integer.toHexString(0xff & b);
+                if (hex.length() == 1)
+                    hexString.append('0'); // Add leading zero
+                hexString.append(hex);
+            }
+            return hexString.toString(); // Return hashed string
+        } catch (NoSuchAlgorithmException e) {
+            throw new RuntimeException("Hashing algorithm not found", e);
+        }
     }
 
     public static boolean checkIfEmailExists(String email) {
