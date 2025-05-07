@@ -1,49 +1,35 @@
 package patientmodules;
 
 import javafx.fxml.FXML;
-import javafx.scene.control.*;
-import java.time.LocalDate;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.DatePicker;
+import javafx.scene.control.PasswordField;
+import javafx.scene.control.TextField;
 
-public class patientSignUpController  {
-
-    @FXML private TextField firstName;
-    @FXML private TextField lastName;
-    @FXML private TextField email;
-    @FXML private PasswordField password;
-    @FXML private PasswordField confirmPassword;
-    @FXML private TextField gender; // Consider changing to ComboBox
-    @FXML private DatePicker dob;
-    @FXML private Button signUpButton;
+public class patientSignUpController {
 
     @FXML
-    private void initialize() {
-        signUpButton.setOnAction(event -> handleSignUp());
-    }
+    private DatePicker birthDay;
 
-    private void handleSignUp() {
-        String fname = firstName.getText();
-        String lname = lastName.getText();
-        String mail = email.getText();
-        String pass = password.getText();
-        String confirmPass = confirmPassword.getText();
-        String gen = gender.getText();
-        LocalDate birthDate = dob.getValue();
+    @FXML
+    private PasswordField confirmPassword;
 
-        if (!pass.equals(confirmPass)) {
-            showAlert("Error", "Passwords do not match.");
-            return;
-        }
+    @FXML
+    private TextField email;
 
-        // Proceed with validation or backend communication
-        System.out.println("User registered: " + fname + " " + lname);
-    }
+    @FXML
+    private TextField firstName;
 
-    private void showAlert(String title, String message) {
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle(title);
-        alert.setHeaderText(null);
-        alert.setContentText(message);
-        alert.showAndWait();
-    }
+    @FXML
+    private ComboBox<?> gender;
+
+    @FXML
+    private TextField lastName;
+
+    @FXML
+    private TextField medicalAidNumber;
+
+    @FXML
+    private PasswordField password;
 
 }
