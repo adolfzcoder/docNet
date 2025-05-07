@@ -1,10 +1,12 @@
 package patientmodules;
 
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import models.Patient;
 
 public class patientSignUpController {
 
@@ -31,5 +33,13 @@ public class patientSignUpController {
 
     @FXML
     private PasswordField password;
+
+    @FXML
+    void signUpButtonCicked(ActionEvent event) {
+
+
+        // Patient patient = new Patient(0, 0, )
+
+    }
 
 }

@@ -33,7 +33,7 @@
                         <Cursor fx:constant="TEXT" />
                     </cursor>
                     <font>
-                        <Font name="Berlin Sans FB" size="12.0" />
+                        <Font name="Arial Rounded MT Bold" size="14.0" />
                     </font>
                 </TextField>
                 <TextField id="lastName" fx:id="lastName" layoutX="262.0" layoutY="75.0" prefHeight="26.0" prefWidth="216.0" promptText="Last Name">
@@ -41,7 +41,7 @@
                         <Cursor fx:constant="TEXT" />
                     </cursor>
                     <font>
-                        <Font name="Berlin Sans FB" size="12.0" />
+                        <Font name="Arial Rounded MT Bold" size="14.0" />
                     </font>
                 </TextField>
                 <TextField id="email" fx:id="email" layoutX="21.0" layoutY="163.0" prefHeight="25.0" prefWidth="216.0" promptText="Email">
@@ -49,23 +49,26 @@
                         <Cursor fx:constant="TEXT" />
                     </cursor>
                     <font>
-                        <Font name="Berlin Sans FB" size="12.0" />
+                        <Font name="Arial Rounded MT Bold" size="14.0" />
                     </font>
                 </TextField>
-                <PasswordField id="password" fx:id="password" layoutX="262.0" layoutY="224.0" prefHeight="25.0" prefWidth="216.0" promptText="Password">
+                <PasswordField id="password" fx:id="password" layoutX="262.0" layoutY="257.0" prefHeight="25.0" prefWidth="216.0" promptText="Password">
                     <cursor>
                         <Cursor fx:constant="TEXT" />
                     </cursor>
                     <font>
-                        <Font name="Berlin Sans FB" size="12.0" />
+                        <Font name="Arial Rounded MT Bold" size="14.0" />
                     </font>
                 </PasswordField>
-                <PasswordField fx:id="confirmPassword" layoutX="20.0" layoutY="224.0" prefHeight="25.0" prefWidth="216.0" promptText="Confirm Password">
+                <PasswordField fx:id="confirmPassword" layoutX="20.0" layoutY="257.0" prefHeight="25.0" prefWidth="216.0" promptText="Confirm Password">
                     <cursor>
                         <Cursor fx:constant="TEXT" />
                     </cursor>
+               <font>
+                  <Font name="Arial Rounded MT Bold" size="14.0" />
+               </font>
                 </PasswordField>
-                <Button layoutX="165.0" layoutY="291.0" mnemonicParsing="false" onAction="#signUpButtonCicked" prefHeight="25.0" prefWidth="168.0" style="-fx-background-radius: 20;" text="Sign Up" textFill="#0237c7">
+                <Button layoutX="165.0" layoutY="316.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="168.0" style="-fx-background-radius: 20;" text="Sign Up" textFill="#0237c7">
                     <cursor>
                         <Cursor fx:constant="HAND" />
                     </cursor>
@@ -79,12 +82,12 @@
                     </cursor>
                 </DatePicker>
             <ComboBox fx:id="gender" layoutX="21.0" layoutY="119.0" prefHeight="25.0" prefWidth="216.0" promptText="Gender" />
-            <TextField id="email" fx:id="medicalAidNumber" layoutX="262.0" layoutY="163.0" prefHeight="25.0" prefWidth="216.0" promptText="Medical Aid Number">
+            <TextField id="email" fx:id="medicalCertificate" layoutX="262.0" layoutY="163.0" prefHeight="25.0" prefWidth="216.0" promptText="Medical Certificate">
                <cursor>
                   <Cursor fx:constant="TEXT" />
                </cursor>
                <font>
-                  <Font name="Berlin Sans FB" size="12.0" />
+                  <Font name="Arial Rounded MT Bold" size="14.0" />
                </font>
             </TextField>
               <Label layoutX="61.0" layoutY="334.0" text="Already have an account?" textFill="#037aa1" />
@@ -93,6 +96,22 @@
                       <Cursor fx:constant="HAND" />
                   </cursor>
               </Label>
+            <TextField id="email" fx:id="yearsOfXp" layoutX="21.0" layoutY="213.0" prefHeight="25.0" prefWidth="216.0" promptText="Years of Experience">
+               <cursor>
+                  <Cursor fx:constant="TEXT" />
+               </cursor>
+               <font>
+                  <Font name="Arial Rounded MT Bold" size="14.0" />
+               </font>
+            </TextField>
+            <TextField id="email" fx:id="specialisation" layoutX="262.0" layoutY="213.0" prefHeight="25.0" prefWidth="216.0" promptText="Specialisation">
+               <cursor>
+                  <Cursor fx:constant="TEXT" />
+               </cursor>
+               <font>
+                  <Font name="Arial Rounded MT Bold" size="14.0" />
+               </font>
+            </TextField>
             </children>
             <opaqueInsets>
                 <Insets />
