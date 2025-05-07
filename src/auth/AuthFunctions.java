@@ -41,6 +41,7 @@ public class AuthFunctions {
      *
      *  * AuthFunctions.signUp(newDoctor);
      */
+
     public static void signUp(User registeringUser){
 
         if( !checkIfEmailExists(registeringUser.getEmail()) ){

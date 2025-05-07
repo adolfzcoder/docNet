@@ -4,6 +4,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
 import utils.AlertHelper;
+import javafx.scene.input.MouseEvent;
 
 public class LoginController {
 
@@ -13,7 +14,10 @@ public class LoginController {
     @FXML
     private TextField password;
 
+    @FXML
+    void loginRedirectPressed(MouseEvent event) {
 
+    }
     @FXML
     void loginButtonClicked(ActionEvent event) {
 
