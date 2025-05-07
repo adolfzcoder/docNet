@@ -106,7 +106,7 @@
             </ImageView>
             <ImageView fitHeight="133.0" fitWidth="133.0" layoutX="36.0" layoutY="14.0">
                <image>
-                  <Image url="@../../../../Downloads/_e5a186fc-f282-4bbe-87e7-5353957213b8.jpeg" />
+                  <Image url="@../image/logo.jpeg" />
                </image>
             </ImageView>
             <Text fill="#0237c7" layoutX="43.0" layoutY="178.0" strokeType="OUTSIDE" strokeWidth="0.0" text="docnet.">
