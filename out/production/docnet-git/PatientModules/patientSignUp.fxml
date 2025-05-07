@@ -15,9 +15,9 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="424.0" prefWidth="792.0" style="-fx-background-color: #F8FAFC;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="patientmodules.patientSignUpController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="420.0" prefWidth="790.0" style="-fx-background-color: #F8FAFC;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="patientmodules.patientSignUpController">
     <children>
-        <Pane layoutX="234.0" layoutY="5.0" prefHeight="414.0" prefWidth="565.0" style="-fx-background-radius: 10; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.5), 10, 0.5, 0, 0); -fx-background-color: #037aa1;" AnchorPane.leftAnchor="234.0" AnchorPane.rightAnchor="14.0">
+        <Pane layoutX="247.0" layoutY="15.0" prefHeight="390.0" prefWidth="498.0" style="-fx-background-radius: 10; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.5), 10, 0.5, 0, 0); -fx-background-color: #037aa1;" AnchorPane.leftAnchor="247.0" AnchorPane.rightAnchor="45.0">
             <children>
                 <Label layoutX="15.0" layoutY="8.0" text="SIGN UP" textFill="#0237c7">
                     <font>
@@ -92,24 +92,24 @@
                 <Insets />
             </opaqueInsets>
         </Pane>
-        <Pane layoutX="14.0" prefHeight="424.0" prefWidth="207.0" style="-fx-background-color: #0397C7; -fx-border-radius: 45;" AnchorPane.rightAnchor="585.0">
+        <Pane layoutX="14.0" prefHeight="420.0" prefWidth="207.0" style="-fx-background-color: #0397C7; -fx-border-radius: 45;" AnchorPane.rightAnchor="585.0">
             <children>
-            <ImageView fitHeight="75.0" fitWidth="80.0" layoutX="66.0" layoutY="201.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fitHeight="75.0" fitWidth="80.0" layoutX="66.0" layoutY="199.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../image/icons8-doctor-giving-advice-100.png" />
                </image>
             </ImageView>
-            <ImageView fitHeight="41.0" fitWidth="36.0" layoutY="148.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fitHeight="41.0" fitWidth="36.0" layoutX="19.0" layoutY="148.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../image/icons8-search-100.png" />
                </image>
             </ImageView>
-            <ImageView fitHeight="133.0" fitWidth="133.0" layoutX="36.0" layoutY="14.0">
+            <ImageView fitHeight="133.0" fitWidth="133.0" layoutX="37.0" layoutY="14.0">
                <image>
-                  <Image url="@../../../../Downloads/_e5a186fc-f282-4bbe-87e7-5353957213b8.jpeg" />
+                  <Image url="@../image/logo.jpeg" />
                </image>
             </ImageView>
-            <Text fill="#0237c7" layoutX="43.0" layoutY="178.0" strokeType="OUTSIDE" strokeWidth="0.0" text="docnet.">
+            <Text fill="#0237c7" layoutX="62.0" layoutY="178.0" strokeType="OUTSIDE" strokeWidth="0.0" text="docnet.">
                <font>
                   <Font name="Arial Rounded MT Bold" size="33.0" />
                </font>
