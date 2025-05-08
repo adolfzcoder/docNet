@@ -17,7 +17,7 @@
     <children>
         <Pane layoutX="262.0" layoutY="15.0" prefHeight="390.0" prefWidth="498.0" style="-fx-background-radius: 10; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.5), 10, 0.5, 0, 0); -fx-background-color: #037aa1;" AnchorPane.leftAnchor="262.0" AnchorPane.rightAnchor="30.0">
             <children>
-                <Label layoutX="128.0" layoutY="47.0" text="Welcome Back" textFill="#0237c7">
+                <Label layoutX="128.0" layoutY="47.0" text="Welcome Back" textFill="#05475b">
                     <font>
                         <Font name="Arial Rounded MT Bold" size="36.0" />
                     </font>
@@ -38,7 +38,7 @@
                         <Font name="Arial Rounded MT Bold" size="14.0" />
                     </font>
                 </PasswordField>
-                <Button layoutX="174.0" layoutY="283.0" mnemonicParsing="false" onAction="#loginButtonClicked" prefHeight="25.0" prefWidth="168.0" style="-fx-background-radius: 20;" text="Login" textFill="#0237c7">
+                <Button layoutX="174.0" layoutY="283.0" mnemonicParsing="false" onAction="#loginButtonClicked" prefHeight="25.0" prefWidth="168.0" style="-fx-background-radius: 20;" text="Login" textFill="#05475b">
                     <cursor>
                         <Cursor fx:constant="HAND" />
                     </cursor>
@@ -50,7 +50,7 @@
                <font>
                   <Font name="Arial Rounded MT Bold" size="14.0" />
                </font></Label>
-              <Label accessibleRole="HYPERLINK" layoutX="293.0" layoutY="352.0" text="Don't have account? Sign in" textFill="#0237c7" underline="true">
+              <Label accessibleRole="HYPERLINK" layoutX="293.0" layoutY="352.0" text="Don't have account? Sign in" textFill="#05475b" underline="true">
                   <cursor>
                       <Cursor fx:constant="HAND" />
                   </cursor>
@@ -70,7 +70,7 @@
                   <Image url="@../image/logo.jpeg" />
                </image>
             </ImageView>
-            <Text fill="#0237c7" layoutX="43.0" layoutY="241.0" strokeType="OUTSIDE" strokeWidth="0.0" text="docnet.">
+            <Text fill="#05475b" layoutX="43.0" layoutY="241.0" strokeType="OUTSIDE" strokeWidth="0.0" text="docnet.">
                <font>
                   <Font name="Arial Rounded MT Bold" size="33.0" />
                </font>

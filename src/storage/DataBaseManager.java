@@ -18,9 +18,12 @@ import java.util.HashMap;
 public class DataBaseManager {
         static HashMap<String, String> env = EnvLoader.loadEnv(".env");
 
+    // if no internet uncomment code below
+    // static String DB_URL = env.get("DB_URL_OFFLINE");
+    // static String DB_USER = env.get("DB_USER_OFFLINE");
+    // static String DB_PASSWORD = env.get("DB_PASSWORD_OFFLINE");
+
         static String DB_URL = env.get("DB_URL");
-        // if no internet uncomment code below
-        // static String DB_URL = env.get("DB_URL_OFFLINE");
         static String DB_USER = env.get("DB_USER");
         static String DB_PASSWORD = env.get("DB_PASSWORD");
 
@@ -226,36 +229,50 @@ public class DataBaseManager {
     }
 
 
-        public static void insertUser(User user) {
-            String query = "INSERT INTO user (firstName, lastName, phoneNumber, telephone, dob, isApproved, userType, email, password, gender) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+    public static int insertUser(User user) {
+        String query = "INSERT INTO user (firstName, lastName, phoneNumber, telephone, dob, isApproved, userType, email, password, gender) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        int generatedUserID = -1;
 
-            try (Connection conn = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
-                 PreparedStatement ps = conn.prepareStatement(query)) {
+        try (Connection conn = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
+             PreparedStatement ps = conn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
 
-                ps.setString(1, user.getFirstName());
-                ps.setString(2, user.getLastName());
-                ps.setString(3, user.getPhoneNumber());
-                ps.setString(4, user.getTelephone());
-                ps.setString(5, user.getDob());
-                ps.setBoolean(6, user.getApproved());
-                ps.setString(7, user.getUserType());
-                ps.setString(8, user.getEmail());
-                ps.setString(9, user.getPassword());
-                ps.setString(10, user.getGender());
+            ps.setString(1, user.getFirstName());
+            ps.setString(2, user.getLastName());
+            ps.setString(3, user.getPhoneNumber());
+            ps.setString(4, user.getTelephone());
+            ps.setString(5, user.getDob());
+            ps.setBoolean(6, user.getApproved());
+            ps.setString(7, user.getUserType());
+            ps.setString(8, user.getEmail());
+            ps.setString(9, user.getPassword());
+            ps.setString(10, user.getGender());
 
-                ps.executeUpdate();
-            } catch (SQLException e) {
-                e.printStackTrace();
+            ps.executeUpdate();
+
+            ResultSet rs = ps.getGeneratedKeys();
+            if (rs.next()) {
+                generatedUserID = rs.getInt(1);
             }
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
 
+        return generatedUserID;
+    }
 
-        public static void insertPatient(Patient patient) {
+
+
+    public static void insertPatient(Patient patient) {
             String query = "INSERT INTO patient (medicalAidNumber, balance, userID) VALUES (?, ?, ?)";
 
             try (Connection conn = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
                  PreparedStatement ps = conn.prepareStatement(query)) {
 
+                int userID = insertUser(new User(patient.getFirstName(), patient.getLastName(), patient.getPhoneNumber(), patient.getTelephone(), patient.getDob(), patient.getApproved(), patient.getUserType(), patient.getEmail(), patient.getPassword(), patient.getGender()));
+                if (userID != -1) {
+                    patient.setUserID(userID);
+                    insertPatient(patient);
+                }
                 ps.setInt(1, patient.getMedicalAidNumber());
                 ps.setDouble(2, patient.getBalance());
                 ps.setInt(3, patient.getUserID());

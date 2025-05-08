@@ -48,7 +48,7 @@ public class LoginController {
 
         }catch(Exception e){
             System.out.println("Something went wrong");
-            AlertHelper.showError("Error", "Something went wrong");
+            // AlertHelper.showError("Error", "Something went wrong");
         }
 
 
