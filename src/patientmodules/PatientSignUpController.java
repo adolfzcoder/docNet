@@ -11,6 +11,7 @@ import javafx.scene.input.MouseEvent;
 import models.Patient;
 import storage.SystemManager;
 import utils.AlertHelper;
+import utils.NavigatorHelper;
 
 public class PatientSignUpController {
 
@@ -51,7 +52,7 @@ public class PatientSignUpController {
 
     @FXML
     void loginClicked(MouseEvent event) {
-
+        NavigatorHelper.loadScene("auth/login.fxml", "Login");
     }
 
     @FXML
