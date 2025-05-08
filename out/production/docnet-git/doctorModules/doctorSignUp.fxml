@@ -90,7 +90,7 @@
                   <Font name="Arial Rounded MT Bold" size="14.0" />
                </font>
             </TextField>
-              <Label accessibleRole="HYPERLINK" layoutX="278.0" layoutY="359.0" onDragDetected="#loginClicked" text="Already have an account? Login" textFill="#05475b" underline="true">
+              <Label accessibleRole="HYPERLINK" layoutX="278.0" layoutY="359.0" text="Already have an account? Login" textFill="#05475b" underline="true">
                   <cursor>
                       <Cursor fx:constant="HAND" />
                   </cursor>
