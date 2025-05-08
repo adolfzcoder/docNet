@@ -2,8 +2,11 @@ package storage;
 
 import models.Appointment;
 import models.Office;
+import models.Prescription;
+import models.User;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 
 public class StorageFunctions {
 
@@ -131,5 +134,31 @@ public class StorageFunctions {
             totalCount++;
         }
         return totalCount;
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    //patients
+    public static int countPrescriptions(){
+        ArrayList<Prescription> allPrescriptions = SystemManager.getPrescriptions();
+        ArrayList<User> session = SystemManager.getSession();
+        int count = 0;
+        for (Prescription prescription : allPrescriptions){
+            if (prescription.getPatientID() == session.getFirst().getUserTypeID()) {
+                count++;
+            }
+        }
+        return count;
     }
 }
