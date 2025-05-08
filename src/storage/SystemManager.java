@@ -5,6 +5,7 @@ import models.Doctor;
 import models.*;
 import utils.AlertHelper;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Optional;
 
@@ -347,12 +348,20 @@ public int findOfficeIDByDoctorID(int doctorID){
         return allNotifications;
     }
 
-    public static String addUser(User user) {
-        users.add(user);
-        DataBaseManager.insertUser(user);
-        String message = "User has been added to user list";
-        return message;
+    public static boolean addUser(User user) {
+        int generatedId = DataBaseManager.insertUser(user);
+
+        if (generatedId != -1) {
+
+            users.add(user);
+            return true;
+        } else {
+            // Insertion failed
+            return false;
+        }
     }
+
+
     public static String addToPendingDoctorList(Doctor dr){
         pendingDoctors.add(dr);
         String message = "added doctor to pending list, awaiting approval";

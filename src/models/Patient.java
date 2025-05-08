@@ -21,6 +21,14 @@ public class Patient extends User {
 
     }
 
+    public Patient(int medicalAidNumber, String firstName, String lastName, String phoneNumber, String telephone, String dob, String email, String password, String gender){
+        super(firstName, lastName, phoneNumber, telephone, dob, "PATIENT", email, password, gender);
+        this.medicalAidNumber = medicalAidNumber;
+        this.patientID = 0;
+        this.balance = 0.0;
+
+    }
+
     public double getBalance() {
         return balance;
     }

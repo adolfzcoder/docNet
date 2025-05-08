@@ -12,7 +12,12 @@ public class NavigatorHelper {
 
     public static void loadScene(String fxmlPath, String title) {
         try {
-            Parent root = FXMLLoader.load(App.class.getResource(fxmlPath));
+            var resource = App.class.getResource("/" + fxmlPath);
+            if (resource == null) {
+                throw new IllegalArgumentException("FXML file not found: " + fxmlPath);
+            }
+            Parent root = FXMLLoader.load(resource);
+
             Stage stage = App.getPrimaryStage(); // you'd need a getter for the primary stage
             stage.setScene(new Scene(root));
             stage.setTitle(title);
@@ -21,4 +26,6 @@ public class NavigatorHelper {
             e.printStackTrace();
         }
     }
+
+
 }

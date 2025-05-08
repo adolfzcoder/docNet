@@ -6,6 +6,7 @@ import doctormodules.DoctorDashboardController;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import patientmodules.PatientDashboard;
 import storage.SystemManager;
 import models.Admin;
@@ -13,6 +14,7 @@ import models.Doctor;
 import models.User;
 import models.Patient;
 import utils.AlertHelper;
+import utils.NavigatorHelper;
 
 import java.io.IOException;
 import java.security.MessageDigest;
@@ -49,35 +51,48 @@ public class AuthFunctions {
     public static void signUp(User registeringUser){
 
         if( !checkIfEmailExists(registeringUser.getEmail()) ){
-            SystemManager.addUser(registeringUser);
-            registeringUser.setPassword( hash( registeringUser.getPassword() ) ); // hash the password you get froom user before signing up
-            if(registeringUser.getUserType().equalsIgnoreCase("DOCTOR")){
 
+            System.out.println("Password before: "+ registeringUser.getPassword());
+            registeringUser.setPassword( hash( registeringUser.getPassword() ) ); // hash the password you get froom user before signing up
+            System.out.println("Password after hashing: "+registeringUser.getPassword());
+            SystemManager.addUser(registeringUser);
+
+            if(registeringUser.getUserType().equalsIgnoreCase("DOCTOR")){
 
                 // the doctor is inserted into the system manager list, which also inserts into the db
 
                 SystemManager.addDoctor((Doctor) registeringUser);
                 SystemManager.addToPendingDoctorList((Doctor) registeringUser);
 
-
+                System.out.println("Inserted Doctor Successfully");
+                AlertHelper.showSuccess("Successfully registered");
             }else if(registeringUser.getUserType().equalsIgnoreCase("PATIENT")){
                 // the admin is inserted into the system manager list, which also inserts into the db
 
                 SystemManager.addPatient((Patient)registeringUser);
 
+                System.out.println("Inserted Patient Successfully");
+                AlertHelper.showSuccess("Successfully registered");
+
             } else {
                 // admin
                 // the admin is inserted into the system manager list, which also inserts into the db
                 SystemManager.addAdmin((Admin) registeringUser);
+                System.out.println("Inserted Admin Succesfully");
+                AlertHelper.showSuccess("Successfully registered");
 
             }
-            // SystemManager.addUser(registeringUser);
-            System.out.println(registeringUser.getUserType());
-            // System.out.println("User has signed up, now login");
+
+        }else{
+            System.out.println("Email exists");
+            AlertHelper.showError("Email already exists");
         }
 
     }
 
+    public static void registerPatient(){
+
+    }
     public static boolean authenticateUser(String email, String password) {
         if (!checkIfEmailExists(email)) {
             AlertHelper.showError("Email does not exist");
@@ -121,12 +136,13 @@ public class AuthFunctions {
                 break;
             case "DOCTOR":
 
-                // Main.App.loadScene("doctormodules/doctor_dashboard.fxml", "Doctor Dashboard");
+                NavigatorHelper.loadScene("doctormodules/DoctorDashboard.fxml", "Doctor Dashboard");
 
                 new DoctorDashboardController();
                 break;
             case "PATIENT":
-                new PatientDashboard( (Patient) u);
+                NavigatorHelper.loadScene("patientmodules/patientDashboard.fxml", "Doctor Dashboard");
+
                 break;
             default:
                 System.out.println("User type not found");

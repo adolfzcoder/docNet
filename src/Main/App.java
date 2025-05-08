@@ -13,7 +13,7 @@ public class App extends Application {
     @Override
     public void start(Stage stage) throws IOException {
         primaryStage = stage;
-        loadScene("patientmodules/patientSignUp.fxml", "Login");
+        loadScene("auth/login.fxml", "Login");
 
     }
 
