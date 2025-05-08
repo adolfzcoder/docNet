@@ -6,9 +6,9 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
-import models.Patient;
+import javafx.scene.input.MouseEvent;
 
-public class patientSignUpController {
+public class PatientSignUpController {
 
     @FXML
     private DatePicker birthDay;
@@ -35,10 +35,12 @@ public class patientSignUpController {
     private PasswordField password;
 
     @FXML
+    void loginClicked(MouseEvent event) {
+
+    }
+
+    @FXML
     void signUpButtonCicked(ActionEvent event) {
-
-
-        // Patient patient = new Patient(0, 0, )
 
     }
 
