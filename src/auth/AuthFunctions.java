@@ -2,19 +2,23 @@ package auth;
 
 import adminmodules.AdminDashboard;
 import doctormodules.DoctorDashboard;
+import doctormodules.DoctorDashboardController;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import patientmodules.PatientDashboard;
 import storage.SystemManager;
-import adminmodules.Admin;
-import doctormodules.Doctor;
+import models.Admin;
+import models.Doctor;
 import models.User;
 import models.Patient;
 import utils.AlertHelper;
 
+import java.io.IOException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.security.SecureRandom;
-import java.util.Base64;
 import java.util.Optional;
+
 
 public class AuthFunctions {
 
@@ -131,7 +135,10 @@ public class AuthFunctions {
                 new AdminDashboard( (Admin) u);
                 break;
             case "DOCTOR":
-                new DoctorDashboard( (Doctor) u);
+
+                // App.loadScene("doctormodules/doctor_dashboard.fxml", "Doctor Dashboard");
+
+                new DoctorDashboardController();
                 break;
             case "PATIENT":
                 new PatientDashboard( (Patient) u);

@@ -1,5 +1,7 @@
 package doctormodules;
 
+import models.Doctor;
+
 public class DoctorDashboard {
 
     public Doctor doctor;

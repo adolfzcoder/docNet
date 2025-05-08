@@ -1,7 +1,7 @@
 package storage;
 
-import adminmodules.Admin;
-import doctormodules.Doctor;
+import models.Admin;
+import models.Doctor;
 import models.*;
 import utils.AlertHelper;
 
@@ -162,7 +162,16 @@ public class SystemManager {
 
 
 
+public int findOfficeIDByDoctorID(int doctorID){
+        int officeID = 0;
+        for(Doctor dr: doctors){
 
+            if(dr.getDoctorID() == doctorID){
+                // officeID = dr.getOfficeID();
+            }
+        }
+        return officeID;
+}
 
     public static Optional<Doctor> findDoctorByEmail(String email) {
         for (Doctor doctor : doctors) {

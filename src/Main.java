@@ -1,7 +1,7 @@
 import storage.SystemManager;
-import adminmodules.Admin;
+import models.Admin;
 import auth.AuthFunctions;
-import doctormodules.Doctor;
+import models.Doctor;
 import models.User;
 import models.Appointment;
 import models.Patient;
