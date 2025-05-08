@@ -3,8 +3,9 @@ package auth;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
+import models.User;
+import storage.SystemManager;
 import utils.AlertHelper;
-import javafx.scene.input.MouseEvent;
 
 public class LoginController {
 
@@ -14,13 +15,10 @@ public class LoginController {
     @FXML
     private TextField password;
 
-    @FXML
-    void signInPressed(MouseEvent event) {
 
-    }
     @FXML
     void loginButtonClicked(ActionEvent event) {
-
+        System.out.println("Login button clicked");
         String emailText = email.getText().trim();
         String passwordText = password.getText().trim();
 
@@ -39,6 +37,10 @@ public class LoginController {
             }
 
             AuthFunctions.authenticateUser(emailText, passwordText);
+
+            User session = SystemManager.getSession().getFirst();
+            System.out.println(session.getName());
+            System.out.println(session.getUserType());
             System.out.println("Successfully logged in");
 
             AlertHelper.showSuccess("Logged in", "Successfully logged in");

@@ -1,6 +1,5 @@
 package models;
 
-import doctormodules.Doctor;
 import storage.SystemManager;
 
 import java.util.ArrayList;

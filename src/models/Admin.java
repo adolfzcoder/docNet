@@ -1,11 +1,9 @@
-package adminmodules;// create admin, inherit from user, but set the user type to admin, allow them to approve
+package models;// create admin, inherit from user, but set the user type to admin, allow them to approve
 // and not approve users
 
 // lets assume just one admin
 
-import doctormodules.Doctor;
 import storage.SystemManager;
-import models.User;
 
 public class Admin extends User {
     private int adminID;
@@ -32,6 +30,7 @@ public class Admin extends User {
         check the submitted documents, so we handle file uploads, admin can then check the file
         to see if its legit
      */
+
     public void addToApprovedList(Doctor dr){
         SystemManager.addApprovedDoctor(dr);
         // alert user of approval status

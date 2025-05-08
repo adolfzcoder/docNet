@@ -45,6 +45,8 @@ public class User {
 //    }
 
 
+
+
     @Override
     public String toString() {
         return "User{" +
@@ -146,7 +148,7 @@ public class User {
     }
 
     public  int getUserTypeID(){
-        return 0;
+        return userID;
     }
     public boolean getApproved(){
         return this.isApproved;

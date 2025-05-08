@@ -20,14 +20,18 @@ public class App extends Application {
     public static void loadScene(String fxmlPath, String title) {
         try {
             Parent root = FXMLLoader.load(App.class.getResource(fxmlPath));
-            primaryStage.setScene(new Scene(root));
-            primaryStage.setTitle(title);
-            primaryStage.show();
+            Stage stage = App.getPrimaryStage(); // you'd need a getter for the primary stage
+            stage.setScene(new Scene(root));
+            stage.setTitle(title);
+            stage.show();
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
+    public static Stage getPrimaryStage() {
+            return primaryStage;
+    }
 
 
     public static void main(String[] args) {

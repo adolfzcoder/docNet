@@ -1,4 +1,4 @@
-package patientmodules;
+package doctormodules;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -36,6 +36,9 @@ public class DoctorSignUpController {
 
     @FXML
     private TextField specialisation;
+
+    @FXML
+    private PasswordField textOfficeName;
 
     @FXML
     private TextField yearsOfXp;
