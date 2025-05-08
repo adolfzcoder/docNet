@@ -40,6 +40,33 @@ public class User {
         this.phoneNumber = phoneNumber;
     }
 
+    public User( String firstName, String lastName, String phoneNumber, String telephone, String dob, boolean isApproved, String userType, String email, String password, String gender) {
+
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.telephone = telephone;
+        this.dob = dob;
+        this.isApproved = isApproved;
+        this.userType = userType;
+        this.email = email;
+        this.password = password;
+        this.gender = gender;
+        this.phoneNumber = phoneNumber;
+    }
+
+    public User(String firstName, String lastName, String phoneNumber, String telephone, String dob, String patient, String email, String password, String gender) {
+
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.telephone = telephone;
+        this.phoneNumber = phoneNumber;
+        this.dob = dob;
+        this.userType = patient;
+        this.email = email;
+        this.password = password;
+
+    }
+
     //    public void notify(String message) {
 //        notifications.add(new Notifications(message));
 //    }

@@ -1,11 +1,16 @@
 package doctormodules;
 
+import Main.App;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 import javafx.scene.input.MouseEvent;
-import storage.StorageFunctions;
-import storage.SystemManager;
+import models.Appointment;
+import utils.NavigatorHelper;
+
+import java.time.LocalTime;
 
 public class DoctorDashboardController {
 
@@ -29,6 +34,21 @@ public class DoctorDashboardController {
 
     @FXML
     private Label IDtotalAppointments;
+
+    @FXML
+    private TableColumn<?, ?> columnAppointmentStatus;
+
+    @FXML
+    private TableColumn<?, ?> columnDate;
+
+    @FXML
+    private TableColumn<?, ?> columnPatientName;
+
+    @FXML
+    private TableColumn<Appointment, LocalTime> columnTime;
+
+    @FXML
+    private TableView<Appointment> tableAppointments;
 
     @FXML
     void acceptedAppointmentsClicked(MouseEvent event) {
@@ -77,36 +97,7 @@ public class DoctorDashboardController {
 
     @FXML
     void totalAppointmentsClicked(MouseEvent event) {
-
-    }
-
-    public void initialize() {
-        StorageFunctions storageFunctions = new StorageFunctions();
-
-        // Fetch and display data
-        updateDashboard(storageFunctions);
-    }
-
-
-    private void updateDashboard(StorageFunctions storageFunctions) {
-        // Fetch data using StorageFunctions
-        int totalAppointments = storageFunctions.countTotalAppointmentsForDoctor(SystemManager.getSession().getFirst().getUserTypeID());
-        int acceptedAppointments = storageFunctions.countTotalAppointmentsAccepted(SystemManager.getSession().getFirst().getUserTypeID());
-        int completedAppointments = storageFunctions.countTotalAppointmentsCompleted(SystemManager.getSession().getFirst().getUserTypeID());
-        int rejectedAppointments = storageFunctions.countTotalAppointmentsRejected(SystemManager.getSession().getFirst().getUserTypeID());
-        int pendingAppointments = storageFunctions.countTotalAppointmentsPending(SystemManager.getSession().getFirst().getUserTypeID());
-        double officeBalance = storageFunctions.getOfficeBalance(SystemManager.getSession().getFirst().getUserTypeID());
-
-        // Set the values in the Dashboard labels
-        IDtotalAppointments.setText(String.valueOf(totalAppointments));
-        IDAcceptedAppointments.setText(String.valueOf(acceptedAppointments));
-        IDCompletedAppointments.setText(String.valueOf(completedAppointments));
-        IDDeniedAppointments.setText(String.valueOf(rejectedAppointments));
-        IDPendingAppointments.setText(String.valueOf(pendingAppointments));
-        IDOfficeBalance.setText(String.format("$%.2f", officeBalance));
-
-        // Example for dynamic doctor's rating
-        IDRating.setText("4.8"); // Replace with an actual logic to compute ratings if available
+        NavigatorHelper.loadScene("", "");
     }
 
 

@@ -1,3 +1,4 @@
+package Main;
 
 import javafx.application.Application;
 import javafx.stage.Stage;
@@ -12,14 +13,14 @@ public class App extends Application {
     @Override
     public void start(Stage stage) throws IOException {
         primaryStage = stage;
-        loadScene("/auth/login.fxml", "Login");
+        loadScene("auth/login.fxml", "Login");
 
     }
 
 
 
     public static Stage getPrimaryStage() {
-        return primaryStage;
+            return primaryStage;
     }
 
 
