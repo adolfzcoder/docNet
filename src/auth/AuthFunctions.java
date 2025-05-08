@@ -78,54 +78,39 @@ public class AuthFunctions {
 
     }
 
-    public static boolean authenticateUser(String email, String pass){
-        // first check if the email exists
-        //if email exists, check if passwords match
-        try {
-            if (checkIfEmailExists(email)) {
-
-                // check if passwords match
-                Optional<User> userLoggin = SystemManager.findUser(email);
-
-
-                if (userLoggin.isPresent()) {
-                    User foundUser = userLoggin.get();
-                    if (foundUser.getPassword().equals( hash(pass) )) {
-                        System.out.println("logged in user");
-                        System.out.println("Starting session...");
-                        // SystemManager.startSession(foundUser);
-
-                        // System.out.println(foundUser.getName());
-                        System.out.println("User is a: " + foundUser.getUserType());
-
-
-                        decideUserJourney(foundUser);
-                        return true;
-                    } else {
-                        System.out.println("Passwords do not match");
-                        AlertHelper.showError("Error", "Passwords do not match");
-
-                    }
-                } else {
-                    System.out.println("User is not found");
-                    AlertHelper.showError("User is not found");
-                    return false;
-
-                }
-
-
-            } else {
-                AlertHelper.showError("Email does not exist");
-                System.out.println("Email does not exist");
-                return false;
-            }
+    public static boolean authenticateUser(String email, String password) {
+        if (!checkIfEmailExists(email)) {
+            AlertHelper.showError("Email does not exist");
+            System.out.println("Email does not exist");
             return false;
         }
-        catch(Exception e){
-            e.printStackTrace();
-            AlertHelper.showError("Unexpected Error", "An unexpected error occurred during login.");
+
+        Optional<User> userOptional = SystemManager.findUser(email);
+        if (userOptional.isEmpty()) {
+            AlertHelper.showError("User is not found");
+            System.out.println("User is not found");
             return false;
         }
+
+        User user = userOptional.get();
+        boolean passwordMatches = user.getPassword().equals(hash(password));
+
+        if (!passwordMatches) {
+            AlertHelper.showError("Error", "Passwords do not match");
+            System.out.println("Passwords do not match");
+            return false;
+        }
+
+        // Successful login
+        System.out.println("Found user");
+        System.out.println("Logged in user");
+        System.out.println("Starting session...");
+        System.out.println("User is a: " + user.getUserType());
+        AlertHelper.showSuccess("Successfully logged in");
+
+
+        decideUserJourney(user);
+        return true;
     }
 
 
