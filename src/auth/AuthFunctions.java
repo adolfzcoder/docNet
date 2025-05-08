@@ -136,7 +136,7 @@ public class AuthFunctions {
                 break;
             case "DOCTOR":
 
-                // App.loadScene("doctormodules/doctor_dashboard.fxml", "Doctor Dashboard");
+                // Main.App.loadScene("doctormodules/doctor_dashboard.fxml", "Doctor Dashboard");
 
                 new DoctorDashboardController();
                 break;
