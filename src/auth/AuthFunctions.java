@@ -135,6 +135,7 @@ public class AuthFunctions {
                 new AdminDashboard( (Admin) u);
                 break;
             case "DOCTOR":
+
                 // App.loadScene("doctormodules/doctor_dashboard.fxml", "Doctor Dashboard");
 
                 new DoctorDashboardController();
