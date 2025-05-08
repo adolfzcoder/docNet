@@ -39,6 +39,7 @@ public class LoginController {
             AuthFunctions.authenticateUser(emailText, passwordText);
 
             User session = SystemManager.getSession().getFirst();
+
             System.out.println(session.getName());
             System.out.println(session.getUserType());
             System.out.println("Successfully logged in");

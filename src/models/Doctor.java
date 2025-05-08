@@ -36,6 +36,15 @@ public class Doctor extends User {
 
     }
 
+    public Doctor(String medicalCertificate, int yearsOfXP, String specialisation, String firstName, String lastName, String phoneNumber, String telephone, String dob, String email, String password, String gender){
+        super(firstName, lastName, phoneNumber, telephone, dob, "DOCTOR", email, password, gender);
+        setMedicalCertificate(medicalCertificate);
+        setYearsOfXP(yearsOfXP);
+        this.doctorID = 0;
+        this.specialisation = specialisation;
+        this.isBooked = false;
+    }
+
     public int getDoctorID() {
         return doctorID;
     }

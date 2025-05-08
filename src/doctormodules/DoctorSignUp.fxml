@@ -68,7 +68,7 @@
                   <Font name="Arial Rounded MT Bold" size="14.0" />
                </font>
                 </PasswordField>
-                <Button layoutX="171.0" layoutY="332.0" mnemonicParsing="false" onAction="#signupButtonClicked" prefHeight="25.0" prefWidth="168.0" style="-fx-background-radius: 20;" text="Sign Up" textFill="#05475b">
+                <Button layoutX="291.0" layoutY="334.0" mnemonicParsing="false" onAction="#signupButtonClicked" prefHeight="25.0" prefWidth="168.0" style="-fx-background-radius: 20;" text="Sign Up" textFill="#05475b">
                     <cursor>
                         <Cursor fx:constant="HAND" />
                     </cursor>
@@ -90,7 +90,7 @@
                   <Font name="Arial Rounded MT Bold" size="14.0" />
                </font>
             </TextField>
-              <Label accessibleRole="HYPERLINK" layoutX="278.0" layoutY="359.0" onDragDetected="#loginClicked" text="Already have an account? Login" textFill="#05475b" underline="true">
+              <Label accessibleRole="HYPERLINK" layoutX="266.0" layoutY="368.0" onDragDetected="#loginClicked" text="Already have an account? Login" textFill="#05475b" underline="true">
                   <cursor>
                       <Cursor fx:constant="HAND" />
                   </cursor>
@@ -115,6 +115,22 @@
                </font>
             </TextField>
             <PasswordField fx:id="textOfficeName" layoutX="20.0" layoutY="297.0" prefHeight="25.0" prefWidth="216.0" promptText="Office Name">
+               <cursor>
+                  <Cursor fx:constant="TEXT" />
+               </cursor>
+               <font>
+                  <Font name="Arial Rounded MT Bold" size="14.0" />
+               </font>
+            </PasswordField>
+            <PasswordField fx:id="phoneNumberIID" layoutX="262.0" layoutY="297.0" prefHeight="25.0" prefWidth="216.0" promptText="Phone Number">
+               <cursor>
+                  <Cursor fx:constant="TEXT" />
+               </cursor>
+               <font>
+                  <Font name="Arial Rounded MT Bold" size="14.0" />
+               </font>
+            </PasswordField>
+            <PasswordField fx:id="telephoneInput" layoutX="21.0" layoutY="334.0" prefHeight="25.0" prefWidth="216.0" promptText="Telephone ">
                <cursor>
                   <Cursor fx:constant="TEXT" />
                </cursor>
