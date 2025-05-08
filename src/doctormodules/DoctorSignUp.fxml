@@ -68,7 +68,7 @@
                   <Font name="Arial Rounded MT Bold" size="14.0" />
                </font>
                 </PasswordField>
-                <Button layoutX="165.0" layoutY="316.0" mnemonicParsing="false" onAction="#signupButtonClicked" prefHeight="25.0" prefWidth="168.0" style="-fx-background-radius: 20;" text="Sign Up" textFill="#0237c7">
+                <Button layoutX="171.0" layoutY="332.0" mnemonicParsing="false" onAction="#signupButtonClicked" prefHeight="25.0" prefWidth="168.0" style="-fx-background-radius: 20;" text="Sign Up" textFill="#0237c7">
                     <cursor>
                         <Cursor fx:constant="HAND" />
                     </cursor>
@@ -114,6 +114,14 @@
                   <Font name="Arial Rounded MT Bold" size="14.0" />
                </font>
             </TextField>
+            <PasswordField fx:id="textOfficeName" layoutX="20.0" layoutY="297.0" prefHeight="25.0" prefWidth="216.0" promptText="Office Name">
+               <cursor>
+                  <Cursor fx:constant="TEXT" />
+               </cursor>
+               <font>
+                  <Font name="Arial Rounded MT Bold" size="14.0" />
+               </font>
+            </PasswordField>
             </children>
             <opaqueInsets>
                 <Insets />

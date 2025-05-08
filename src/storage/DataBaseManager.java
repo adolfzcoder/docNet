@@ -2,8 +2,8 @@ package storage;
 
 
 
-import adminmodules.Admin;
-import doctormodules.Doctor;
+import models.Admin;
+import models.Doctor;
 import models.Office;
 import models.Prescription;
 import models.User;
@@ -19,6 +19,8 @@ public class DataBaseManager {
         static HashMap<String, String> env = EnvLoader.loadEnv(".env");
 
         static String DB_URL = env.get("DB_URL");
+        // if no internet uncomment code below
+        // static String DB_URL = env.get("DB_URL_OFFLINE");
         static String DB_USER = env.get("DB_USER");
         static String DB_PASSWORD = env.get("DB_PASSWORD");
 
