@@ -2,49 +2,79 @@ package doctormodules;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.text.Text;
 
 public class DoctorDashboardController {
 
     @FXML
-    private Text dash;
+    private Label IDAcceptedAppointments;
 
     @FXML
-    private Text dash1;
+    private Label IDDeniedAppointments;
 
     @FXML
-    private Button logout1;
+    private Label IDOfficeBalance;
 
     @FXML
-    private Text totalAppoint;
+    private Label IDPendingAppointments;
 
     @FXML
-    private Text totalAppoint1;
+    private Label IDRating;
 
     @FXML
-    private Text totalAppoint11;
+    private Label IDTodaysAppointments;
 
     @FXML
-    private Text totalAppoint111;
+    private Label IDtotalAppointments;
 
     @FXML
-    private Text totalAppoint1111;
+    void acceptedAppointmentsClicked(MouseEvent event) {
+
+    }
 
     @FXML
-    private Text totalAppoint11111;
+    void appointmentsRedirectClicked(MouseEvent event) {
+
+    }
 
     @FXML
-    private Text userHandle;
+    void dashboardRedirectClicked(MouseEvent event) {
+
+    }
 
     @FXML
-    void findDoc(MouseEvent event) {
+    void deniedAppointmentsClicked(MouseEvent event) {
 
     }
 
     @FXML
     void logoutButtonClicked(ActionEvent event) {
+
+    }
+
+    @FXML
+    void manageDoctorsRedirectClicked(MouseEvent event) {
+
+    }
+
+    @FXML
+    void pendingAppointmentsClicked(MouseEvent event) {
+
+    }
+
+    @FXML
+    void profileRedirectClicked(MouseEvent event) {
+
+    }
+
+    @FXML
+    void todaysAppointmentsClicked(MouseEvent event) {
+
+    }
+
+    @FXML
+    void totalAppointmentsClicked(MouseEvent event) {
 
     }
 

@@ -15,7 +15,7 @@ public class LoginController {
     private TextField password;
 
     @FXML
-    void loginRedirectPressed(MouseEvent event) {
+    void signInPressed(MouseEvent event) {
 
     }
     @FXML
