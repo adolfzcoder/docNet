@@ -25,7 +25,11 @@ CREATE TABLE office(
                        location VARCHAR(255),
                        openingHours TIME,
                        closingHours TIME,
-                       accountBalance DECIMAL(10, 2)
+                       accountBalance DECIMAL(10, 2),
+
+                        doctorID INT,
+                       CONSTRAINT fk_office_doctor_id FOREIGN KEY (doctorID) REFERENCES doctor(doctorID)
+
 
 
 );

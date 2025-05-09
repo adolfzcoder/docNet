@@ -55,6 +55,7 @@ public class AuthFunctions {
             System.out.println("Password before: "+ registeringUser.getPassword());
             registeringUser.setPassword( hash( registeringUser.getPassword() ) ); // hash the password you get froom user before signing up
             System.out.println("Password after hashing: "+registeringUser.getPassword());
+
             SystemManager.addUser(registeringUser);
 
             if(registeringUser.getUserType().equalsIgnoreCase("DOCTOR")){

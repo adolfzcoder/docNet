@@ -284,25 +284,44 @@ public class DataBaseManager {
         }
 
 
-        public static void insertDoctor(Doctor doctor) {
-                String query = "INSERT INTO doctor (medicalCertificatePath, yearsOfExperience, specialisation, userID) VALUES (?, ?, ?, ?)";
+    public static void insertDoctor(Doctor doctor) {
+        String query = "INSERT INTO doctor (medicalCertificatePath, yearsOfExperience, specialisation, userID) VALUES (?, ?, ?, ?)";
 
-                try (Connection conn = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
-                     PreparedStatement ps = conn.prepareStatement(query)) {
+        try (Connection conn = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
+             PreparedStatement ps = conn.prepareStatement(query)) {
 
-                    ps.setString(1, doctor.getMedicalCertificate());
-                    ps.setInt(2, doctor.getYearsOfXP());
-                    ps.setString(3, doctor.getSpecialisation());
-                    ps.setInt(4, doctor.getUserID());
+            // Insert the user first
+            int userID = insertUser(new User(
+                    doctor.getFirstName(),
+                    doctor.getLastName(),
+                    doctor.getPhoneNumber(),
+                    doctor.getTelephone(),
+                    doctor.getDob(),
+                    doctor.getApproved(),
+                    doctor.getUserType(),
+                    doctor.getEmail(),
+                    doctor.getPassword(),
+                    doctor.getGender()
+            ));
 
-                    ps.executeUpdate();
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
+            if (userID != -1) {
+                doctor.setUserID(userID);  // Set userID in doctor
+
+                ps.setString(1, doctor.getMedicalCertificate());
+                ps.setInt(2, doctor.getYearsOfXP());
+                ps.setString(3, doctor.getSpecialisation());
+                ps.setInt(4, doctor.getUserID());
+
+                ps.executeUpdate();
             }
 
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 
-     public static void insertAppointment(Appointment appointment) {
+
+    public static void insertAppointment(Appointment appointment) {
             String query = "INSERT INTO appointment (appointmentDate, reasonForVisit, status, appointmentTime, patientID, doctorID) VALUES (?, ?, ?, ?, ?, ?)";
 
             try (Connection conn = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);

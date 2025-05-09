@@ -1,5 +1,6 @@
 package models;
 
+import storage.SystemManager;
 import validations.DoctorValidate;
 
 public class Doctor extends User {
@@ -34,6 +35,16 @@ public class Doctor extends User {
 
 
 
+    }
+
+    public Doctor(String medicalCertificate, int yearsOfXP, String specialisation, String firstName, String lastName, String phoneNumber, String telephone, String dob, String email, String password, String gender, String officeName){
+        super(firstName, lastName, phoneNumber, telephone, dob, "DOCTOR", email, password, gender);
+        setMedicalCertificate(medicalCertificate);
+        setYearsOfXP(yearsOfXP);
+        this.doctorID = 0;
+        this.specialisation = specialisation;
+        this.isBooked = false;
+        this.officeID = SystemManager.findOfficeIdByName(officeName);
     }
 
     public int getDoctorID() {
@@ -77,7 +88,13 @@ public class Doctor extends User {
         this.medicalCertificate = medicalCertificate;
     }
 
+    public int getOfficeID() {
+        return officeID;
+    }
 
+    public void setOfficeID(int officeID) {
+        this.officeID = officeID;
+    }
 
     @Override
     public int getUserTypeID(){

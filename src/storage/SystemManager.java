@@ -7,6 +7,7 @@ import utils.AlertHelper;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 public class SystemManager {
@@ -56,7 +57,14 @@ public class SystemManager {
         return session;
     }
 
-
+    public static int findOfficeIdByName(String officeName) {
+        for (Office office : offices) {
+            if (office.getOfficeName().equalsIgnoreCase(officeName)) {
+                return office.getOfficeID();
+            }
+        }
+        return -1;
+    }
     public static ArrayList<Prescription> fetchPrescriptions(){
         try {
             ArrayList<Prescription> prescriptions = DataBaseManager.getPrescriptions();

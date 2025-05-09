@@ -15,7 +15,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="420.0" prefWidth="790.0" style="-fx-background-color: #F8FAFC;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="patientmodules.DoctorSignUpController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="420.0" prefWidth="790.0" style="-fx-background-color: #F8FAFC;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="doctormodules.DoctorSignUpController">
     <children>
         <Pane layoutX="247.0" layoutY="15.0" prefHeight="390.0" prefWidth="498.0" style="-fx-background-radius: 10; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.5), 10, 0.5, 0, 0); -fx-background-color: #037aa1;" AnchorPane.leftAnchor="247.0" AnchorPane.rightAnchor="45.0">
             <children>
@@ -68,7 +68,7 @@
                   <Font name="Arial Rounded MT Bold" size="14.0" />
                </font>
                 </PasswordField>
-                <Button layoutX="171.0" layoutY="332.0" mnemonicParsing="false" onAction="#signupButtonClicked" prefHeight="25.0" prefWidth="168.0" style="-fx-background-radius: 20;" text="Sign Up" textFill="#05475b">
+                <Button layoutX="296.0" layoutY="341.0" mnemonicParsing="false" onAction="#signupButtonClicked" prefHeight="25.0" prefWidth="168.0" style="-fx-background-radius: 20;" text="Sign Up" textFill="#05475b">
                     <cursor>
                         <Cursor fx:constant="HAND" />
                     </cursor>
@@ -90,7 +90,7 @@
                   <Font name="Arial Rounded MT Bold" size="14.0" />
                </font>
             </TextField>
-              <Label accessibleRole="HYPERLINK" layoutX="278.0" layoutY="359.0" onDragDetected="#loginClicked" text="Already have an account? Login" textFill="#05475b" underline="true">
+              <Label accessibleRole="HYPERLINK" layoutX="271.0" layoutY="368.0" onDragDetected="#loginClicked" text="Already have an account? Login" textFill="#05475b" underline="true">
                   <cursor>
                       <Cursor fx:constant="HAND" />
                   </cursor>
@@ -114,14 +114,30 @@
                   <Font name="Arial Rounded MT Bold" size="14.0" />
                </font>
             </TextField>
-            <PasswordField fx:id="textOfficeName" layoutX="20.0" layoutY="297.0" prefHeight="25.0" prefWidth="216.0" promptText="Office Name">
+            <TextField id="email" fx:id="officeNameID" layoutX="22.0" layoutY="298.0" prefHeight="25.0" prefWidth="216.0" promptText="Office Name">
                <cursor>
                   <Cursor fx:constant="TEXT" />
                </cursor>
                <font>
                   <Font name="Arial Rounded MT Bold" size="14.0" />
                </font>
-            </PasswordField>
+            </TextField>
+            <TextField id="email" fx:id="phoneNumberID" layoutX="262.0" layoutY="298.0" prefHeight="25.0" prefWidth="216.0" promptText="Phone Number">
+               <cursor>
+                  <Cursor fx:constant="TEXT" />
+               </cursor>
+               <font>
+                  <Font name="Arial Rounded MT Bold" size="14.0" />
+               </font>
+            </TextField>
+            <TextField id="email" fx:id="telephoneID" layoutX="22.0" layoutY="341.0" prefHeight="25.0" prefWidth="216.0" promptText="Telephone">
+               <cursor>
+                  <Cursor fx:constant="TEXT" />
+               </cursor>
+               <font>
+                  <Font name="Arial Rounded MT Bold" size="14.0" />
+               </font>
+            </TextField>
             </children>
             <opaqueInsets>
                 <Insets />
