@@ -5,6 +5,7 @@ import models.Doctor;
 import models.*;
 import utils.AlertHelper;
 
+import javax.xml.crypto.Data;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -187,6 +188,7 @@ public class SystemManager {
 
     public static void addOffice(Doctor registeringUser) {
         DataBaseManager.insertOffice(registeringUser.getOfficeName(), registeringUser.getDoctorID());
+        offices.add( new Office(registeringUser.getOfficeName()));
     }
 
 
@@ -338,16 +340,7 @@ public class SystemManager {
     public static ArrayList<Appointment> getAppointments(){
         return appointments;
     }
-    public static String addAppointment(Appointment appt){
-        appointments.add(appt);
 
-        DataBaseManager.insertAppointment(appt);
-
-        String message = "Successfully added appointment";
-
-        System.out.println(message);
-        return message;
-    }
 
     public static String flushSession(){
         session.clear();
@@ -432,13 +425,14 @@ public class SystemManager {
     }
 
     public static void addAdmin(Admin ad){
-        admins.add(ad);
         DataBaseManager.insertAdmin(ad);
+        admins.add(ad);
+
     }
 
     public static String addNotification(Notification notif){
-        allNotifications.add(notif);
         String message = "Notification was added succesfully";
+        allNotifications.add(notif);
 
         System.out.println(message);
         return message;
@@ -452,8 +446,9 @@ public class SystemManager {
     }
 
     public static String addPatient(Patient p){
-        patients.add(p);
         DataBaseManager.insertPatient(p);
+        patients.add(p);
+
         String message = "Patient successfully added";
 
         System.out.println(message);
@@ -461,10 +456,26 @@ public class SystemManager {
 
     }
 
-    public static void addRating(double rating, int doctorID){
+    public static void addRating(Rating rating){
+
+
+        DataBaseManager.insertRating(rating);
+
+        ratings.add(rating);
+        System.out.println("Rating added successfully");
 
 
 
+    }
+
+    public static ArrayList<Rating> getRatings(){
+        return ratings;
+    }
+
+    public static void addAppointment(Appointment appt){
+        DataBaseManager.insertAppointment(appt);
+        appointments.add(appt);
+        System.out.println("Appointment added successfully");
     }
 
 

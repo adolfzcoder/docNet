@@ -6,7 +6,7 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 
 public class Appointment {
-    private int appointmentID;
+    private int appointmentID=-1;
     private int patientID;
     private int doctorID;
     private LocalDate appointmentDate;
@@ -14,13 +14,27 @@ public class Appointment {
     private String reasonForVisit;
     private String status;
 
+    public Appointment(int appointmentID, int patientID, int doctorID, LocalDate appointmentDate, LocalTime appointmentTime, String reasonForVisit, String status) {
 
-    public Appointment(int appointmentID, int patientID, int doctorID, LocalDate appointmentDate, LocalTime appointmentTime, String reason, String status) {
-
-
-
-        if( checkBookingsDates(appointmentDate) ){ // check if there are any bookings on that day
+        if( checkBookingsDates(appointmentDate) ) {
             this.appointmentID = appointmentID;
+            this.patientID = patientID;
+            this.doctorID = doctorID;
+            this.appointmentDate = appointmentDate;
+            this.appointmentTime = appointmentTime;
+            this.reasonForVisit = reasonForVisit;
+            this.status = status;
+        }{
+
+            System.out.println("Doctor is booked, added to waiting list. ");
+
+        }
+    }
+
+    public Appointment(int patientID, int doctorID, LocalDate appointmentDate, LocalTime appointmentTime, String reason, String status) {
+
+
+        if (checkBookingsDates(appointmentDate)) { // check if there are any bookings on that day
             this.patientID = patientID;
             this.doctorID = doctorID;
             this.appointmentDate = appointmentDate;
@@ -28,10 +42,10 @@ public class Appointment {
             this.reasonForVisit = reason;
             this.status = status;
 
-            SystemManager.addAppointment(this);
+            // SystemManager.addAppointment(this);
 
 
-        }else{
+        } else {
 
             System.out.println("Doctor is booked, added to waiting list. ");
 

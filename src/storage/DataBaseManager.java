@@ -402,4 +402,31 @@ public class DataBaseManager {
             e.printStackTrace();
         }
     }
+
+    public static void insertRating(Rating rating) {
+
+            /*
+            ratingID INT PRIMARY KEY AUTO_INCREMENT,
+                       review VARCHAR(255),
+                       score ENUM('1', '2', '3', '4', '5'),
+
+                       patientID INT,
+                       doctorID INT,
+             */
+        String query = "INSERT INTO rating (review, score, patientID, doctorID) VALUES (?, ?, ?, ?)";
+
+        try (Connection conn = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
+             PreparedStatement ps = conn.prepareStatement(query)) {
+
+            ps.setString(1, rating.getReview());
+            ps.setDouble(2, rating.getScore());
+            ps.setInt(3, rating.getPatientID());
+            ps.setInt(4, rating.getDoctorID());
+
+
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 }
