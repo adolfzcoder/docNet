@@ -16,9 +16,9 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="530.0" prefWidth="850.0" style="-fx-background-color: #F8FAFC;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="doctormodules.DoctorDashboardController">
     <children>
-        <Pane layoutX="233.0" layoutY="7.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="517.0" prefWidth="612.0" style="-fx-background-radius: 10; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.5), 10, 0.5, 0, 0); -fx-background-color: #04a9de;" AnchorPane.leftAnchor="233.0" AnchorPane.rightAnchor="5.0">
+        <Pane layoutX="247.0" layoutY="7.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="517.0" prefWidth="589.0" style="-fx-background-radius: 10; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.5), 10, 0.5, 0, 0); -fx-background-color: #04a9de;" AnchorPane.leftAnchor="247.0" AnchorPane.rightAnchor="14.0">
             <children>
-                <Label layoutX="178.0" layoutY="14.0" text="Admin Dashboard" textFill="#05475b">
+                <Label layoutX="200.0" layoutY="27.0" text="Admin Dashboard" textFill="#05475b">
                     <font>
                         <Font name="Arial Rounded MT Bold" size="24.0" />
                     </font>
@@ -35,14 +35,14 @@
                         <Image url="@../image/icons8-appointment-64.png" />
                      </image>
                   </ImageView>
-                  <Label fx:id="IDtotalAppointments" layoutX="42.0" layoutY="25.0" prefHeight="61.0" prefWidth="72.0" text="0" textFill="#05475b">
+                  <Label fx:id="IDtotalAppointments" layoutX="42.0" layoutY="23.0" prefHeight="61.0" prefWidth="72.0" text="0" textFill="#05475b">
                      <font>
                         <Font name="Arial Rounded MT Bold" size="52.0" />
                      </font>
                   </Label>
                </children>
             </Pane>
-            <Label layoutX="245.0" layoutY="174.0" text="Doctors" textFill="#05475b">
+            <Label layoutX="248.0" layoutY="152.0" text="Doctors" textFill="#05475b">
                <font>
                   <Font name="Arial Rounded MT Bold" size="24.0" />
                </font>
@@ -104,14 +104,14 @@
                   </ImageView>
                </children>
             </Pane>
-            <Pane layoutX="487.0" layoutY="414.0" minHeight="-Infinity" minWidth="-Infinity" onDragDetected="#deniedAppointmentsClicked" prefHeight="89.0" prefWidth="113.0" style="-fx-background-color: #0397C7; -fx-border-color: #0AABFB; -fx-border-width: 2; -fx-border-radius: 8; -fx-border-radius: 8;">
+            <Pane layoutX="487.0" layoutY="414.0" minHeight="-Infinity" minWidth="-Infinity" onDragDetected="#deniedAppointmentsClicked" prefHeight="89.0" prefWidth="100.0" style="-fx-background-color: #0397C7; -fx-border-color: #0AABFB; -fx-border-width: 2; -fx-border-radius: 8; -fx-border-radius: 8;">
                <children>
                   <Label layoutX="21.0" layoutY="14.0" text="Rejected" textFill="#05475b">
                      <font>
                         <Font name="Arial Rounded MT Bold" size="18.0" />
                      </font>
                   </Label>
-                  <Label fx:id="IDDeniedAppointments" layoutX="65.0" layoutY="28.0" prefHeight="22.0" prefWidth="25.0" text="0" textFill="#05475b">
+                  <Label fx:id="IDDeniedAppointments" layoutX="50.0" layoutY="28.0" prefHeight="22.0" prefWidth="25.0" text="0" textFill="#05475b">
                      <font>
                         <Font name="Arial Rounded MT Bold" size="52.0" />
                      </font>
@@ -123,14 +123,14 @@
                   </ImageView>
                </children>
             </Pane>
-            <Pane layoutX="292.0" layoutY="85.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="89.0" prefWidth="267.0" style="-fx-background-color: #0397C7; -fx-border-color: #0AABFB; -fx-border-width: 2; -fx-border-radius: 8; -fx-border-radius: 8;">
+            <Pane layoutX="305.0" layoutY="55.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="89.0" prefWidth="267.0" style="-fx-background-color: #0397C7; -fx-border-color: #0AABFB; -fx-border-width: 2; -fx-border-radius: 8; -fx-border-radius: 8;">
                <children>
                   <Label layoutX="53.0" layoutY="12.0" text="Total Offices Balance" textFill="#05475b">
                      <font>
                         <Font name="Arial Rounded MT Bold" size="18.0" />
                      </font>
                   </Label>
-                  <Label fx:id="IDOfficeBalance" layoutX="135.0" layoutY="23.0" prefHeight="61.0" prefWidth="129.0" text="0.00" textFill="#05475b">
+                  <Label id="balance" fx:id="IDOfficeBalance" layoutX="135.0" layoutY="23.0" prefHeight="61.0" prefWidth="129.0" text="0.00" textFill="#05475b">
                      <font>
                         <Font name="Arial Rounded MT Bold" size="36.0" />
                      </font>
@@ -147,15 +147,15 @@
                   </ImageView>
                </children>
             </Pane>
-            <TableView fx:id="tableAppointments" layoutX="45.0" layoutY="209.0" prefHeight="193.0" prefWidth="520.0">
+            <TableView fx:id="tableAppointments" layoutX="45.0" layoutY="180.0" prefHeight="193.0" prefWidth="520.0">
               <columns>
-                <TableColumn fx:id="columnPatientName" prefWidth="137.0" text="Doctor Name" />
-                <TableColumn fx:id="columnDate" prefWidth="122.0" text="Years of Experience" />
-                  <TableColumn fx:id="columnTime" prefWidth="151.0" text="Phone Number" />
-                  <TableColumn fx:id="columnAppointmentStatus" prefWidth="119.0" text="Status" />
+                <TableColumn id="firstName" fx:id="columnPatientName" prefWidth="137.0" text="Doctor Name" />
+                <TableColumn id="yearsOfExperience" fx:id="columnDate" prefWidth="122.0" text="Years of Experience" />
+                  <TableColumn id="phoneNumber" fx:id="columnTime" prefWidth="151.0" text="Phone Number" />
+                  <TableColumn id="status" fx:id="columnAppointmentStatus" prefWidth="119.0" text="Status" />
               </columns>
             </TableView>
-            <Pane layoutX="44.0" layoutY="85.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="89.0" prefWidth="241.0" style="-fx-background-color: #0397C7; -fx-border-color: #0AABFB; -fx-border-width: 2; -fx-border-radius: 8; -fx-border-radius: 8;">
+            <Pane layoutX="45.0" layoutY="55.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="89.0" prefWidth="241.0" style="-fx-background-color: #0397C7; -fx-border-color: #0AABFB; -fx-border-width: 2; -fx-border-radius: 8; -fx-border-radius: 8;">
                <children>
                   <Label layoutX="17.0" layoutY="12.0" text="Total Users" textFill="#05475b">
                      <font>
@@ -174,12 +174,12 @@
                   </Label>
                </children>
             </Pane>
-            <Text fx:id="username" fill="#1f2937" layoutX="514.0" layoutY="47.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Username " wrappingWidth="104.13671875">
+            <Text id="firstName" fx:id="username" fill="#1f2937" layoutX="504.0" layoutY="46.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Username " wrappingWidth="84.60351562500023">
                <font>
                   <Font name="Arial Rounded MT Bold" size="16.0" />
                </font>
             </Text>
-            <ImageView fitHeight="35.0" fitWidth="46.0" layoutX="543.0" layoutY="2.0">
+            <ImageView fitHeight="35.0" fitWidth="46.0" layoutX="523.0" layoutY="-3.0">
                <image>
                   <Image url="@../image/icons8-user-24.png" />
                </image>
@@ -189,7 +189,7 @@
                 <Insets />
             </opaqueInsets>
         </Pane>
-        <Pane layoutY="-5.0" minHeight="-Infinity" prefHeight="536.0" prefWidth="218.0" style="-fx-background-color: #0397C7; -fx-border-radius: 45;" AnchorPane.rightAnchor="632.0">
+        <Pane layoutY="-3.0" minHeight="-Infinity" prefHeight="536.0" prefWidth="218.0" style="-fx-background-color: #0397C7; -fx-border-radius: 45;" AnchorPane.rightAnchor="632.0">
             <children>
             <ImageView fitHeight="80.0" fitWidth="80.0" layoutX="69.0" layoutY="14.0">
                <image>
@@ -209,7 +209,7 @@
                   <Font name="Arial Rounded MT Bold" size="14.0" />
                </font>
             </Button>
-            <Label layoutX="31.0" layoutY="201.0" onDragDetected="#dashboardRedirectClicked" text="Dashboard" textFill="#05475b">
+            <Label accessibleRole="HYPERLINK" layoutX="42.0" layoutY="200.0" onDragDetected="#dashboardRedirectClicked" text="Dashboard" textFill="#05475b">
                <font>
                   <Font name="Arial Rounded MT Bold" size="24.0" />
                </font>
@@ -217,7 +217,7 @@
                   <Cursor fx:constant="HAND" />
                </cursor>
             </Label>
-            <Label layoutX="13.0" layoutY="240.0" onDragDetected="#appointmentsRedirectClicked" text="Manage Doctors" textFill="#05475b">
+            <Label accessibleRole="HYPERLINK" layoutX="20.0" layoutY="231.0" onDragDetected="#appointmentsRedirectClicked" text="Manage Profile" textFill="#05475b">
                <font>
                   <Font name="Arial Rounded MT Bold" size="24.0" />
                </font>
@@ -226,8 +226,8 @@
                </cursor>
             </Label>
             <Separator layoutX="7.0" layoutY="228.0" prefWidth="200.0" />
-            <Separator layoutX="6.0" layoutY="272.0" minHeight="-Infinity" prefHeight="1.0" prefWidth="200.0" />
-            <Label layoutX="57.0" layoutY="279.0" onDragDetected="#profileRedirectClicked" text="Profile" textFill="#05475b">
+            <Separator layoutX="9.0" layoutY="259.0" minHeight="-Infinity" prefHeight="11.0" prefWidth="200.0" />
+            <Label accessibleRole="HYPERLINK" layoutX="22.0" layoutY="265.0" onDragDetected="#appointmentsRedirectClicked" text="Search Doctor" textFill="#05475b">
                <font>
                   <Font name="Arial Rounded MT Bold" size="24.0" />
                </font>
