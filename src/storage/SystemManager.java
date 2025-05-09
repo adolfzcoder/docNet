@@ -1,14 +1,12 @@
 package storage;
 
+import javafx.scene.control.TextField;
 import models.Admin;
 import models.Doctor;
 import models.*;
 import utils.AlertHelper;
 
-import javax.xml.crypto.Data;
-import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
 
 public class SystemManager {
@@ -19,7 +17,7 @@ public class SystemManager {
 
     private static ArrayList<Admin> admins= fetchAdmins();
     private static ArrayList<Patient> patients = fetchPatients();
-    private static ArrayList<Doctor> doctors = fetchDoctors();
+    private static ArrayList<Doctor> doctors = fetchDoctors(docName, spec);
     private static ArrayList<Appointment> appointments = fetchAppointments();
     private static ArrayList<Prescription> prescriptions = fetchPrescriptions();
     private static ArrayList<Rating> ratings = fetchRatings();
@@ -157,7 +155,7 @@ public class SystemManager {
         }
     }
 
-    public static ArrayList<Doctor> fetchDoctors() {
+    public static ArrayList<Doctor> fetchDoctors(TextField docName, TextField spec) {
         try {
             ArrayList<Doctor> doctors = DataBaseManager.getDoctors();
             if (doctors == null || doctors.isEmpty()) {
