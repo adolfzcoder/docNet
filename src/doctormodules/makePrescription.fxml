@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+
+<AnchorPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="doctormodules.MakePrescriptionController"
+            prefHeight="450.0" prefWidth="600.0"
+            style="-fx-background-color: #ffffff;">
+
+    <children>
+        <!-- Title -->
+        <Label layoutX="200" layoutY="20" text="Make Prescription"
+               style="-fx-font-size: 22px; -fx-font-weight: bold; -fx-text-fill: #2c3e50;"/>
+
+        <!-- Form Grid -->
+        <GridPane layoutX="50" layoutY="70" hgap="10" vgap="15">
+            <columnConstraints>
+                <ColumnConstraints minWidth="120"/>
+                <ColumnConstraints minWidth="300"/>
+            </columnConstraints>
+
+            <children>
+                <Label text="Patient ID:" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+                <TextField fx:id="patientIdField" promptText="Enter Patient ID"
+                           GridPane.rowIndex="0" GridPane.columnIndex="1"/>
+
+                <Label text="Medicine:" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+                <TextField fx:id="medicineField" promptText="Enter medicine name"
+                           GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+
+                <Label text="Dosage:" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
+                <TextField fx:id="dosageField" promptText="e.g. 2 times a day"
+                           GridPane.rowIndex="2" GridPane.columnIndex="1"/>
+
+                <Label text="Date:" GridPane.rowIndex="3" GridPane.columnIndex="0"/>
+                <DatePicker fx:id="datePicker" GridPane.rowIndex="3" GridPane.columnIndex="1"/>
+
+                <Label text="Instructions:" GridPane.rowIndex="4" GridPane.columnIndex="0"/>
+                <TextArea fx:id="instructionsArea" promptText="Any special instructions"
+                          prefRowCount="3" wrapText="true"
+                          GridPane.rowIndex="4" GridPane.columnIndex="1"/>
+            </children>
+        </GridPane>
+
+        <!-- Buttons -->
+        <HBox layoutX="370" layoutY="400" spacing="10">
+            <children>
+                <Button fx:id="clearButton" text="Clear"
+                        style="-fx-background-color: #bdc3c7;"/>
+                <Button fx:id="submitButton" text="Submit"
+                        style="-fx-background-color: #27ae60; -fx-text-fill: white;"/>
+            </children>
+        </HBox>
+    </children>
+</AnchorPane>
