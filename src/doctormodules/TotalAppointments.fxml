@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane prefHeight="534.0" prefWidth="1075.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="doctormodules.TotalAppointments">
+   <children>
+      <AnchorPane layoutX="14.0" layoutY="5.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="530.0" prefWidth="850.0" style="-fx-background-color: #F8FAFC;">
+          <children>
+              <Pane fx:id="statusColumn" layoutX="231.0" layoutY="4.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="518.0" prefWidth="810.0" style="-fx-background-radius: 10; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.5), 10, 0.5, 0, 0); -fx-background-color: #04a9de;" AnchorPane.leftAnchor="231.0" AnchorPane.rightAnchor="-191.0000000000001">
+                  <children>
+                      <Label layoutX="193.0" layoutY="14.0" text="Total Appointments" textFill="#05475b">
+                          <font>
+                              <Font name="Arial Rounded MT Bold" size="24.0" />
+                          </font>
+                      </Label>
+                  <TableView fx:id="appointmentsTable" layoutX="29.0" layoutY="46.0" prefHeight="426.0" prefWidth="541.0">
+                    <columns>
+                      <TableColumn fx:id="patientNameColumn" prefWidth="165.0" text="Patient Name" />
+                      <TableColumn fx:id="dateColumn" prefWidth="115.20001220703125" text="Date" />
+                        <TableColumn fx:id="timeColumn" prefWidth="117.39996337890625" text="Time" />
+                        <TableColumn fx:id="statusColumn" prefWidth="141.0" text="Status" />
+                    </columns>
+                  </TableView>
+                  <TextField fx:id="searchField" layoutX="615.0" layoutY="94.0" promptText="Search Patient..." />
+                  </children>
+                  <opaqueInsets>
+                      <Insets />
+                  </opaqueInsets>
+              </Pane>
+              <Pane layoutY="-5.0" minHeight="-Infinity" prefHeight="536.0" prefWidth="218.0" style="-fx-background-color: #0397C7; -fx-border-radius: 45;" AnchorPane.rightAnchor="632.0">
+                  <children>
+                  <ImageView fitHeight="80.0" fitWidth="80.0" layoutX="69.0" layoutY="14.0">
+                     <image>
+                        <Image url="@../image/logo.jpeg" />
+                     </image>
+                  </ImageView>
+                  <Text fill="#05475b" layoutX="48.0" layoutY="125.0" strokeType="OUTSIDE" strokeWidth="0.0" text="docnet.">
+                     <font>
+                        <Font name="Arial Rounded MT Bold" size="33.0" />
+                     </font>
+                  </Text>
+                  <Button fx:id="logoutButton" layoutX="25.0" layoutY="475.0" mnemonicParsing="false" onAction="#logoutButtonClicked" prefHeight="25.0" prefWidth="168.0" style="-fx-background-radius: 20;" text="Logout" textFill="#0237c7">
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                     <font>
+                        <Font name="Arial Rounded MT Bold" size="14.0" />
+                     </font>
+                  </Button>
+                  <Label fx:id="dashboardButton" layoutX="31.0" layoutY="201.0" onDragDetected="#dashboardRedirectClicked" text="Dashboard" textFill="#05475b">
+                     <font>
+                        <Font name="Arial Rounded MT Bold" size="24.0" />
+                     </font>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </Label>
+                  <Label fx:id="appointmentsButton" layoutX="25.0" layoutY="237.0" onDragDetected="#appointmentsRedirectClicked" text="Appointments" textFill="#05475b">
+                     <font>
+                        <Font name="Arial Rounded MT Bold" size="24.0" />
+                     </font>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </Label>
+                  <Label fx:id="manageDoctorsButton" layoutX="13.0" layoutY="285.0" onDragDetected="#manageDoctorsRedirectClicked" text="Manage Doctors" textFill="#05475b">
+                     <font>
+                        <Font name="Arial Rounded MT Bold" size="24.0" />
+                     </font>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </Label>
+                  <Separator layoutX="7.0" layoutY="228.0" prefWidth="200.0" />
+                  <Separator layoutX="6.0" layoutY="272.0" minHeight="-Infinity" prefHeight="1.0" prefWidth="200.0" />
+                  <Separator layoutX="6.0" layoutY="322.0" prefWidth="200.0" />
+                  <Label fx:id="profileButton" layoutX="71.0" layoutY="334.0" onDragDetected="#profileRedirectClicked" text="Profile" textFill="#05475b">
+                     <font>
+                        <Font name="Arial Rounded MT Bold" size="24.0" />
+                     </font>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </Label>
+                  </children>
+              </Pane>
+          </children>
+      </AnchorPane>
+   </children>
+</AnchorPane>
