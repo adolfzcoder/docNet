@@ -3,9 +3,11 @@ package auth;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
+import javafx.scene.input.MouseEvent;
 import models.User;
 import storage.SystemManager;
 import utils.AlertHelper;
+import utils.NavigatorHelper;
 
 public class LoginController {
 
@@ -16,6 +18,11 @@ public class LoginController {
     private TextField password;
 
 
+
+    @FXML
+    void switchToSignUpPage(MouseEvent event) {
+        NavigatorHelper.loadScene("auth/UserSplitSignUp.fxml", "Sign Up");
+    }
     @FXML
     void loginButtonClicked(ActionEvent event) {
         System.out.println("Login button clicked");

@@ -51,7 +51,7 @@ public class PatientSignUpController {
     }
 
     @FXML
-    void loginClicked(MouseEvent event) {
+    void switchToLoginPage(MouseEvent event) {
         NavigatorHelper.loadScene("auth/login.fxml", "Login");
     }
 

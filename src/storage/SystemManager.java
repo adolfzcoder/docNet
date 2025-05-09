@@ -189,6 +189,7 @@ public class SystemManager {
 
     public static void addOffice(Doctor registeringUser) {
         DataBaseManager.insertOffice(registeringUser.getOfficeName(), registeringUser.getDoctorID());
+        System.out.println("succesfully added to offices");
         offices.add( new Office(registeringUser.getOfficeName()));
     }
 
@@ -399,17 +400,13 @@ public class SystemManager {
         int doctorID = DataBaseManager.insertDoctor(doctor); // inserts user too
 
         if (doctorID != -1) {
-            Office office = new Office(doctor.getOfficeName());
-            // office.setOfficeName(doctor.getOfficeName());
-            office.setDoctorID(doctorID);
-
-            // DataBaseManager.insertOffice(office, doctor);
-            SystemManager.addOffice(doctor);
+            DataBaseManager.insertOffice(doctor.getOfficeName(), doctorID);
             System.out.println("Doctor and Office inserted");
         } else {
             System.out.println("Failed to insert Doctor");
         }
     }
+
     public static ArrayList<Doctor> getApprovedDoctors(){
         return approvedDoctors;
     }

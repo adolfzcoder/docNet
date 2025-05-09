@@ -1,6 +1,8 @@
 package doctormodules;
 
 import Main.App;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
@@ -142,6 +144,9 @@ public class DoctorDashboardController {
         columnTime.setCellValueFactory(new PropertyValueFactory<>("time"));
         columnAppointmentStatus.setCellValueFactory(new PropertyValueFactory<>("status"));
 
+        ArrayList<Appointment> appointmentArrayList = SystemManager.getAppointments();
+        ObservableList<Appointment> observableAppointments  = FXCollections.observableArrayList(appointmentArrayList);
+        tableAppointments.setItems(observableAppointments );
 
     }
 

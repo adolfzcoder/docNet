@@ -285,25 +285,30 @@ public class DataBaseManager {
 
 
     public static void insertPatient(Patient patient) {
-            String query = "INSERT INTO patient (medicalAidNumber, balance, userID) VALUES (?, ?, ?)";
+        String query = "INSERT INTO patient (medicalAidNumber, balance, userID) VALUES (?, ?, ?)";
 
-            try (Connection conn = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
-                 PreparedStatement ps = conn.prepareStatement(query)) {
+        try (Connection conn = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
+             PreparedStatement ps = conn.prepareStatement(query)) {
 
-                int userID = insertUser(new User(patient.getFirstName(), patient.getLastName(), patient.getPhoneNumber(), patient.getTelephone(), patient.getDob(), patient.getApproved(), patient.getUserType(), patient.getEmail(), patient.getPassword(), patient.getGender()));
-                if (userID != -1) {
-                    patient.setUserID(userID);
-                    insertPatient(patient);
-                }
+            int userID = insertUser(new User(
+                    patient.getFirstName(), patient.getLastName(), patient.getPhoneNumber(),
+                    patient.getTelephone(), patient.getDob(), patient.getApproved(),
+                    patient.getUserType(), patient.getEmail(), patient.getPassword(), patient.getGender()
+            ));
+
+            if (userID != -1) {
+                patient.setUserID(userID); // assign new user ID
+
                 ps.setInt(1, patient.getMedicalAidNumber());
                 ps.setDouble(2, patient.getBalance());
                 ps.setInt(3, patient.getUserID());
 
                 ps.executeUpdate();
-            } catch (SQLException e) {
-                e.printStackTrace();
             }
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
+    }
 
 
     public static int insertDoctor(Doctor doctor) {
@@ -327,6 +332,7 @@ public class DataBaseManager {
             ));
 
             if (userID != -1) {
+                System.out.println("User inserted, now doctor");
                 doctor.setUserID(userID);
 
                 ps.setString(1, doctor.getMedicalCertificate());
@@ -340,7 +346,13 @@ public class DataBaseManager {
                 if (rs.next()) {
                     generatedDoctorID = rs.getInt(1);
                     doctor.setDoctorID(generatedDoctorID);
+
+                    if (generatedDoctorID != -1) {
+                        insertOffice(doctor.getOfficeName(), generatedDoctorID);
+                    }
                 }
+
+                insertOffice(doctor.getOfficeName(), generatedDoctorID);
             }
 
         } catch (SQLException e) {
@@ -351,7 +363,7 @@ public class DataBaseManager {
     }
 
     public static void insertOffice(String officeName, int doctorID) {
-        String query = "INSERT INTO office (name, doctorID, balance) VALUES (?, ?)";
+        String query = "INSERT INTO office (name, doctorID, balance) VALUES (?, ?, ?)";
 
         try (Connection conn = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
              PreparedStatement ps = conn.prepareStatement(query)) {
