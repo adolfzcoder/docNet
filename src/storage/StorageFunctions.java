@@ -104,18 +104,6 @@ public class StorageFunctions {
     }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
     //patients
     public static int countPrescriptions(){
         ArrayList<Prescription> allPrescriptions = SystemManager.getPrescriptions();
@@ -139,4 +127,25 @@ public class StorageFunctions {
         return String.valueOf(count);
 
     }
+    public int getTotalAppointments(int patientID,int appointmentID, ArrayList<Appointment> appointments) {
+        int totalAppointments =0;
+        for (Appointment appt : SystemManager.getAppointments()) {
+            if (appt.getPatientID() == patientID && appt.getAppointmentID() == appointmentID) {
+                totalAppointments++;
+            }
+        }
+        return totalAppointments;
+    }
+
+    public int getTotalPrescriptions(int patientID, ArrayList<Prescription> prescriptions) {
+        int totalPrescriptions = 0;
+        for (Prescription prescription : prescriptions) {
+            if (prescription.getPatientID() == patientID) {
+                totalPrescriptions++;
+            }
+
+        }
+        return totalPrescriptions;
+    }
 }
+
