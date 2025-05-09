@@ -44,6 +44,16 @@ public class Doctor extends User {
         this.isBooked = false;
         this.officeID = -1;
     }
+
+    public Doctor(int userID, int doctorID, String certificate, int yearsXP, String specialisation, String firstName, String lastName, String phoneNumber, String telephone, String dob, boolean b, String doctor, String email, String password, String gender, boolean isBooked) {
+
+    super(userID,firstName, lastName, phoneNumber, telephone, dob, b, doctor, email, password, gender);
+        setYearsOfXP(yearsXP);
+        this.doctorID = doctorID;
+        this.specialisation = specialisation;
+        this.isBooked = isBooked;
+    }
+
     public String getOfficeName() {
         return officeName;
     }

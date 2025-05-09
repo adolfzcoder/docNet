@@ -25,6 +25,14 @@ public class Patient extends User {
         this.patientID = 0;
 
     }
+
+    public Patient(int userID, int patientID, int medAidNumber, String firstName, String lastName, String phoneNumber, String telephone, String dob, boolean b, String patient, String email, String password, String gender, double balance) {
+        super(userID,firstName, lastName, phoneNumber, telephone, dob, b, patient, email, password, gender);
+        this.medicalAidNumber = medAidNumber;
+        this.patientID = patientID;
+
+    }
+
     @Override
     public void setUserTypeID(int userTypeID){
         this.patientID = userTypeID;
