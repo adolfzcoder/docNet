@@ -2,8 +2,6 @@ package storage;
 
 import models.*;
 
-import java.lang.reflect.Array;
-import java.time.LocalDate;
 import java.util.ArrayList;
 
 public class StorageFunctions {
@@ -129,5 +127,16 @@ public class StorageFunctions {
             }
         }
         return count;
+    }
+
+    public String countTotalCompletedAppointmentsPatients() {
+        int count =0;
+        for( Appointment appt : sys.getAppointments()){
+            if(appt.getStatus().equals("COMPLETED") && appt.getPatientID()==sys.getSession().getFirst().getUserTypeID()){
+                count ++;
+            }
+        }
+        return String.valueOf(count);
+
     }
 }

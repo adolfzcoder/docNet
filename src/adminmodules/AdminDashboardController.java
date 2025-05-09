@@ -7,6 +7,10 @@ import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 import javafx.collections.ObservableList;
 import models.Appointment;
+import models.User;
+import storage.DataBaseManager;
+import storage.StorageFunctions;
+import storage.SystemManager;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -32,31 +36,31 @@ public class AdminDashboardController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         username.setText("Admin"); // Replace this dynamically after admin login
 
-        columnPatientName.setCellValueFactory(cellData -> cellData.getValue().patientID());
-        columnDate.setCellValueFactory(cellData -> cellData.getValue().dateProperty());
-        columnTime.setCellValueFactory(cellData -> cellData.getValue().timeProperty());
-        columnAppointmentStatus.setCellValueFactory(cellData -> cellData.getValue().statusProperty());
+//        columnPatientName.setCellValueFactory(cellData -> cellData.getValue().patientID());
+//        columnDate.setCellValueFactory(cellData -> cellData.getValue().dateProperty());
+//        columnTime.setCellValueFactory(cellData -> cellData.getValue().timeProperty());
+//        columnAppointmentStatus.setCellValueFactory(cellData -> cellData.getValue().statusProperty());
 
         loadDashboardData();
     }
 
     private void loadDashboardData() {
-        ObservableList<Appointment> appointments = DataBaseManager.getInstance().getAllAppointments();
+        StorageFunctions storage = new StorageFunctions();
+        User session = SystemManager.getSession().getFirst();
+        ObservableList<Appointment> appointments = (ObservableList<Appointment>) DataBaseManager.getAppointments();
         tableAppointments.setItems(appointments);
 
         IDtotalAppointments.setText(String.valueOf(appointments.size()));
-        IDCompletedAppointments.setText(String.valueOf(countAppointmentsByStatus(appointments, "Completed")));
-        IDPendingAppointments.setText(String.valueOf(countAppointmentsByStatus(appointments, "Pending")));
-        IDAcceptedAppointments.setText(String.valueOf(countAppointmentsByStatus(appointments, "Accepted")));
-        IDDeniedAppointments.setText(String.valueOf(countAppointmentsByStatus(appointments, "Rejected")));
+        IDCompletedAppointments.setText(String.valueOf(storage.countTotalAppointmentsCompletedDoctors(session.getUserTypeID())));
+        IDPendingAppointments.setText(String.valueOf(session.getUserTypeID()));
+        IDAcceptedAppointments.setText(String.valueOf(session.getUserTypeID()));
+        IDDeniedAppointments.setText(String.valueOf(session.getUserTypeID()));
 
-        IDOfficeBalance.setText(String.valueOf(DataBaseManager.getInstance().getTotalOfficeBalance()));
-        IDRating.setText(String.format("%.2f", DataBaseManager.getInstance().getAverageDoctorRating()));
+        IDOfficeBalance.setText(storage.getOfficeBalance(session.getUserTypeID()) + "");
+        IDRating.setText(String.format(storage.averageDoctorRating(session.getUserTypeID()) + ""));
     }
 
-    private int countAppointmentsByStatus(ObservableList<Appointment> list, String status) {
-        return (int) list.stream().filter(a -> a.getStatus().equalsIgnoreCase(status)).count();
-    }
+
 
     @FXML private void totalAppointmentsClicked(MouseEvent event) {}
     @FXML private void todaysAppointmentsClicked(MouseEvent event) {}

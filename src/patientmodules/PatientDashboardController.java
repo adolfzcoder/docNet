@@ -7,8 +7,12 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Text;
-import models.User;
+import models.Appointment;
+import storage.StorageFunctions;
 import storage.SystemManager;
+
+import java.time.LocalDate;
+import java.time.LocalTime;
 
 public class PatientDashboardController {
 
@@ -16,36 +20,43 @@ public class PatientDashboardController {
     private Label IDCompletedAppointments;
 
     @FXML
-    private Label IDRating1;
-
-    @FXML
     private Label IDtotalAppointments;
 
     @FXML
-    private TableColumn<?, ?> columnAppointmentStatus;
+    private TableColumn<Appointment, String> columnAppointmentStatus;
 
     @FXML
-    private TableColumn<?, ?> columnDate;
+    private TableColumn<Appointment, LocalDate> columnDate;
 
     @FXML
-    private TableColumn<?, ?> columnPatientName;
+    private TableColumn<Appointment, String> columnPatientName;
 
     @FXML
-    private TableColumn<?, ?> columnTime;
+    private TableColumn<Appointment, LocalTime> columnTime;
 
     @FXML
-    private TableView<?> tableAppointments;
+    private TableView<Appointment> tableAppointments;
 
     @FXML
     private Text username;
 
     @FXML
-    void appointmentsRedirectClicked(MouseEvent event) {
+    void bookNewAppointment(ActionEvent event) {
+
+    }
+
+    @FXML
+    void cancelAppointment(ActionEvent event) {
 
     }
 
     @FXML
     void dashboardRedirectClicked(MouseEvent event) {
+
+    }
+
+    @FXML
+    void editAppointment(ActionEvent event) {
 
     }
 
@@ -60,7 +71,12 @@ public class PatientDashboardController {
     }
 
     @FXML
-    void profileRedirectClicked(MouseEvent event) {
+    void rateDoctorClicked(MouseEvent event) {
+
+    }
+
+    @FXML
+    void searchDoctorClicked(MouseEvent event) {
 
     }
 
@@ -73,17 +89,14 @@ public class PatientDashboardController {
     void totalAppointmentsClicked(MouseEvent event) {
 
     }
-
     @FXML
     void initialize() {
 
-        User session = SystemManager.getSession().get(0);
+        StorageFunctions storage = new StorageFunctions();
 
-        String uname = session.getFirstName();
-
-
-        username.setText( uname );
-
+        username.setText("Adolf");
+        IDCompletedAppointments.setText( String.format(storage.countTotalCompletedAppointmentsPatients()));
+        IDtotalAppointments.setText( String.format(String.valueOf(storage.countTotalAppointmentsForPatient(Integer.parseInt(String.valueOf(SystemManager.getSession().getFirst().getUserTypeID()))))) );
     }
 
 }

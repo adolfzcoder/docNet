@@ -141,7 +141,7 @@ public class AuthFunctions {
 
                 break;
             case "PATIENT":
-                NavigatorHelper.loadScene("patientmodules/patientDashboard.fxml", "Doctor Dashboard");
+                NavigatorHelper.loadScene("patientmodules/patientDashboard.fxml", "Patient Dashboard");
 
                 break;
             default:
