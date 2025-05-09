@@ -14,7 +14,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="530.0" prefWidth="750.0" style="-fx-background-color: #F8FAFC;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="patientmodules.PatientDashboard">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="530.0" prefWidth="750.0" style="-fx-background-color: #F8FAFC;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="patientmodules.PatientDashboardController">
     <children>
         <Pane layoutX="234.0" layoutY="8.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="515.0" prefWidth="502.0" style="-fx-background-radius: 10; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.5), 10, 0.5, 0, 0); -fx-background-color: #04a9de;" AnchorPane.leftAnchor="234.0" AnchorPane.rightAnchor="14.0">
             <children>
@@ -35,7 +35,7 @@
                         <Image url="@../image/icons8-file-prescription-50.png" />
                      </image>
                   </ImageView>
-                  <Label id="countPrescription" fx:id="IDtotalAppointments" layoutX="75.0" layoutY="23.0" prefHeight="61.0" prefWidth="68.0" text="11" textFill="#05475b">
+                  <Label id="countPrescription" fx:id="IDtotalAppointments" layoutX="75.0" layoutY="23.0" prefHeight="61.0" prefWidth="68.0" text="0" textFill="#05475b">
                      <font>
                         <Font name="Arial Rounded MT Bold" size="36.0" />
                      </font>
@@ -54,7 +54,7 @@
                         <Font name="Arial Rounded MT Bold" size="18.0" />
                      </font>
                   </Label>
-                  <Label fx:id="IDCompletedAppointments" layoutX="67.0" layoutY="37.0" prefHeight="22.0" prefWidth="25.0" text="2" textFill="#05475b">
+                  <Label fx:id="IDCompletedAppointments" layoutX="67.0" layoutY="37.0" prefHeight="22.0" prefWidth="25.0" text="0" textFill="#05475b">
                      <font>
                         <Font name="Arial Rounded MT Bold" size="36.0" />
                      </font>

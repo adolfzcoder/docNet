@@ -73,7 +73,7 @@ public class AuthFunctions {
                 // admin
                 // the admin is inserted into the system manager list, which also inserts into the db
                 SystemManager.addAdmin((Admin) registeringUser);
-                System.out.println("Inserted Admin Succesfully");
+                System.out.println("Inserted Admin Successfully");
                 AlertHelper.showSuccess("Successfully registered");
 
             }
