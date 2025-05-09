@@ -50,10 +50,8 @@ CREATE TABLE doctor(
                        yearsOfExperience INT,
                        specialisation VARCHAR(255),
 
-                       officeID INT,
                        userID INT,
                        CONSTRAINT fk_doctor_office_id FOREIGN KEY (userID) REFERENCES user(userID),
-                       CONSTRAINT fk_doctor_user_id FOREIGN KEY (officeID) REFERENCES office(officeID)
 );
 
 

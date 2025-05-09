@@ -169,9 +169,12 @@ public class SystemManager {
         }
     }
 
+    public static void addOffice(Doctor registeringUser) {
+        DataBaseManager.insertOffice(registeringUser.getOfficeName(), registeringUser.getDoctorID());
+    }
 
 
-public int findOfficeIDByDoctorID(int doctorID){
+    public int findOfficeIDByDoctorID(int doctorID){
         int officeID = 0;
         for(Doctor dr: doctors){
 
@@ -382,13 +385,20 @@ public int findOfficeIDByDoctorID(int doctorID){
         System.out.println(message);
         return message;
     }
-    public static String addDoctor(Doctor dr) {
-        doctors.add(dr);
-        DataBaseManager.insertDoctor(dr);
+    public static void addDoctor(Doctor doctor) {
+        int doctorID = DataBaseManager.insertDoctor(doctor); // inserts user too
 
-        String message = "Doctor was added successfully";
-        System.out.println(message);
-        return message;
+        if (doctorID != -1) {
+            Office office = new Office(doctor.getOfficeName());
+            // office.setOfficeName(doctor.getOfficeName());
+            office.setDoctorID(doctorID);
+
+            // DataBaseManager.insertOffice(office, doctor);
+            SystemManager.addOffice(doctor);
+            System.out.println("Doctor and Office inserted");
+        } else {
+            System.out.println("Failed to insert Doctor");
+        }
     }
     public static ArrayList<Doctor> getApprovedDoctors(){
         return approvedDoctors;

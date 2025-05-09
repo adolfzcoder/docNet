@@ -7,12 +7,9 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import models.*;
 import patientmodules.PatientDashboard;
 import storage.SystemManager;
-import models.Admin;
-import models.Doctor;
-import models.User;
-import models.Patient;
 import utils.AlertHelper;
 import utils.NavigatorHelper;
 
@@ -63,7 +60,9 @@ public class AuthFunctions {
                 // the doctor is inserted into the system manager list, which also inserts into the db
 
                 SystemManager.addDoctor((Doctor) registeringUser);
+                SystemManager.addOffice((Doctor) registeringUser);
                 SystemManager.addToPendingDoctorList((Doctor) registeringUser);
+
 
                 System.out.println("Inserted Doctor Successfully");
                 AlertHelper.showSuccess("Successfully registered");

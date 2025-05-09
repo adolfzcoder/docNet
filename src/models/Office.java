@@ -14,13 +14,19 @@ public class Office {
     private LocalTime closingHours;
     private double accountBalance;
     private ArrayList<Appointment> appointments;
-    public Office(int officeID, String officeName, String officeLocation, LocalTime openingHours, LocalTime closingHours, double accountBalance) {
+    private int doctorID;
+
+    public Office(String officeName){
+        this.officeName = officeName;
+    }
+    public Office(int officeID, String officeName, String officeLocation, LocalTime openingHours, LocalTime closingHours, double accountBalance, int doctorID) {
         this.officeID = officeID;
         this.officeName = officeName;
         this.officeLocation = officeLocation;
         this.openingHours = openingHours;
         this.closingHours = closingHours;
         this.accountBalance = accountBalance;
+        this.doctorID = doctorID;
 
 
         //
@@ -49,6 +55,8 @@ public class Office {
     public double getAccountBalance() { return accountBalance; }
 
     // Setters
+
+    public void setDoctorID(int doctorID) { this.doctorID = doctorID; }
     public void setOfficeID(int officeID) { this.officeID = officeID; }
     public void setOfficeName(String officeName) { this.officeName = officeName; }
     public void setOfficeLocation(String officeLocation) { this.officeLocation = officeLocation; }

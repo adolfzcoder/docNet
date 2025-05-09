@@ -30,7 +30,7 @@
                   <TableColumn prefWidth="220.0" text="Time" />
               </columns>
             </TableView>
-            <Label fx:id="dynamicTotalOrPendingOrApprovedOrDeclinedAppointment" layoutX="134.0" layoutY="14.0" text="Total" textFill="#05475b">
+            <Label fx:id="dynamicTotalOrPendingOrApprovedOrDeclinedAppointment" layoutX="126.0" layoutY="14.0" text="Accepted" textFill="#05475b">
                <font>
                   <Font name="Arial Rounded MT Bold" size="24.0" />
                </font>
@@ -76,18 +76,9 @@
                   <Cursor fx:constant="HAND" />
                </cursor>
             </Label>
-            <Label layoutX="13.0" layoutY="285.0" onDragDetected="#manageDoctorsRedirectClicked" text="Manage Doctors" textFill="#05475b">
-               <font>
-                  <Font name="Arial Rounded MT Bold" size="24.0" />
-               </font>
-               <cursor>
-                  <Cursor fx:constant="HAND" />
-               </cursor>
-            </Label>
             <Separator layoutX="7.0" layoutY="228.0" prefWidth="200.0" />
             <Separator layoutX="6.0" layoutY="272.0" minHeight="-Infinity" prefHeight="1.0" prefWidth="200.0" />
-            <Separator layoutX="6.0" layoutY="322.0" prefWidth="200.0" />
-            <Label layoutX="71.0" layoutY="334.0" onDragDetected="#profileRedirectClicked" text="Profile" textFill="#05475b">
+            <Label layoutX="68.0" layoutY="284.0" onDragDetected="#profileRedirectClicked" text="Profile" textFill="#05475b">
                <font>
                   <Font name="Arial Rounded MT Bold" size="24.0" />
                </font>

@@ -11,6 +11,7 @@ public class Doctor extends User {
     private double totalRating;
     private int numberOfRatings;
     private boolean isBooked=false;
+    private String officeName;
 
     private int officeID;
 
@@ -37,14 +38,21 @@ public class Doctor extends User {
 
     }
 
-    public Doctor(String medicalCertificate, int yearsOfXP, String specialisation, String firstName, String lastName, String phoneNumber, String telephone, String dob, String email, String password, String gender, String officeName){
+    public Doctor(String medicalCertificate, int yearsOfXP, String specialisation, String firstName, String lastName, String phoneNumber, String telephone, String dob, String email, String password, String gender){
         super(firstName, lastName, phoneNumber, telephone, dob, "DOCTOR", email, password, gender);
         setMedicalCertificate(medicalCertificate);
         setYearsOfXP(yearsOfXP);
         this.doctorID = 0;
         this.specialisation = specialisation;
         this.isBooked = false;
-        this.officeID = SystemManager.findOfficeIdByName(officeName);
+        this.officeID = -1;
+    }
+    public String getOfficeName() {
+        return officeName;
+    }
+
+    public void setOfficeName(String officeName) {
+        this.officeName = officeName;
     }
 
     public int getDoctorID() {
