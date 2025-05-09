@@ -52,7 +52,7 @@
                         <Font name="Arial Rounded MT Bold" size="14.0" />
                     </font>
                 </TextField>
-                <PasswordField id="password" fx:id="password" layoutX="262.0" layoutY="257.0" prefHeight="25.0" prefWidth="216.0" promptText="Password">
+                <PasswordField id="password" fx:id="password" layoutX="262.0" layoutY="298.0" prefHeight="25.0" prefWidth="216.0" promptText="Password">
                     <cursor>
                         <Cursor fx:constant="TEXT" />
                     </cursor>
@@ -60,7 +60,7 @@
                         <Font name="Arial Rounded MT Bold" size="14.0" />
                     </font>
                 </PasswordField>
-                <PasswordField fx:id="confirmPassword" layoutX="20.0" layoutY="257.0" prefHeight="25.0" prefWidth="216.0" promptText="Confirm Password">
+                <PasswordField fx:id="confirmPassword" layoutX="22.0" layoutY="298.0" prefHeight="25.0" prefWidth="216.0" promptText="Confirm Password">
                     <cursor>
                         <Cursor fx:constant="TEXT" />
                     </cursor>
@@ -82,14 +82,6 @@
                     </cursor>
                 </DatePicker>
                 <ComboBox fx:id="gender" layoutX="21.0" layoutY="119.0" prefHeight="25.0" prefWidth="216.0" promptText="Gender" />
-                <TextField id="email" fx:id="medicalCertificate" layoutX="262.0" layoutY="163.0" prefHeight="25.0" prefWidth="216.0" promptText="Medical Certificate">
-                    <cursor>
-                        <Cursor fx:constant="TEXT" />
-                    </cursor>
-                    <font>
-                        <Font name="Arial Rounded MT Bold" size="14.0" />
-                    </font>
-                </TextField>
                 <Label accessibleRole="HYPERLINK" layoutX="271.0" layoutY="368.0" onDragDetected="#loginClicked" text="Already have an account? Login" textFill="#05475b" underline="true">
                     <cursor>
                         <Cursor fx:constant="HAND" />
@@ -98,7 +90,7 @@
                         <Font name="Arial Rounded MT Bold" size="14.0" />
                     </font>
                 </Label>
-                <TextField id="email" fx:id="yearsOfXp" layoutX="21.0" layoutY="213.0" prefHeight="25.0" prefWidth="216.0" promptText="Years of Experience">
+                <TextField id="email" fx:id="yearsOfXp" layoutX="262.0" layoutY="163.0" prefHeight="25.0" prefWidth="216.0" promptText="Years of Experience">
                     <cursor>
                         <Cursor fx:constant="TEXT" />
                     </cursor>
@@ -114,7 +106,7 @@
                         <Font name="Arial Rounded MT Bold" size="14.0" />
                     </font>
                 </TextField>
-                <TextField id="email" fx:id="officeNameID" layoutX="22.0" layoutY="298.0" prefHeight="25.0" prefWidth="216.0" promptText="Office Name">
+                <TextField id="email" fx:id="officeNameID" layoutX="22.0" layoutY="206.0" prefHeight="25.0" prefWidth="216.0" promptText="Office Name">
                     <cursor>
                         <Cursor fx:constant="TEXT" />
                     </cursor>
@@ -122,7 +114,7 @@
                         <Font name="Arial Rounded MT Bold" size="14.0" />
                     </font>
                 </TextField>
-                <TextField id="email" fx:id="phoneNumberID" layoutX="262.0" layoutY="298.0" prefHeight="25.0" prefWidth="216.0" promptText="Phone Number">
+                <TextField id="email" fx:id="phoneNumberID" layoutX="262.0" layoutY="257.0" prefHeight="25.0" prefWidth="216.0" promptText="Phone Number">
                     <cursor>
                         <Cursor fx:constant="TEXT" />
                     </cursor>
@@ -130,7 +122,7 @@
                         <Font name="Arial Rounded MT Bold" size="14.0" />
                     </font>
                 </TextField>
-                <TextField id="email" fx:id="telephoneID" layoutX="22.0" layoutY="341.0" prefHeight="25.0" prefWidth="216.0" promptText="Telephone">
+                <TextField id="email" fx:id="telephoneID" layoutX="22.0" layoutY="257.0" prefHeight="25.0" prefWidth="216.0" promptText="Telephone">
                     <cursor>
                         <Cursor fx:constant="TEXT" />
                     </cursor>

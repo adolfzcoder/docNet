@@ -45,7 +45,14 @@ public class AuthFunctions {
             System.out.println("Password after hashing: "+registeringUser.getPassword());
 
             SystemManager.startSession(registeringUser);
-            SystemManager.addUser(registeringUser);
+//            if(registeringUser.getUserType().equals("DOCTOR")){
+//                SystemManager.addUser( (Doctor) registeringUser);
+//
+//
+//            }
+//            if(registeringUser.getUserType().equals("PATIENT")){
+//                SystemManager.addUser( (Patient) registeringUser);
+//            }
 
             if(registeringUser.getUserType().equalsIgnoreCase("DOCTOR")){
 
@@ -75,7 +82,7 @@ public class AuthFunctions {
                 AlertHelper.showSuccess("Successfully registered");
 
             }
-
+            NavigatorHelper.loadScene("auth/login.fxml", "Login");
         }else{
             System.out.println("Email exists");
             AlertHelper.showError("Email already exists");
@@ -110,7 +117,6 @@ public class AuthFunctions {
         }
         SystemManager.startSession(user);
 
-        // Successful login
         System.out.println("Found user");
         System.out.println("Logged in user");
         System.out.println("Starting session...");

@@ -13,6 +13,7 @@ public class Rating {
 
 
 
+
    public Rating (int ratingID, int patientID, int doctorID, String review,double score ){
        setRatingID(ratingID);
        setPatientID(patientID);

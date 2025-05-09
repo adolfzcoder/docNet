@@ -5,7 +5,6 @@ import validations.DoctorValidate;
 
 public class Doctor extends User {
     private int doctorID;
-    private String medicalCertificate;
     private int yearsOfXP =0;
     private String specialisation;
     private double totalRating;
@@ -20,12 +19,11 @@ public class Doctor extends User {
 
     public DoctorValidate validate = new DoctorValidate();
 
-    public Doctor(int userID, int doctorID, String medicalCertificate, int yearsOfXP, String specialisation, String firstName, String lastName, String phoneNumber, String telephone, String dob, boolean isApproved, String userType, String email, String password, String gender, boolean isBooked) {
+    public Doctor(int userID, int doctorID,  int yearsOfXP, String specialisation, String firstName, String lastName, String phoneNumber, String telephone, String dob, boolean isApproved, String userType, String email, String password, String gender, boolean isBooked) {
 
 
 
         super(userID,firstName, lastName, phoneNumber, telephone, dob, isApproved, userType, email, password, gender);
-        setMedicalCertificate(medicalCertificate);
         setYearsOfXP(yearsOfXP);
         this.doctorID = doctorID;
         this.specialisation = specialisation;
@@ -38,9 +36,8 @@ public class Doctor extends User {
 
     }
 
-    public Doctor(String medicalCertificate, int yearsOfXP, String specialisation, String firstName, String lastName, String phoneNumber, String telephone, String dob, String email, String password, String gender){
+    public Doctor( int yearsOfXP, String specialisation, String firstName, String lastName, String phoneNumber, String telephone, String dob, String email, String password, String gender){
         super(firstName, lastName, phoneNumber, telephone, dob, "DOCTOR", email, password, gender);
-        setMedicalCertificate(medicalCertificate);
         setYearsOfXP(yearsOfXP);
         this.doctorID = 0;
         this.specialisation = specialisation;
@@ -76,7 +73,6 @@ public class Doctor extends User {
         return "Doctor{" +
                 "Name='"+getFirstName()+" "+ getLastName()+ '\'' +
         "doctorID='" + doctorID + '\'' +
-                "medicalCertificate='" + medicalCertificate + '\'' +
                 ", yearsOfXP=" + yearsOfXP +
                 ", specialisation='" + specialisation + '\'' +
                 ", validate=" + validate +
@@ -88,13 +84,7 @@ public class Doctor extends User {
     }
 
 
-    public String getMedicalCertificate() {
-        return this.medicalCertificate;
-    }
 
-    public void setMedicalCertificate(String medicalCertificate) {
-        this.medicalCertificate = medicalCertificate;
-    }
 
     public int getOfficeID() {
         return officeID;
