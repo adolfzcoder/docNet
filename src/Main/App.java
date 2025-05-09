@@ -13,8 +13,8 @@ public class App extends Application {
     @Override
     public void start(Stage stage) throws IOException {
         primaryStage = stage;
-        loadScene("auth/login.fxml", "Login");
-        //loadScene("doctormodules/DoctorSignUp.fxml", "Doctor Sign up");
+        // loadScene("auth/login.fxml", "Login");
+        loadScene("doctormodules/DoctorSignUp.fxml", "Doctor Sign up");
 
 
     }

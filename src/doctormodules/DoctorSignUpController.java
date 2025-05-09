@@ -9,6 +9,7 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import models.Doctor;
+import models.Office;
 import utils.AlertHelper;
 
 public class DoctorSignUpController {
@@ -35,19 +36,19 @@ public class DoctorSignUpController {
     private TextField medicalCertificate;
 
     @FXML
+    private TextField officeNameID;
+
+    @FXML
     private PasswordField password;
 
     @FXML
-    private PasswordField phoneNumberID;
+    private TextField phoneNumberID;
 
     @FXML
     private TextField specialisation;
 
     @FXML
-    private PasswordField telephoneID;
-
-    @FXML
-    private PasswordField textOfficeName;
+    private TextField telephoneID;
 
     @FXML
     private TextField yearsOfXp;
@@ -71,7 +72,7 @@ public class DoctorSignUpController {
             String medicalCertificateText = medicalCertificate.getText();
             String specialisationText = specialisation.getText();
             String yearsOfXpText = yearsOfXp.getText();
-            String officeNameText = textOfficeName.getText(); // This is a PasswordField; consider renaming for clarity
+            String officeNameText = officeNameID.getText(); // This is a PasswordField; consider renaming for clarity
 
             String genderText = gender.getValue() != null ? gender.getValue().toString() : "";
             String birthDayText = birthDay.getValue() != null ? birthDay.getValue().toString() : "";
@@ -81,8 +82,8 @@ public class DoctorSignUpController {
                 return;
             }
 
-            Doctor doctor = new Doctor(medicalCertificateText, years, specialisationText, firstNameText, lastNameText, phoneNumberText, telephoneText, birthDayText, emailText, passwordText, genderText, officeNameText);
-
+            Doctor doctor = new Doctor(medicalCertificateText, years, specialisationText, firstNameText, lastNameText, phoneNumberText, telephoneText, birthDayText, emailText, passwordText, genderText);
+            doctor.setOfficeName(officeNameText);
             AuthFunctions.signUp(doctor);
 
 

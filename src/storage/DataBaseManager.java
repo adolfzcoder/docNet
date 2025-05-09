@@ -196,7 +196,8 @@ public class DataBaseManager {
                             rs.getString("location"),
                             rs.getTime("openingHours").toLocalTime(),
                             rs.getTime("closingHours").toLocalTime(),
-                            rs.getDouble("accountBalance")
+                            rs.getDouble("accountBalance"),
+                            rs.getInt("doctorID")
                     );
                     offices.add(office);
                 }
@@ -284,13 +285,13 @@ public class DataBaseManager {
         }
 
 
-    public static void insertDoctor(Doctor doctor) {
+    public static int insertDoctor(Doctor doctor) {
         String query = "INSERT INTO doctor (medicalCertificatePath, yearsOfExperience, specialisation, userID) VALUES (?, ?, ?, ?)";
+        int generatedDoctorID = -1;
 
         try (Connection conn = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
-             PreparedStatement ps = conn.prepareStatement(query)) {
+             PreparedStatement ps = conn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
 
-            // Insert the user first
             int userID = insertUser(new User(
                     doctor.getFirstName(),
                     doctor.getLastName(),
@@ -305,7 +306,7 @@ public class DataBaseManager {
             ));
 
             if (userID != -1) {
-                doctor.setUserID(userID);  // Set userID in doctor
+                doctor.setUserID(userID);
 
                 ps.setString(1, doctor.getMedicalCertificate());
                 ps.setInt(2, doctor.getYearsOfXP());
@@ -313,7 +314,32 @@ public class DataBaseManager {
                 ps.setInt(4, doctor.getUserID());
 
                 ps.executeUpdate();
+
+                ResultSet rs = ps.getGeneratedKeys();
+                if (rs.next()) {
+                    generatedDoctorID = rs.getInt(1);
+                    doctor.setDoctorID(generatedDoctorID);
+                }
             }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return generatedDoctorID;
+    }
+
+    public static void insertOffice(String officeName, int doctorID) {
+        String query = "INSERT INTO office (name, doctorID) VALUES (?, ?)";
+
+        try (Connection conn = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
+             PreparedStatement ps = conn.prepareStatement(query)) {
+
+            ps.setString(1, officeName);
+            ps.setInt(2, doctorID);
+             // Set after doctor is inserted
+
+            ps.executeUpdate();
 
         } catch (SQLException e) {
             e.printStackTrace();
