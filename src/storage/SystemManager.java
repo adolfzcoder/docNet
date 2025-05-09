@@ -91,7 +91,7 @@ public class SystemManager {
             }
             return prescriptions;
         } catch (Exception e) {
-            AlertHelper.showError("Error", "Error fetching patients: " + e.getMessage());
+            // AlertHelper.showError("Error", "Error fetching patients: " + e.getMessage());
 
             System.err.println("Error fetching users: " + e.getMessage());
             return new ArrayList<>(); // Return an empty list in case of an error
@@ -105,7 +105,7 @@ public class SystemManager {
             }
             return users;
         } catch (Exception e) {
-            AlertHelper.showError("Error", "Error fetching patients: " + e.getMessage());
+            //AlertHelper.showError("Error", "Error fetching patients: " + e.getMessage());
 
             System.err.println("Error fetching users: " + e.getMessage());
             return new ArrayList<>(); // Return an empty list in case of an error
@@ -135,7 +135,7 @@ public class SystemManager {
             }
             return admins;
         } catch (Exception e) {
-            AlertHelper.showError("Error", "Error fetching patients: " + e.getMessage());
+            // AlertHelper.showError("Error", "Error fetching patients: " + e.getMessage());
 
             System.err.println("Error fetching admins: " + e.getMessage());
             return new ArrayList<>();
@@ -151,8 +151,8 @@ public class SystemManager {
 
             return patients;
         } catch (Exception e) {
-            AlertHelper.showError("Error", "Error fetching patients: " + e.getMessage());
-            System.err.println("Error fetching patients: " + e.getMessage());
+            // AlertHelper.showError("Error", "Error fetching patients: " + e.getMessage());
+            // System.err.println("Error fetching patients: " + e.getMessage());
             return new ArrayList<>();
         }
     }
@@ -165,9 +165,9 @@ public class SystemManager {
             }
             return doctors;
         } catch (Exception e) {
-            AlertHelper.showError("Error", "Error fetching patients: " + e.getMessage());
+            // AlertHelper.showError("Error", "Error fetching patients: " + e.getMessage());
 
-            System.err.println("Error fetching doctors: " + e.getMessage());
+            // System.err.println("Error fetching doctors: " + e.getMessage());
             return new ArrayList<>();
         }
     }
@@ -180,9 +180,9 @@ public class SystemManager {
             }
             return appointments;
         } catch (Exception e) {
-            AlertHelper.showError("Error", "Error fetching patients: " + e.getMessage());
+            // AlertHelper.showError("Error", "Error fetching patients: " + e.getMessage());
 
-            System.err.println("Error fetching appointments: " + e.getMessage());
+            // System.err.println("Error fetching appointments: " + e.getMessage());
             return new ArrayList<>();
         }
     }
