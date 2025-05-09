@@ -10,12 +10,13 @@ public class StorageFunctions {
     private SystemManager sys = new SystemManager();
     public int countTotalAppointmentsForDoctor(int doctorID){
         int drCount = 0;
-        for (Appointment appt : sys.getAppointments()){
+        for (Appointment appt : SystemManager.getAppointments()){
             if (appt.getDoctorID() == doctorID){
                 drCount++;
             }
 
         }
+
 
         return drCount;
 
@@ -83,6 +84,7 @@ public class StorageFunctions {
         for(Office office : sys.getOffices()){
 
             if(office.getOfficeID()==officeID){
+
                 return office.getAccountBalance();
 
             }

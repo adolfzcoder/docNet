@@ -1,7 +1,5 @@
 package auth;
 
-import adminmodules.AdminDashboard;
-import doctormodules.DoctorDashboardController;
 import models.*;
 import storage.SystemManager;
 import utils.AlertHelper;
@@ -126,7 +124,7 @@ public class AuthFunctions {
     public static void decideUserJourney(User u){
         switch(u.getUserType()){
             case "ADMIN":
-                new AdminDashboard( (Admin) u);
+                NavigatorHelper.loadScene("adminmodules/AdminDashboard.fxml", "Admin Dashboard");
                 break;
             case "DOCTOR":
 

@@ -6,6 +6,9 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.text.Text;
+import models.User;
+import storage.SystemManager;
 
 public class PatientDashboardController {
 
@@ -32,6 +35,9 @@ public class PatientDashboardController {
 
     @FXML
     private TableView<?> tableAppointments;
+
+    @FXML
+    private Text username;
 
     @FXML
     void appointmentsRedirectClicked(MouseEvent event) {
@@ -65,6 +71,18 @@ public class PatientDashboardController {
 
     @FXML
     void totalAppointmentsClicked(MouseEvent event) {
+
+    }
+
+    @FXML
+    void initialize() {
+
+        User session = SystemManager.getSession().get(0);
+
+        String uname = session.getFirstName();
+
+
+        username.setText( uname );
 
     }
 

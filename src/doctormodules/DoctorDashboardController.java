@@ -134,7 +134,8 @@ public class DoctorDashboardController {
         IDPendingAppointments.setText(String.valueOf(storage.countTotalAppointmentsPendingDoctors(doctorID)));
         IDOfficeBalance.setText(String.format("%.2f", storage.getOfficeBalance(session.getUserTypeID())));
         IDRating.setText(String.format("%.1f", storage.averageDoctorRating(doctorID)));
-        IDtotalAppointments.setText(String.valueOf(storage.countTotalAppointmentsForDoctor(doctorID)));
+
+        IDtotalAppointments.setText(String.valueOf( storage.countTotalAppointmentsForDoctor(doctorID) ));
 
         columnPatientName.setCellValueFactory(new PropertyValueFactory<>("patientName"));
         columnDate.setCellValueFactory(new PropertyValueFactory<>("date"));

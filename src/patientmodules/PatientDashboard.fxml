@@ -35,7 +35,7 @@
                         <Image url="@../image/icons8-file-prescription-50.png" />
                      </image>
                   </ImageView>
-                  <Label id="countPrescription" fx:id="IDtotalAppointments" layoutX="75.0" layoutY="23.0" prefHeight="61.0" prefWidth="68.0" text="11" textFill="#05475b">
+                  <Label id="countPrescription" fx:id="IDtotalAppointments" layoutX="75.0" layoutY="23.0" prefHeight="61.0" prefWidth="68.0" text="0" textFill="#05475b">
                      <font>
                         <Font name="Arial Rounded MT Bold" size="36.0" />
                      </font>
@@ -54,7 +54,7 @@
                         <Font name="Arial Rounded MT Bold" size="18.0" />
                      </font>
                   </Label>
-                  <Label fx:id="IDCompletedAppointments" layoutX="67.0" layoutY="37.0" prefHeight="22.0" prefWidth="25.0" text="2" textFill="#05475b">
+                  <Label fx:id="IDCompletedAppointments" layoutX="67.0" layoutY="37.0" prefHeight="22.0" prefWidth="25.0" text="0" textFill="#05475b">
                      <font>
                         <Font name="Arial Rounded MT Bold" size="36.0" />
                      </font>
@@ -106,11 +106,6 @@
                   <Image url="@../image/icons8-account-88.png" />
                </image>
             </ImageView>
-            <Label id="firstName" layoutX="363.0" layoutY="23.0" text="Hileni" textFill="#05475b">
-               <font>
-                  <Font name="Arial Rounded MT Bold" size="24.0" />
-               </font>
-            </Label>
             <Button layoutX="257.0" layoutY="91.0" mnemonicParsing="false" onAction="#logoutButtonClicked" prefHeight="27.0" prefWidth="200.0" style="-fx-background-radius: 20;" text="Reschedule Appointment" textFill="#0237c7">
                <cursor>
                   <Cursor fx:constant="HAND" />
@@ -127,6 +122,11 @@
                   <Font name="Arial Rounded MT Bold" size="14.0" />
                </font>
             </Button>
+            <Text fx:id="username" fill="#05475b" layoutX="325.0" layoutY="42.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Username " wrappingWidth="104.13671875">
+               <font>
+                  <Font name="Arial Rounded MT Bold" size="16.0" />
+               </font>
+            </Text>
             </children>
             <opaqueInsets>
                 <Insets />
