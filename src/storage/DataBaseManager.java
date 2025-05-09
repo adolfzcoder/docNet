@@ -2,13 +2,7 @@ package storage;
 
 
 
-import models.Admin;
-import models.Doctor;
-import models.Office;
-import models.Prescription;
-import models.User;
-import models.Appointment;
-import models.Patient;
+import models.*;
 import utils.EnvLoader;
 
 import java.sql.*;
@@ -206,6 +200,33 @@ public class DataBaseManager {
             }
             return offices;
         }
+
+
+    public static ArrayList<Rating> getRatings() {
+        ArrayList<Rating> ratings = new ArrayList<>();
+        try (Connection conn = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
+             Statement stmt = conn.createStatement();
+             ResultSet rs = stmt.executeQuery("SELECT * FROM ratings")) {
+
+
+
+            while (rs.next()) {
+                // int userID, int doctorID, String review,double score, LocalDateTime dateTime )
+                Rating rating = new Rating(
+                        rs.getInt("ratingID"),
+                        rs.getInt("patientID"),
+                        rs.getInt("doctorID"),
+                        rs.getString("review"),
+                        rs.getDouble("score")
+
+                );
+                ratings.add(rating);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return ratings;
+    }
 
     public static ArrayList<Prescription> getPrescriptions() {
         ArrayList<Prescription> prescriptions = new ArrayList<>();

@@ -10,6 +10,7 @@ import javafx.scene.input.MouseEvent;
 import models.Appointment;
 import utils.NavigatorHelper;
 
+import java.time.LocalDate;
 import java.time.LocalTime;
 
 public class DoctorDashboardController {
@@ -36,13 +37,13 @@ public class DoctorDashboardController {
     private Label IDtotalAppointments;
 
     @FXML
-    private TableColumn<?, ?> columnAppointmentStatus;
+    private TableColumn<Appointment, String> columnAppointmentStatus;
 
     @FXML
-    private TableColumn<?, ?> columnDate;
+    private TableColumn<Appointment, LocalDate> columnDate;
 
     @FXML
-    private TableColumn<?, ?> columnPatientName;
+    private TableColumn<Appointment, String> columnPatientName;
 
     @FXML
     private TableColumn<Appointment, LocalTime> columnTime;
