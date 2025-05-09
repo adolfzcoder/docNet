@@ -180,6 +180,27 @@ public class AuthFunctions {
     }
 
     public static boolean checkIfEmailExists(String email) {
+
+        for(Doctor drd : SystemManager.getDoctors()){
+            if(email.equalsIgnoreCase(drd.getEmail())){
+                System.out.println("Email from doctor: "+ email);
+                System.out.println("Email from DB: "+ drd.getEmail());
+                return true;
+            }
+        }
+        for(Patient ptp : SystemManager.getPatients()){
+            if(email.equalsIgnoreCase(ptp.getEmail())){
+                System.out.println("Email from patient: "+ email);
+                System.out.println("Email from DB: "+ ptp.getEmail());
+            }
+        }
+        for(Admin admn : SystemManager.getAdmins()){
+            if(email.equalsIgnoreCase(admn.getEmail())){
+                System.out.println("Email from admin: "+ email);
+                System.out.println("Email from DB: "+ admn.getEmail());
+                return true;
+            }
+        }
         for (User userDB : SystemManager.getUsers()) {
             if (email.equalsIgnoreCase(userDB.getEmail())) {
                 System.out.println("Email from user: "+ email);
