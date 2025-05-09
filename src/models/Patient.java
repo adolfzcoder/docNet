@@ -28,7 +28,10 @@ public class Patient extends User {
         this.balance = 0.0;
 
     }
-
+    @Override
+    public void setUserTypeID(int userTypeID){
+        this.patientID = userTypeID;
+    }
     public double getBalance() {
         return balance;
     }

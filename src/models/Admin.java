@@ -58,6 +58,10 @@ public class Admin extends User {
 
     }
     @Override
+    public void setUserTypeID(int userTypeID){
+        this.adminID = userTypeID;
+    }
+    @Override
     public int getUserTypeID(){
         return adminID;
     }

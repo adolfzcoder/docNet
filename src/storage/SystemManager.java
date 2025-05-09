@@ -187,10 +187,38 @@ public class SystemManager {
         }
     }
 
-    public static void addOffice(Doctor registeringUser) {
-        DataBaseManager.insertOffice(registeringUser.getOfficeName(), registeringUser.getDoctorID());
-        System.out.println("succesfully added to offices");
-        offices.add( new Office(registeringUser.getOfficeName()));
+    public static void addOffice(Doctor doctor) {
+        if (doctor.getDoctorID() <= 0) {
+            System.out.println("Cannot add office - doctor ID is invalid: " + doctor.getDoctorID());
+            return;
+        }
+
+        int officeID = DataBaseManager.insertOffice(
+                doctor.getOfficeName(),
+                "Default Location",
+                java.sql.Time.valueOf("09:00:00"),
+                java.sql.Time.valueOf("17:00:00"),
+                1000.0,
+                doctor.getDoctorID()
+        );
+
+        if (officeID != -1) {
+
+            Office newOffice = new Office(
+                    officeID,
+                    doctor.getOfficeName(),
+                    "Default Location",
+                    java.time.LocalTime.of(9, 0), // default times, can be cahnged later
+                    java.time.LocalTime.of(15, 0),
+                    1000.0,
+                    doctor.getDoctorID()
+            );
+            offices.add(newOffice);
+
+            System.out.println("Office successfully added with ID: " + officeID);
+        } else {
+            System.out.println("Failed to insert Office in database");
+        }
     }
 
 
@@ -397,13 +425,19 @@ public class SystemManager {
         return message;
     }
     public static void addDoctor(Doctor doctor) {
-        int doctorID = DataBaseManager.insertDoctor(doctor); // inserts user too
+        int doctorID = DataBaseManager.insertDoctor(doctor);
 
         if (doctorID != -1) {
-            DataBaseManager.insertOffice(doctor.getOfficeName(), doctorID);
-            System.out.println("Doctor and Office inserted");
+            // doctor created, now set the generated doctor id
+            doctor.setDoctorID(doctorID);
+
+            doctors.add(doctor);
+
+            addOffice(doctor);
+
+            System.out.println("Doctor successfully added with ID: " + doctorID);
         } else {
-            System.out.println("Failed to insert Doctor");
+            System.out.println("Failed to insert Doctor in database");
         }
     }
 
@@ -422,10 +456,15 @@ public class SystemManager {
         return Optional.empty();
     }
 
-    public static void addAdmin(Admin ad){
-        DataBaseManager.insertAdmin(ad);
-        admins.add(ad);
+    public static void addAdmin(Admin admin) {
+        int adminID = DataBaseManager.insertAdmin(admin);
 
+        if (adminID != -1) {
+            admins.add(admin);
+            System.out.println("Admin successfully added with ID: " + adminID);
+        } else {
+            System.out.println("Failed to insert Admin in database");
+        }
     }
 
     public static String addNotification(Notification notif){
@@ -443,15 +482,22 @@ public class SystemManager {
         return pendingDoctors;
     }
 
-    public static String addPatient(Patient p){
-        DataBaseManager.insertPatient(p);
-        patients.add(p);
+    public static String addPatient(Patient patient) {
+        int patientID = DataBaseManager.insertPatient(patient);
 
-        String message = "Patient successfully added";
+        if (patientID != -1) {
+            patient.setPatientID(patientID);
 
-        System.out.println(message);
-        return message;
+            patients.add(patient);
 
+            String message = "Patient successfully added with ID: " + patientID;
+            System.out.println(message);
+            return message;
+        } else {
+            String message = "Failed to insert Patient in database";
+            System.out.println(message);
+            return message;
+        }
     }
 
     public static void addRating(Rating rating){

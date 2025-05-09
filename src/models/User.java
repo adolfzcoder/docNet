@@ -74,6 +74,10 @@ public class User {
 
 
 
+    public void setUserTypeID(int userTypeID){
+        this.userID = userTypeID;
+    }
+
     @Override
     public String toString() {
         return "User{" +
