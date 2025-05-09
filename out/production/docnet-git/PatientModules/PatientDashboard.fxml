@@ -16,127 +16,123 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="530.0" prefWidth="750.0" style="-fx-background-color: #F8FAFC;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="doctormodules.DoctorDashboardController">
     <children>
-        <Pane layoutX="233.0" layoutY="7.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="515.0" prefWidth="590.0" style="-fx-background-radius: 10; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.5), 10, 0.5, 0, 0); -fx-background-color: #04a9de;" AnchorPane.leftAnchor="233.0" AnchorPane.rightAnchor="5.0">
+        <Pane layoutX="234.0" layoutY="8.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="515.0" prefWidth="502.0" style="-fx-background-radius: 10; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.5), 10, 0.5, 0, 0); -fx-background-color: #04a9de;" AnchorPane.leftAnchor="234.0" AnchorPane.rightAnchor="14.0">
             <children>
-                <Label layoutX="149.0" layoutY="14.0" text="Patient Dashboard" textFill="#05475b">
+                <Label layoutX="14.0" layoutY="23.0" text="Patient Dashboard" textFill="#05475b">
                     <font>
                         <Font name="Arial Rounded MT Bold" size="24.0" />
                     </font>
                 </Label>
-            <Pane layoutX="6.0" layoutY="414.0" minHeight="-Infinity" minWidth="-Infinity" onDragDetected="#totalAppointmentsClicked" prefHeight="89.0" prefWidth="113.0" style="-fx-background-color: #0397C7; -fx-border-color: #0AABFB; -fx-border-width: 2; -fx-border-radius: 8; -fx-border-radius: 8;">
+            <Pane layoutX="260.0" layoutY="412.0" minHeight="-Infinity" minWidth="-Infinity" onDragDetected="#totalAppointmentsClicked" prefHeight="89.0" prefWidth="217.0" style="-fx-background-color: #0397C7; -fx-border-color: #0AABFB; -fx-border-width: 2; -fx-border-radius: 8; -fx-border-radius: 8;">
                <children>
-                  <Label layoutX="34.0" layoutY="14.0" text="Total" textFill="#05475b">
+                  <Label layoutX="14.0" layoutY="12.0" text=" Total Prescriptions" textFill="#05475b">
                      <font>
                         <Font name="Arial Rounded MT Bold" size="18.0" />
                      </font>
                   </Label>
-                  <ImageView fitHeight="35.0" fitWidth="40.0" layoutY="36.0">
+                  <ImageView fitHeight="35.0" fitWidth="40.0" layoutX="14.0" layoutY="45.0">
                      <image>
-                        <Image url="@../image/icons8-appointment-64.png" />
+                        <Image url="@../image/icons8-file-prescription-50.png" />
                      </image>
                   </ImageView>
-                  <Label fx:id="IDtotalAppointments" layoutX="42.0" layoutY="25.0" prefHeight="61.0" prefWidth="72.0" text="11" textFill="#05475b">
-                     <font>
-                        <Font name="Arial Rounded MT Bold" size="52.0" />
-                     </font>
-                  </Label>
-               </children>
-            </Pane>
-            <Label layoutX="177.0" layoutY="156.0" text="Appointments" textFill="#05475b">
-               <font>
-                  <Font name="Arial Rounded MT Bold" size="24.0" />
-               </font>
-            </Label>
-            <Pane layoutX="126.0" layoutY="414.0" minHeight="-Infinity" minWidth="-Infinity" onDragDetected="#todaysAppointmentsClicked" prefHeight="89.0" prefWidth="113.0" style="-fx-background-color: #0397C7; -fx-border-color: #0AABFB; -fx-border-width: 2; -fx-border-radius: 8; -fx-border-radius: 8;">
-               <children>
-                  <Label layoutX="9.0" layoutY="14.0" text="Completed" textFill="#05475b">
-                     <font>
-                        <Font name="Arial Rounded MT Bold" size="18.0" />
-                     </font>
-                  </Label>
-                  <Label fx:id="IDCompletedAppointments" layoutX="65.0" layoutY="28.0" prefHeight="22.0" prefWidth="25.0" text="2" textFill="#05475b">
-                     <font>
-                        <Font name="Arial Rounded MT Bold" size="52.0" />
-                     </font>
-                  </Label>
-                  <ImageView fitHeight="35.0" fitWidth="40.0" layoutX="14.0" layoutY="41.0">
-                     <image>
-                        <Image url="@../image/icons8-calendar-64.png" />
-                     </image>
-                  </ImageView>
-               </children>
-            </Pane>
-            <Pane layoutX="248.0" layoutY="414.0" minHeight="-Infinity" minWidth="-Infinity" onDragDetected="#pendingAppointmentsClicked" prefHeight="89.0" prefWidth="113.0" style="-fx-background-color: #0397C7; -fx-border-color: #0AABFB; -fx-border-width: 2; -fx-border-radius: 8; -fx-border-radius: 8;">
-               <children>
-                  <Label layoutX="21.0" layoutY="14.0" text="Pending" textFill="#05475b">
-                     <font>
-                        <Font name="Arial Rounded MT Bold" size="18.0" />
-                     </font>
-                  </Label>
-                  <Label fx:id="IDPendingAppointments" layoutX="65.0" layoutY="28.0" prefHeight="22.0" prefWidth="25.0" text="2" textFill="#05475b">
-                     <font>
-                        <Font name="Arial Rounded MT Bold" size="52.0" />
-                     </font>
-                  </Label>
-                  <ImageView fitHeight="35.0" fitWidth="40.0" layoutX="14.0" layoutY="41.0">
-                     <image>
-                        <Image url="@../image/icons8-clock-96.png" />
-                     </image>
-                  </ImageView>
-               </children>
-            </Pane>
-            <Pane layoutX="367.0" layoutY="414.0" minHeight="-Infinity" minWidth="-Infinity" onDragDetected="#acceptedAppointmentsClicked" prefHeight="89.0" prefWidth="113.0" style="-fx-background-color: #0397C7; -fx-border-color: #0AABFB; -fx-border-width: 2; -fx-border-radius: 8; -fx-border-radius: 8;">
-               <children>
-                  <Label layoutX="21.0" layoutY="14.0" text="Accepted" textFill="#05475b">
-                     <font>
-                        <Font name="Arial Rounded MT Bold" size="18.0" />
-                     </font>
-                  </Label>
-                  <Label fx:id="IDAcceptedAppointments" layoutX="65.0" layoutY="28.0" prefHeight="22.0" prefWidth="25.0" text="4" textFill="#05475b">
-                     <font>
-                        <Font name="Arial Rounded MT Bold" size="52.0" />
-                     </font>
-                  </Label>
-                  <ImageView fitHeight="35.0" fitWidth="40.0" layoutX="8.0" layoutY="41.0">
-                     <image>
-                        <Image url="@../image/icons8-verified-account-64.png" />
-                     </image>
-                  </ImageView>
-               </children>
-            </Pane>
-            <TableView fx:id="tableAppointments" layoutX="36.0" layoutY="190.0" prefHeight="186.0" prefWidth="441.0">
-              <columns>
-                <TableColumn fx:id="columnPatientName" prefWidth="100.0" text="Doctor Name" />
-                <TableColumn fx:id="columnDate" prefWidth="110.0" text="Date" />
-                  <TableColumn fx:id="columnTime" prefWidth="103.0" text="Time" />
-                  <TableColumn fx:id="columnAppointmentStatus" prefWidth="124.0" text="Status" />
-              </columns>
-            </TableView>
-            <Pane layoutX="14.0" layoutY="58.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="89.0" prefWidth="241.0" style="-fx-background-color: #0397C7; -fx-border-color: #0AABFB; -fx-border-width: 2; -fx-border-radius: 8; -fx-border-radius: 8;">
-               <children>
-                  <Label layoutX="17.0" layoutY="12.0" text="Your Avg Rating" textFill="#05475b">
-                     <font>
-                        <Font name="Arial Rounded MT Bold" size="18.0" />
-                     </font>
-                  </Label>
-                  <ImageView fitHeight="35.0" fitWidth="40.0" layoutX="28.0" layoutY="36.0">
-                     <image>
-                        <Image url="@../image/icons8-appointment-64.png" />
-                     </image>
-                  </ImageView>
-                  <Label fx:id="IDRating" layoutX="99.0" layoutY="23.0" prefHeight="61.0" prefWidth="80.0" text="4.7" textFill="#05475b">
+                  <Label id="countPrescription" fx:id="IDtotalAppointments" layoutX="75.0" layoutY="23.0" prefHeight="61.0" prefWidth="68.0" text="11" textFill="#05475b">
                      <font>
                         <Font name="Arial Rounded MT Bold" size="36.0" />
                      </font>
                   </Label>
                </children>
             </Pane>
+            <Label layoutX="179.0" layoutY="166.0" text="Appointments" textFill="#05475b">
+               <font>
+                  <Font name="Arial Rounded MT Bold" size="24.0" />
+               </font>
+            </Label>
+            <Pane layoutX="20.0" layoutY="60.0" minHeight="-Infinity" minWidth="-Infinity" onDragDetected="#todaysAppointmentsClicked" prefHeight="89.0" prefWidth="190.0" style="-fx-background-color: #0397C7; -fx-border-color: #0AABFB; -fx-border-width: 2; -fx-border-radius: 8; -fx-border-radius: 8;">
+               <children>
+                  <Label layoutX="9.0" layoutY="14.0" text="Total Appointments" textFill="#05475b">
+                     <font>
+                        <Font name="Arial Rounded MT Bold" size="18.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="IDCompletedAppointments" layoutX="67.0" layoutY="37.0" prefHeight="22.0" prefWidth="25.0" text="2" textFill="#05475b">
+                     <font>
+                        <Font name="Arial Rounded MT Bold" size="36.0" />
+                     </font>
+                  </Label>
+                  <ImageView fitHeight="35.0" fitWidth="40.0" layoutX="14.0" layoutY="41.0">
+                     <image>
+                        <Image url="@../image/icons8-appointment-64.png" />
+                     </image>
+                  </ImageView>
+               </children>
+            </Pane>
+            <TableView fx:id="tableAppointments" layoutX="33.0" layoutY="194.0" prefHeight="186.0" prefWidth="441.0">
+              <columns>
+                <TableColumn id="doctorID" fx:id="columnPatientName" prefWidth="105.0" text="Doctor Name" />
+                <TableColumn fx:id="columnDate" prefWidth="105.0" text="Date" />
+                  <TableColumn fx:id="columnTime" prefWidth="103.0" text="Time" />
+                  <TableColumn id="prescription" fx:id="columnAppointmentStatus" prefWidth="127.0" text="Prescription" />
+              </columns>
+            </TableView>
+            <Pane layoutX="36.0" layoutY="412.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="89.0" prefWidth="217.0" style="-fx-background-color: #0397C7; -fx-border-color: #0AABFB; -fx-border-width: 2; -fx-border-radius: 8; -fx-border-radius: 8;">
+               <children>
+                  <Label layoutX="17.0" layoutY="12.0" text="Current Balance" textFill="#05475b">
+                     <font>
+                        <Font name="Arial Rounded MT Bold" size="18.0" />
+                     </font>
+                  </Label>
+                  <ImageView fitHeight="35.0" fitWidth="40.0" layoutX="14.0" layoutY="45.0">
+                     <image>
+                        <Image url="@../image/icons8-money-50.png" />
+                     </image>
+                  </ImageView>
+                  <Label id="balance" fx:id="IDRating1" layoutX="89.0" layoutY="23.0" prefHeight="61.0" prefWidth="80.0" text="0.0" textFill="#05475b">
+                     <font>
+                        <Font name="Arial Rounded MT Bold" size="36.0" />
+                     </font>
+                  </Label>
+               </children>
+            </Pane>
+            <Button layoutX="257.0" layoutY="60.0" mnemonicParsing="false" onAction="#logoutButtonClicked" prefHeight="27.0" prefWidth="200.0" style="-fx-background-radius: 20;" text="Book New Appointment" textFill="#0237c7">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+               <font>
+                  <Font name="Arial Rounded MT Bold" size="14.0" />
+               </font>
+            </Button>
+            <ImageView fitHeight="61.0" fitWidth="68.0" layoutX="430.0" layoutY="-1.0">
+               <image>
+                  <Image url="@../image/icons8-account-88.png" />
+               </image>
+            </ImageView>
+            <Label id="firstName" layoutX="363.0" layoutY="23.0" text="Hileni" textFill="#05475b">
+               <font>
+                  <Font name="Arial Rounded MT Bold" size="24.0" />
+               </font>
+            </Label>
+            <Button layoutX="257.0" layoutY="91.0" mnemonicParsing="false" onAction="#logoutButtonClicked" prefHeight="27.0" prefWidth="200.0" style="-fx-background-radius: 20;" text="Reschedule Appointment" textFill="#0237c7">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+               <font>
+                  <Font name="Arial Rounded MT Bold" size="14.0" />
+               </font>
+            </Button>
+            <Button layoutX="257.0" layoutY="122.0" mnemonicParsing="false" onAction="#logoutButtonClicked" prefHeight="27.0" prefWidth="200.0" style="-fx-background-radius: 20;" text="Cancel Appointment" textFill="#0237c7">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+               <font>
+                  <Font name="Arial Rounded MT Bold" size="14.0" />
+               </font>
+            </Button>
             </children>
             <opaqueInsets>
                 <Insets />
             </opaqueInsets>
         </Pane>
-        <Pane layoutY="-3.0" minHeight="-Infinity" prefHeight="536.0" prefWidth="218.0" style="-fx-background-color: #0397C7; -fx-border-radius: 45;" AnchorPane.rightAnchor="532.0">
+        <Pane minHeight="-Infinity" prefHeight="530.0" prefWidth="218.0" style="-fx-background-color: #0397C7; -fx-border-radius: 45;" AnchorPane.rightAnchor="532.0">
             <children>
             <ImageView fitHeight="80.0" fitWidth="80.0" layoutX="69.0" layoutY="14.0">
                <image>
@@ -156,7 +152,7 @@
                   <Font name="Arial Rounded MT Bold" size="14.0" />
                </font>
             </Button>
-            <Label layoutX="31.0" layoutY="201.0" onDragDetected="#dashboardRedirectClicked" text="Dashboard" textFill="#05475b">
+            <Label layoutX="43.0" layoutY="200.0" onDragDetected="#dashboardRedirectClicked" text="Dashboard" textFill="#05475b">
                <font>
                   <Font name="Arial Rounded MT Bold" size="24.0" />
                </font>
@@ -164,7 +160,7 @@
                   <Cursor fx:constant="HAND" />
                </cursor>
             </Label>
-            <Label layoutX="25.0" layoutY="237.0" onDragDetected="#appointmentsRedirectClicked" text="Appointments" textFill="#05475b">
+            <Label layoutX="28.0" layoutY="228.0" onDragDetected="#appointmentsRedirectClicked" text="Appointments" textFill="#05475b">
                <font>
                   <Font name="Arial Rounded MT Bold" size="24.0" />
                </font>
@@ -172,7 +168,7 @@
                   <Cursor fx:constant="HAND" />
                </cursor>
             </Label>
-            <Label layoutX="13.0" layoutY="285.0" onDragDetected="#manageDoctorsRedirectClicked" text="Manage Doctors" textFill="#05475b">
+            <Label layoutX="24.0" layoutY="303.0" onDragDetected="#manageDoctorsRedirectClicked" text="Search Doctor" textFill="#05475b">
                <font>
                   <Font name="Arial Rounded MT Bold" size="24.0" />
                </font>
@@ -181,9 +177,9 @@
                </cursor>
             </Label>
             <Separator layoutX="7.0" layoutY="228.0" prefWidth="200.0" />
-            <Separator layoutX="6.0" layoutY="272.0" minHeight="-Infinity" prefHeight="1.0" prefWidth="200.0" />
-            <Separator layoutX="6.0" layoutY="322.0" prefWidth="200.0" />
-            <Label layoutX="71.0" layoutY="334.0" onDragDetected="#profileRedirectClicked" text="Profile" textFill="#05475b">
+            <Separator layoutX="5.0" layoutY="264.0" minHeight="-Infinity" prefHeight="1.0" prefWidth="200.0" />
+            <Separator layoutX="9.0" layoutY="300.0" prefWidth="200.0" />
+            <Label layoutX="19.0" layoutY="265.0" onDragDetected="#profileRedirectClicked" text="Manage Profile " textFill="#05475b">
                <font>
                   <Font name="Arial Rounded MT Bold" size="24.0" />
                </font>
@@ -191,6 +187,15 @@
                   <Cursor fx:constant="HAND" />
                </cursor>
             </Label>
+            <Label layoutX="39.0" layoutY="338.0" onDragDetected="#manageDoctorsRedirectClicked" text="Rate Doctor" textFill="#05475b">
+               <font>
+                  <Font name="Arial Rounded MT Bold" size="24.0" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Label>
+            <Separator layoutX="9.0" layoutY="337.0" prefWidth="200.0" />
             </children>
         </Pane>
     </children>

@@ -68,8 +68,7 @@
                   </Label>
                   <ImageView fitHeight="35.0" fitWidth="40.0" layoutY="36.0">
                      <image>
-                        <Image url="@image/icons8-dashboard-96.png" />
-
+                        <Image url="@../image/icons8-appointment-64.png" />
                      </image>
                   </ImageView>
                   <Label fx:id="IDtotalAppointments1" layoutX="65.0" layoutY="28.0" prefHeight="22.0" prefWidth="25.0" text="9" textFill="#05475b">
@@ -88,8 +87,7 @@
             <children>
             <ImageView fitHeight="80.0" fitWidth="80.0" layoutX="69.0" layoutY="14.0">
                <image>
-                  <Image url="@image/logo.jpeg" />
-
+                  <Image url="@../IdeaProjects/docNet/src/image/logo.jpeg" />
                </image>
             </ImageView>
             <Text fill="#05475b" layoutX="48.0" layoutY="125.0" strokeType="OUTSIDE" strokeWidth="0.0" text="docnet.">
