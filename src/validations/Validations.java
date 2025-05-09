@@ -5,19 +5,46 @@ import java.util.regex.Pattern;
 
 public class Validations {
     enum Gender{
-        MALE,
-        FEMALE
+        MALE("Male"),
+        FEMALE("Female");
+        private String displayGender;
+
+        Gender(String displayGender){
+            this.displayGender = displayGender;
+        }
+        public String getDisplayGender(){
+            return displayGender;
+        }
     }
     enum UserType{
-        DOCTOR,
-        PATIENT,
-        ADMIN
+        DOCTOR("Doctor"),
+        PATIENT("Patient"),
+        ADMIN("Admin");
+        private String displayUserType;
+
+        UserType(String displayUserType){
+            this.displayUserType = displayUserType;
+        }
+        public String getDisplayUserType(){
+            return displayUserType;
+        }
+
+
     }
     enum AppointmentStatus{
-        PENDING,
-        ACCEPTED,
-        REJECTED,
-        COMPLETED
+        PENDING("Pending"),
+        ACCEPTED("Accepted"),
+        REJECTED("Rejected"),
+        COMPLETED("Completed");
+        private String displayStatus;
+
+        AppointmentStatus(String displayStatus){
+            this.displayStatus = displayStatus;
+        }
+        public String getDisplayStatus(){
+            return displayStatus;
+        }
+
     }
 
     private static final Pattern PATTERN_NON_ALPHNUM_USASCII = Pattern.compile("[^a-zA-Z0-9]+");

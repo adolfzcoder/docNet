@@ -22,6 +22,7 @@ public class SystemManager {
     private static ArrayList<Doctor> doctors = fetchDoctors();
     private static ArrayList<Appointment> appointments = fetchAppointments();
     private static ArrayList<Prescription> prescriptions = fetchPrescriptions();
+    private static ArrayList<Rating> ratings = fetchRatings();
 
     private static ArrayList<Doctor> approvedDoctors = new ArrayList<>();
     private static ArrayList<Doctor> pendingDoctors = new ArrayList<>();
@@ -64,6 +65,21 @@ public class SystemManager {
             }
         }
         return -1;
+    }
+
+    public static ArrayList<Rating> fetchRatings(){
+        try {
+            ArrayList<Rating> ratings = DataBaseManager.getRatings();
+            if (ratings == null || ratings.isEmpty()) {
+                ratings = new ArrayList<>();
+            }
+            return ratings;
+        } catch (Exception e) {
+            AlertHelper.showError("Error", "Error fetching Ratings: " + e.getMessage());
+
+            System.err.println("Error fetching Ratins: " + e.getMessage());
+            return new ArrayList<>();
+        }
     }
     public static ArrayList<Prescription> fetchPrescriptions(){
         try {
@@ -442,6 +458,12 @@ public class SystemManager {
 
         System.out.println(message);
         return message;
+
+    }
+
+    public static void addRating(double rating, int doctorID){
+
+
 
     }
 

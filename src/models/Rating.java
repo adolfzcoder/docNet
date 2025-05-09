@@ -3,28 +3,32 @@ package models;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
-class Rating {
+public class Rating {
     private static ArrayList<Rating> allRatings = new ArrayList<>();
-   private int ratingID;
+   private int ratingID=-1;
    private int doctorID;
    private String review;
    private double score;
-   private LocalDateTime dateTime;
+   private int patientID;
 
-   //constructor
-    /*
-    old rating constructor
-   public Rating (int ratingID, int doctorID, String review,double score, LocalDateTime dateTime ){
+
+
+   public Rating (int ratingID, int patientID, int doctorID, String review,double score ){
        setRatingID(ratingID);
+       setPatientID(patientID);
        setDoctorID(doctorID);
        setReview(review);
        setScore(score);
-       setDateTime(dateTime);
    }
-   */
 
 
-   //add rating method
+  public int getPatientID(){
+       return this.patientID;
+  }
+
+  public void setPatientID(int userID){
+       this.patientID = userID;
+  }
    public static void addRating(Rating rating){
        if (rating.validateRating()) {
            allRatings.add(rating);
@@ -42,7 +46,6 @@ class Rating {
            if (r.getRatingID() == ratingID) {
                r.setReview(newReview);
                r.setScore(newScore);
-               r.setDateTime(LocalDateTime.now());
            }
        }
    }
@@ -92,9 +95,6 @@ class Rating {
         return score;
     }
 
-    public LocalDateTime getDateTime() {
-        return dateTime;
-    }
 
 
 
@@ -115,8 +115,5 @@ class Rating {
         this.score = score;
     }
 
-    public void setDateTime(LocalDateTime dateTime) {
-        this.dateTime = dateTime;
-    }
 }
 
