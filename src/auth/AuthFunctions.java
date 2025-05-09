@@ -1,19 +1,12 @@
 package auth;
 
 import adminmodules.AdminDashboard;
-import doctormodules.DoctorDashboard;
 import doctormodules.DoctorDashboardController;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
-import javafx.scene.control.Alert;
 import models.*;
-import patientmodules.PatientDashboard;
 import storage.SystemManager;
 import utils.AlertHelper;
 import utils.NavigatorHelper;
 
-import java.io.IOException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Optional;
@@ -53,12 +46,14 @@ public class AuthFunctions {
             registeringUser.setPassword( hash( registeringUser.getPassword() ) ); // hash the password you get froom user before signing up
             System.out.println("Password after hashing: "+registeringUser.getPassword());
 
+            SystemManager.startSession(registeringUser);
             SystemManager.addUser(registeringUser);
 
             if(registeringUser.getUserType().equalsIgnoreCase("DOCTOR")){
 
                 // the doctor is inserted into the system manager list, which also inserts into the db
-
+                System.out.println("Doctor ID:"+SystemManager.getSession().get(0).getUserTypeID());
+                System.out.println("First name doctor:"+SystemManager.getSession().get(0).getFirstName());
                 SystemManager.addDoctor((Doctor) registeringUser);
                 SystemManager.addOffice((Doctor) registeringUser);
                 SystemManager.addToPendingDoctorList((Doctor) registeringUser);
@@ -90,9 +85,7 @@ public class AuthFunctions {
 
     }
 
-    public static void registerPatient(){
 
-    }
     public static boolean authenticateUser(String email, String password) {
         if (!checkIfEmailExists(email)) {
             AlertHelper.showError("Email does not exist");
@@ -115,6 +108,7 @@ public class AuthFunctions {
             System.out.println("Passwords do not match");
             return false;
         }
+        SystemManager.startSession(user);
 
         // Successful login
         System.out.println("Found user");
@@ -138,7 +132,7 @@ public class AuthFunctions {
 
                 NavigatorHelper.loadScene("doctormodules/DoctorDashboard.fxml", "Doctor Dashboard");
 
-                new DoctorDashboardController();
+
                 break;
             case "PATIENT":
                 NavigatorHelper.loadScene("patientmodules/patientDashboard.fxml", "Doctor Dashboard");

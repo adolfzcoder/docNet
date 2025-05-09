@@ -206,7 +206,7 @@ public class DataBaseManager {
         ArrayList<Rating> ratings = new ArrayList<>();
         try (Connection conn = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
              Statement stmt = conn.createStatement();
-             ResultSet rs = stmt.executeQuery("SELECT * FROM ratings")) {
+             ResultSet rs = stmt.executeQuery("SELECT * FROM rating")) {
 
 
 
@@ -351,13 +351,14 @@ public class DataBaseManager {
     }
 
     public static void insertOffice(String officeName, int doctorID) {
-        String query = "INSERT INTO office (name, doctorID) VALUES (?, ?)";
+        String query = "INSERT INTO office (name, doctorID, balance) VALUES (?, ?)";
 
         try (Connection conn = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
              PreparedStatement ps = conn.prepareStatement(query)) {
 
             ps.setString(1, officeName);
             ps.setInt(2, doctorID);
+            ps.setDouble(3, 1000);
              // Set after doctor is inserted
 
             ps.executeUpdate();

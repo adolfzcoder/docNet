@@ -1,17 +1,14 @@
 package storage;
 
-import models.Appointment;
-import models.Office;
-import models.Prescription;
-import models.User;
+import models.*;
 
+import java.lang.reflect.Array;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
 public class StorageFunctions {
-
+    private SystemManager sys = new SystemManager();
     public int countTotalAppointmentsForDoctor(int doctorID){
-        SystemManager sys = new SystemManager();
         int drCount = 0;
         for (Appointment appt : sys.getAppointments()){
             if (appt.getDoctorID() == doctorID){
@@ -26,7 +23,6 @@ public class StorageFunctions {
     }
 
     public int countTotalAppointmentsForPatient(int patientID){
-        SystemManager sys = new SystemManager();
         int ptCount = 0;
         for (Appointment appt : sys.getAppointments()){
             if (appt.getPatientID() == patientID){
@@ -39,25 +35,7 @@ public class StorageFunctions {
 
     }
 
-
-
-
-
-//    public int countTotalAppointmentsToday(){
-//        SystemManager sys = new SystemManager();
-//        LocalDate today = LocalDate.now();
-//
-//        int totalCount = 0;
-//        for( Appointment appt : sys.getAppointments()){
-//            if(appt.getAppointmentDate().equals(today)){
-//                totalCount++;
-//            }
-//        }
-//        return totalCount;
-//    }
-
-    public int countTotalAppointmentsPending(int doctorID){
-        SystemManager sys = new SystemManager();
+    public int countTotalAppointmentsPendingDoctors(int doctorID){
 
         int totalCount = 0;
         for( Appointment appt : sys.getAppointments()){
@@ -68,20 +46,8 @@ public class StorageFunctions {
         return totalCount;
     }
 
-    public int countTotalAppointmentsApproved(int doctorID){
-        SystemManager sys = new SystemManager();
 
-        int totalCount = 0;
-        for( Appointment appt : sys.getAppointments()){
-            if(appt.getDoctorID()==doctorID && appt.getStatus().equals("ACCEPTED")){
-                totalCount++;
-            }
-        }
-        return totalCount;
-    }
-
-    public int countTotalAppointmentsCompleted(int doctorID){
-        SystemManager sys = new SystemManager();
+    public int countTotalAppointmentsCompletedDoctors(int doctorID){
 
         int totalCount = 0;
         for( Appointment appt : sys.getAppointments()){
@@ -91,8 +57,7 @@ public class StorageFunctions {
         }
         return totalCount;
     }
-    public int countTotalAppointmentsAccepted(int doctorID){
-        SystemManager sys = new SystemManager();
+    public int countTotalAppointmentsAcceptedDoctors(int doctorID){
 
         int totalCount = 0;
         for( Appointment appt : sys.getAppointments()){
@@ -102,8 +67,7 @@ public class StorageFunctions {
         }
         return totalCount;
     }
-    public int countTotalAppointmentsRejected(int doctorID){
-        SystemManager sys = new SystemManager();
+    public int countTotalAppointmentsRejectedDoctors(int doctorID){
 
         int totalCount = 0;
         for( Appointment appt : sys.getAppointments()){
@@ -113,12 +77,14 @@ public class StorageFunctions {
         }
         return totalCount;
     }
-    public double getOfficeBalance(int officeID){
-        SystemManager sys = new SystemManager();
+    public double getOfficeBalance(int drID){
         double balance = 0;
+        int officeID = sys.findOfficeIDByDoctorID(drID);
         for(Office office : sys.getOffices()){
+
             if(office.getOfficeID()==officeID){
-                balance = office.getAccountBalance();
+                return office.getAccountBalance();
+
             }
 
         }
@@ -126,9 +92,10 @@ public class StorageFunctions {
     }
 
 
-
+    public double averageDoctorRating(int doctorID){
+        return sys.calculateDoctorAvgRating(doctorID);
+    }
     public int countTotalAppointments(){
-        SystemManager sys = new SystemManager();
         int totalCount = 0;
         for (Appointment appt : sys.getAppointments()){
             totalCount++;

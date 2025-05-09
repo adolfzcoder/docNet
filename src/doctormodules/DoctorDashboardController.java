@@ -7,11 +7,17 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.text.Text;
 import models.Appointment;
+import models.Doctor;
+import models.User;
+import storage.StorageFunctions;
+import storage.SystemManager;
 import utils.NavigatorHelper;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.ArrayList;
 
 public class DoctorDashboardController {
 
@@ -73,9 +79,12 @@ public class DoctorDashboardController {
 
     @FXML
     void logoutButtonClicked(ActionEvent event) {
+        SystemManager.flushSession();
+        NavigatorHelper.loadScene("auth/login.fxml", "Login");
 
     }
-
+    @FXML
+    private Text username;
     @FXML
     void manageDoctorsRedirectClicked(MouseEvent event) {
 
@@ -101,6 +110,31 @@ public class DoctorDashboardController {
         NavigatorHelper.loadScene("", "");
     }
 
+    @FXML
+    void initialize() {
+        StorageFunctions storage = new StorageFunctions();
 
+        System.out.println("Before the session empty check");
+
+        if(SystemManager.getSession().isEmpty()){
+            System.out.println("Session is empty");
+            return;
+        }
+        User session =  SystemManager.getSession().getFirst();
+        int doctorID = session.getUserTypeID();
+
+
+        System.out.println("Doctor ID:"+doctorID);
+        System.out.println("First name doctor:"+session.getFirstName());
+        username.setText(session.getFirstName());
+        IDAcceptedAppointments.setText(String.valueOf(storage.countTotalAppointmentsAcceptedDoctors(doctorID)));
+        IDCompletedAppointments.setText(String.valueOf(storage.countTotalAppointmentsCompletedDoctors(doctorID)));
+        IDDeniedAppointments.setText(String.valueOf(storage.countTotalAppointmentsRejectedDoctors(doctorID)));
+        IDPendingAppointments.setText(String.valueOf(storage.countTotalAppointmentsPendingDoctors(doctorID)));
+        IDOfficeBalance.setText("N$" + String.format("%.2f", storage.getOfficeBalance(session.getUserTypeID())));
+        IDRating.setText(String.format("%.1f", storage.averageDoctorRating(doctorID)));
+        IDtotalAppointments.setText(String.valueOf(storage.countTotalAppointmentsForDoctor(doctorID)));
+
+    }
 
 }

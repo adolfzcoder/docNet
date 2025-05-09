@@ -35,7 +35,7 @@
                         <Image url="@../image/icons8-appointment-64.png" />
                      </image>
                   </ImageView>
-                  <Label fx:id="IDtotalAppointments" layoutX="42.0" layoutY="25.0" prefHeight="61.0" prefWidth="72.0" text="11" textFill="#05475b">
+                  <Label fx:id="IDtotalAppointments" layoutX="42.0" layoutY="25.0" prefHeight="61.0" prefWidth="72.0" text="0" textFill="#05475b">
                      <font>
                         <Font name="Arial Rounded MT Bold" size="52.0" />
                      </font>
@@ -54,7 +54,7 @@
                         <Font name="Arial Rounded MT Bold" size="18.0" />
                      </font>
                   </Label>
-                  <Label fx:id="IDCompletedAppointments" layoutX="65.0" layoutY="28.0" prefHeight="22.0" prefWidth="25.0" text="2" textFill="#05475b">
+                  <Label fx:id="IDCompletedAppointments" layoutX="65.0" layoutY="28.0" prefHeight="22.0" prefWidth="25.0" text="0" textFill="#05475b">
                      <font>
                         <Font name="Arial Rounded MT Bold" size="52.0" />
                      </font>
@@ -73,7 +73,7 @@
                         <Font name="Arial Rounded MT Bold" size="18.0" />
                      </font>
                   </Label>
-                  <Label fx:id="IDPendingAppointments" layoutX="65.0" layoutY="28.0" prefHeight="22.0" prefWidth="25.0" text="2" textFill="#05475b">
+                  <Label fx:id="IDPendingAppointments" layoutX="65.0" layoutY="28.0" prefHeight="22.0" prefWidth="25.0" text="0" textFill="#05475b">
                      <font>
                         <Font name="Arial Rounded MT Bold" size="52.0" />
                      </font>
@@ -92,7 +92,7 @@
                         <Font name="Arial Rounded MT Bold" size="18.0" />
                      </font>
                   </Label>
-                  <Label fx:id="IDAcceptedAppointments" layoutX="65.0" layoutY="28.0" prefHeight="22.0" prefWidth="25.0" text="4" textFill="#05475b">
+                  <Label fx:id="IDAcceptedAppointments" layoutX="65.0" layoutY="28.0" prefHeight="22.0" prefWidth="25.0" text="0" textFill="#05475b">
                      <font>
                         <Font name="Arial Rounded MT Bold" size="52.0" />
                      </font>
@@ -111,7 +111,7 @@
                         <Font name="Arial Rounded MT Bold" size="18.0" />
                      </font>
                   </Label>
-                  <Label fx:id="IDDeniedAppointments" layoutX="65.0" layoutY="28.0" prefHeight="22.0" prefWidth="25.0" text="3" textFill="#05475b">
+                  <Label fx:id="IDDeniedAppointments" layoutX="65.0" layoutY="28.0" prefHeight="22.0" prefWidth="25.0" text="0" textFill="#05475b">
                      <font>
                         <Font name="Arial Rounded MT Bold" size="52.0" />
                      </font>
@@ -130,7 +130,7 @@
                         <Font name="Arial Rounded MT Bold" size="18.0" />
                      </font>
                   </Label>
-                  <Label fx:id="IDOfficeBalance" layoutX="135.0" layoutY="23.0" prefHeight="61.0" prefWidth="129.0" text="999.00" textFill="#05475b">
+                  <Label fx:id="IDOfficeBalance" layoutX="135.0" layoutY="23.0" prefHeight="61.0" prefWidth="129.0" text="0.00" textFill="#05475b">
                      <font>
                         <Font name="Arial Rounded MT Bold" size="36.0" />
                      </font>
@@ -157,7 +157,7 @@
             </TableView>
             <Pane layoutX="44.0" layoutY="85.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="89.0" prefWidth="241.0" style="-fx-background-color: #0397C7; -fx-border-color: #0AABFB; -fx-border-width: 2; -fx-border-radius: 8; -fx-border-radius: 8;">
                <children>
-                  <Label layoutX="17.0" layoutY="12.0" text="Your Avg Rating" textFill="#05475b">
+                  <Label layoutX="17.0" layoutY="12.0" text="Your Average Rating" textFill="#05475b">
                      <font>
                         <Font name="Arial Rounded MT Bold" size="18.0" />
                      </font>
@@ -167,13 +167,23 @@
                         <Image url="@../image/icons8-appointment-64.png" />
                      </image>
                   </ImageView>
-                  <Label fx:id="IDRating" layoutX="99.0" layoutY="23.0" prefHeight="61.0" prefWidth="80.0" text="4.7" textFill="#05475b">
+                  <Label fx:id="IDRating" layoutX="99.0" layoutY="23.0" prefHeight="61.0" prefWidth="80.0" text="0" textFill="#05475b">
                      <font>
                         <Font name="Arial Rounded MT Bold" size="36.0" />
                      </font>
                   </Label>
                </children>
             </Pane>
+            <Text fx:id="username" fill="#1f2937" layoutX="514.0" layoutY="47.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Username " wrappingWidth="104.13671875">
+               <font>
+                  <Font name="Arial Rounded MT Bold" size="16.0" />
+               </font>
+            </Text>
+            <ImageView fitHeight="35.0" fitWidth="46.0" layoutX="543.0" layoutY="2.0">
+               <image>
+                  <Image url="@../image/icons8-user-24.png" />
+               </image>
+            </ImageView>
             </children>
             <opaqueInsets>
                 <Insets />
@@ -215,18 +225,9 @@
                   <Cursor fx:constant="HAND" />
                </cursor>
             </Label>
-            <Label layoutX="13.0" layoutY="285.0" onDragDetected="#manageDoctorsRedirectClicked" text="Manage Doctors" textFill="#05475b">
-               <font>
-                  <Font name="Arial Rounded MT Bold" size="24.0" />
-               </font>
-               <cursor>
-                  <Cursor fx:constant="HAND" />
-               </cursor>
-            </Label>
             <Separator layoutX="7.0" layoutY="228.0" prefWidth="200.0" />
             <Separator layoutX="6.0" layoutY="272.0" minHeight="-Infinity" prefHeight="1.0" prefWidth="200.0" />
-            <Separator layoutX="6.0" layoutY="322.0" prefWidth="200.0" />
-            <Label layoutX="71.0" layoutY="334.0" onDragDetected="#profileRedirectClicked" text="Profile" textFill="#05475b">
+            <Label layoutX="57.0" layoutY="279.0" onDragDetected="#profileRedirectClicked" text="Profile" textFill="#05475b">
                <font>
                   <Font name="Arial Rounded MT Bold" size="24.0" />
                </font>

@@ -2,6 +2,7 @@ package Main;
 
 import javafx.application.Application;
 import javafx.stage.Stage;
+import storage.SystemManager;
 
 import java.io.IOException;
 
@@ -13,6 +14,8 @@ public class App extends Application {
     @Override
     public void start(Stage stage) throws IOException {
         primaryStage = stage;
+
+        SystemManager.initializeLists();
         loadScene("auth/login.fxml", "Login");
         // loadScene("doctormodules/DoctorSignUp.fxml", "Doctor Sign up");
 

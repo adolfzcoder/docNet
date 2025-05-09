@@ -17,13 +17,14 @@ public class SystemManager {
     private static ArrayList<User> users = fetchUsers(); //fetch all users from the db
 
 
-    private static ArrayList<Office> offices = fetchOffices(); // goes to db and fetches all the offices
     private static ArrayList<Admin> admins= fetchAdmins();
     private static ArrayList<Patient> patients = fetchPatients();
     private static ArrayList<Doctor> doctors = fetchDoctors();
     private static ArrayList<Appointment> appointments = fetchAppointments();
     private static ArrayList<Prescription> prescriptions = fetchPrescriptions();
     private static ArrayList<Rating> ratings = fetchRatings();
+    private static ArrayList<Office> offices = fetchOffices(); // goes to db and fetches all the offices
+
 
     private static ArrayList<Doctor> approvedDoctors = new ArrayList<>();
     private static ArrayList<Doctor> pendingDoctors = new ArrayList<>();
@@ -113,8 +114,8 @@ public class SystemManager {
 
     public static ArrayList<Office> fetchOffices() {
         try {
-            ArrayList<Office> offices = (ArrayList<Office>) DataBaseManager.getOffices();
-            if (offices == null || offices.isEmpty()) {
+            ArrayList<Office> offices =  DataBaseManager.getOffices();
+            if (offices.isEmpty()) {
                 offices = new ArrayList<>();
             }
             return offices;
@@ -476,6 +477,22 @@ public class SystemManager {
         DataBaseManager.insertAppointment(appt);
         appointments.add(appt);
         System.out.println("Appointment added successfully");
+    }
+
+    public static double calculateDoctorAvgRating(int doctorID){
+        int ratingCount =0;
+        double ratingCountTotal = 0;
+        for(Rating rating: ratings){
+            if(rating.getDoctorID() == doctorID){
+                ratingCount++;
+                ratingCountTotal += rating.getScore();
+            }
+        }
+        if(ratingCount == 0){
+            return 0;
+        }
+        return ratingCountTotal/ratingCount;
+
     }
 
 
