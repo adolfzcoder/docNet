@@ -6,6 +6,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Text;
 import models.Appointment;
@@ -131,9 +132,15 @@ public class DoctorDashboardController {
         IDCompletedAppointments.setText(String.valueOf(storage.countTotalAppointmentsCompletedDoctors(doctorID)));
         IDDeniedAppointments.setText(String.valueOf(storage.countTotalAppointmentsRejectedDoctors(doctorID)));
         IDPendingAppointments.setText(String.valueOf(storage.countTotalAppointmentsPendingDoctors(doctorID)));
-        IDOfficeBalance.setText("N$" + String.format("%.2f", storage.getOfficeBalance(session.getUserTypeID())));
+        IDOfficeBalance.setText(String.format("%.2f", storage.getOfficeBalance(session.getUserTypeID())));
         IDRating.setText(String.format("%.1f", storage.averageDoctorRating(doctorID)));
         IDtotalAppointments.setText(String.valueOf(storage.countTotalAppointmentsForDoctor(doctorID)));
+
+        columnPatientName.setCellValueFactory(new PropertyValueFactory<>("patientName"));
+        columnDate.setCellValueFactory(new PropertyValueFactory<>("date"));
+        columnTime.setCellValueFactory(new PropertyValueFactory<>("time"));
+        columnAppointmentStatus.setCellValueFactory(new PropertyValueFactory<>("status"));
+
 
     }
 
