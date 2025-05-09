@@ -83,7 +83,7 @@ public class DataBaseManager {
                     int userID = patientRs.getInt("userID");
                     int patientID = patientRs.getInt("patientID");
                     int medicalAidNumber = patientRs.getInt("medicalAidNumber");
-                    double balance = patientRs.getDouble("balance");
+
 
                     try (PreparedStatement userStmt = conn.prepareStatement(userQuery)) {
                         userStmt.setInt(1, userID);
@@ -101,7 +101,7 @@ public class DataBaseManager {
                             String password = userRs.getString("password");
                             String gender = userRs.getString("gender");
 
-                            Patient patient = new Patient(userID, patientID, medicalAidNumber, firstName, lastName, phoneNumber, telephone, dob, isApproved, userType, email, password, gender, balance);
+                            Patient patient = new Patient(userID, patientID, medicalAidNumber, firstName, lastName, phoneNumber, telephone, dob, isApproved, userType, email, password, gender);
                             patients.add(patient);
                         }
                     }
@@ -127,7 +127,6 @@ public class DataBaseManager {
                     Doctor doctor = new Doctor(
                             rs.getInt("userID"),
                             rs.getInt("doctorID"),
-                            rs.getString("medicalCertificatePath"),
                             rs.getInt("yearsOfExperience"),
                             rs.getString("specialisation"),
 
@@ -251,23 +250,26 @@ public class DataBaseManager {
     }
 
 
-    public static int insertUser(User user) {
-        String query = "INSERT INTO user (firstName, lastName, phoneNumber, telephone, dob, isApproved, userType, email, password, gender) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+    public static int insertUser(Patient patient) {
+        String query1 = "INSERT INTO user (firstName, lastName, phoneNumber, telephone, dob, isApproved, userType, email, password, gender) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+
+        String query2 = "INSERT INTO patient (medicalAidNumber, userID) VALUES (?, ?)";
         int generatedUserID = -1;
 
         try (Connection conn = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
-             PreparedStatement ps = conn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
+             PreparedStatement ps = conn.prepareStatement(query1, Statement.RETURN_GENERATED_KEYS)) {
 
-            ps.setString(1, user.getFirstName());
-            ps.setString(2, user.getLastName());
-            ps.setString(3, user.getPhoneNumber());
-            ps.setString(4, user.getTelephone());
-            ps.setString(5, user.getDob());
-            ps.setBoolean(6, user.getApproved());
-            ps.setString(7, user.getUserType());
-            ps.setString(8, user.getEmail());
-            ps.setString(9, user.getPassword());
-            ps.setString(10, user.getGender());
+            ps.setString(1, patient.getFirstName());
+            ps.setString(2, patient.getLastName());
+            ps.setString(3, patient.getPhoneNumber());
+            ps.setString(4, patient.getTelephone());
+            ps.setString(5, patient.getDob());
+            ps.setBoolean(6, patient.getApproved());
+            ps.setString(7, patient.getUserType());
+            ps.setString(8, patient.getEmail());
+            ps.setString(9, patient.getPassword());
+            ps.setString(10, patient.getGender());
+
 
             int affectedRows = ps.executeUpdate();
 
@@ -276,6 +278,12 @@ public class DataBaseManager {
                 if (rs.next()) {
                     generatedUserID = rs.getInt(1);
                     System.out.println("Generated User ID: " + generatedUserID);
+
+                    PreparedStatement ps2 = conn.prepareStatement(query2);
+                    ps2.setInt(1, patient.getMedicalAidNumber());
+                    ps2.setInt(2, generatedUserID);
+                    ps2.executeUpdate();
+
                 }
             } else {
                 System.out.println("No rows affected when inserting user!");
@@ -288,224 +296,153 @@ public class DataBaseManager {
         return generatedUserID;
     }
 
+    public static int insertUser(Doctor doctor) {
+        String query1 = "INSERT INTO user (firstName, lastName, phoneNumber, telephone, dob, isApproved, userType, email, password, gender) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        String query2 = "INSERT INTO doctor (yearsOfExperience, specialisation, userID) VALUES (?, ?, ?)";
+        String query3 = "INSERT INTO office (name, accountBalance, doctorID) VALUES (?, ?, ?)";
 
-    public static int insertPatient(Patient patient) {
-        Connection conn = null;
         int generatedUserID = -1;
-        int generatedPatientID = -1;
 
-        try {
-            // Establish connection
-            conn = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
+        try (Connection conn = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
+             PreparedStatement ps = conn.prepareStatement(query1, Statement.RETURN_GENERATED_KEYS)) {
 
-            // Start transaction
-            conn.setAutoCommit(false);
+            // Insert into user table
+            ps.setString(1, doctor.getFirstName());
+            ps.setString(2, doctor.getLastName());
+            ps.setString(3, doctor.getPhoneNumber());
+            ps.setString(4, doctor.getTelephone());
+            ps.setString(5, doctor.getDob());
+            ps.setBoolean(6, doctor.getApproved());
+            ps.setString(7, doctor.getUserType());
+            ps.setString(8, doctor.getEmail());
+            ps.setString(9, doctor.getPassword());
+            ps.setString(10, doctor.getGender());
 
-            // 1. Insert user record
-            String userQuery = "INSERT INTO user (firstName, lastName, phoneNumber, telephone, dob, isApproved, userType, email, password, gender) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+            int affectedRows = ps.executeUpdate();
 
-            try (PreparedStatement ps = conn.prepareStatement(userQuery, Statement.RETURN_GENERATED_KEYS)) {
-                ps.setString(1, patient.getFirstName());
-                ps.setString(2, patient.getLastName());
-                ps.setString(3, patient.getPhoneNumber());
-                ps.setString(4, patient.getTelephone());
-                ps.setString(5, patient.getDob());
-                ps.setBoolean(6, patient.getApproved());
-                ps.setString(7, patient.getUserType());
-                ps.setString(8, patient.getEmail());
-                ps.setString(9, patient.getPassword());
-                ps.setString(10, patient.getGender());
+            if (affectedRows > 0) {
+                ResultSet rs = ps.getGeneratedKeys();
+                if (rs.next()) {
+                    generatedUserID = rs.getInt(1);
+                    System.out.println("Generated User ID: " + generatedUserID);
 
-                int affectedRows = ps.executeUpdate();
+                    // Insert into doctor table
+                    try (PreparedStatement ps2 = conn.prepareStatement(query2, Statement.RETURN_GENERATED_KEYS)) {
+                        ps2.setInt(1, doctor.getYearsOfXP());
+                        ps2.setString(2, doctor.getSpecialisation());
+                        ps2.setInt(3, generatedUserID);
 
-                if (affectedRows > 0) {
-                    ResultSet rs = ps.getGeneratedKeys();
-                    if (rs.next()) {
-                        generatedUserID = rs.getInt(1);
-                        patient.setUserID(generatedUserID);
-                        System.out.println("Generated User ID for patient: " + generatedUserID);
+                        int affectedRows2 = ps2.executeUpdate();
+                        if (affectedRows2 > 0) {
+                            ResultSet rs2 = ps2.getGeneratedKeys();
+                            if (rs2.next()) {
+                                int doctorID = rs2.getInt(1);
+                                System.out.println("Generated Doctor ID: " + doctorID);
+
+                                // Insert into office table
+                                try (PreparedStatement ps3 = conn.prepareStatement(query3)) {
+                                    ps3.setString(1, doctor.getOfficeName());
+                                    ps3.setDouble(2, 1000.00);
+                                    ps3.setInt(3, doctorID);
+                                    ps3.executeUpdate();
+                                }
+                            }
+                        }
                     }
-                } else {
-                    throw new SQLException("Creating user failed, no rows affected.");
                 }
+            } else {
+                System.out.println("No rows affected when inserting user!");
             }
-
-            // 2. Insert patient record
-            String patientQuery = "INSERT INTO patient (medicalAidNumber, balance, userID) VALUES (?, ?, ?)";
-
-            try (PreparedStatement ps = conn.prepareStatement(patientQuery, Statement.RETURN_GENERATED_KEYS)) {
-                ps.setInt(1, patient.getMedicalAidNumber());
-                ps.setDouble(2, patient.getBalance());
-                ps.setInt(3, generatedUserID);
-
-                int affectedRows = ps.executeUpdate();
-
-                if (affectedRows > 0) {
-                    ResultSet rs = ps.getGeneratedKeys();
-                    if (rs.next()) {
-                        generatedPatientID = rs.getInt(1);
-                        patient.setPatientID(generatedPatientID);
-                        System.out.println("Generated Patient ID: " + generatedPatientID);
-                    }
-                } else {
-                    throw new SQLException("Creating patient failed, no rows affected.");
-                }
-            }
-
-            // Commit transaction
-            conn.commit();
-            System.out.println("Successfully inserted patient with User ID: " + generatedUserID + " and Patient ID: " + generatedPatientID);
-
         } catch (SQLException e) {
-            System.out.println("SQL Error: " + e.getMessage());
+            System.out.println("SQL Error when inserting user: " + e.getMessage());
             e.printStackTrace();
-
-            // Rollback transaction on error
-            if (conn != null) {
-                try {
-                    conn.rollback();
-                    System.out.println("Transaction rolled back");
-                } catch (SQLException ex) {
-                    System.out.println("Failed to rollback: " + ex.getMessage());
-                }
-            }
-        } finally {
-            // Restore default commit behavior and close connection
-            if (conn != null) {
-                try {
-                    conn.setAutoCommit(true);
-                    conn.close();
-                } catch (SQLException e) {
-                    System.out.println("Error closing connection: " + e.getMessage());
-                }
-            }
         }
 
-        return generatedPatientID;
+        return generatedUserID;
     }
-
-    public static int insertDoctor(Doctor doctor) {
-        Connection conn = null;
-        int generatedUserID = -1;
-        int generatedDoctorID = -1;
-        int generatedOfficeID = -1;
-
-        try {
-            // Establish connection
-            conn = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
-
-            // Start transaction
-            conn.setAutoCommit(false);
-
-            // 1. Insert user record
-            String userQuery = "INSERT INTO user (firstName, lastName, phoneNumber, telephone, dob, isApproved, userType, email, password, gender) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-
-            try (PreparedStatement ps = conn.prepareStatement(userQuery, Statement.RETURN_GENERATED_KEYS)) {
-                ps.setString(1, doctor.getFirstName());
-                ps.setString(2, doctor.getLastName());
-                ps.setString(3, doctor.getPhoneNumber());
-                ps.setString(4, doctor.getTelephone());
-                ps.setString(5, doctor.getDob());
-                ps.setBoolean(6, doctor.getApproved());
-                ps.setString(7, doctor.getUserType());
-                ps.setString(8, doctor.getEmail());
-                ps.setString(9, doctor.getPassword());
-                ps.setString(10, doctor.getGender());
-
-                int affectedRows = ps.executeUpdate();
-
-                if (affectedRows > 0) {
-                    ResultSet rs = ps.getGeneratedKeys();
-                    if (rs.next()) {
-                        generatedUserID = rs.getInt(1);
-                        doctor.setUserID(generatedUserID);
-                        System.out.println("Generated User ID for doctor: " + generatedUserID);
-                    }
-                } else {
-                    throw new SQLException("Creating user failed, no rows affected.");
-                }
-            }
-
-            // 2. Insert doctor record
-            String doctorQuery = "INSERT INTO doctor (medicalCertificatePath, yearsOfExperience, specialisation, userID) VALUES (?, ?, ?, ?)";
-
-            try (PreparedStatement ps = conn.prepareStatement(doctorQuery, Statement.RETURN_GENERATED_KEYS)) {
-                ps.setString(1, doctor.getMedicalCertificate());
-                ps.setInt(2, doctor.getYearsOfXP());
-                ps.setString(3, doctor.getSpecialisation());
-                ps.setInt(4, generatedUserID);
-
-                int affectedRows = ps.executeUpdate();
-
-                if (affectedRows > 0) {
-                    ResultSet rs = ps.getGeneratedKeys();
-                    if (rs.next()) {
-                        generatedDoctorID = rs.getInt(1);
-                        doctor.setDoctorID(generatedDoctorID);
-                        System.out.println("Generated Doctor ID: " + generatedDoctorID);
-                    }
-                } else {
-                    throw new SQLException("Creating doctor failed, no rows affected.");
-                }
-            }
-
-            // 3. Insert office record
-            String officeQuery = "INSERT INTO office (name, location, openingHours, closingHours, accountBalance, doctorID) VALUES (?, ?, ?, ?, ?, ?)";
-
-            try (PreparedStatement ps = conn.prepareStatement(officeQuery, Statement.RETURN_GENERATED_KEYS)) {
-                ps.setString(1, doctor.getOfficeName());
-                ps.setString(2, "Default Location");
-                ps.setTime(3, Time.valueOf("09:00:00"));
-                ps.setTime(4, Time.valueOf("17:00:00"));
-                ps.setDouble(5, 1000.0);
-                ps.setInt(6, generatedDoctorID);
-
-                int affectedRows = ps.executeUpdate();
-
-                if (affectedRows > 0) {
-                    ResultSet rs = ps.getGeneratedKeys();
-                    if (rs.next()) {
-                        generatedOfficeID = rs.getInt(1);
-                        System.out.println("Generated Office ID: " + generatedOfficeID);
-                    }
-                } else {
-                    throw new SQLException("Creating office failed, no rows affected.");
-                }
-            }
-
-            // Commit transaction
-            conn.commit();
-            System.out.println("Successfully inserted doctor with User ID: " + generatedUserID +
-                    ", Doctor ID: " + generatedDoctorID +
-                    ", and Office ID: " + generatedOfficeID);
-
-        } catch (SQLException e) {
-            System.out.println("SQL Error: " + e.getMessage());
-            e.printStackTrace();
-
-            // Rollback transaction on error
-            if (conn != null) {
-                try {
-                    conn.rollback();
-                    System.out.println("Transaction rolled back");
-                } catch (SQLException ex) {
-                    System.out.println("Failed to rollback: " + ex.getMessage());
-                }
-            }
-        } finally {
-            // Restore default commit behavior and close connection
-            if (conn != null) {
-                try {
-                    conn.setAutoCommit(true);
-                    conn.close();
-                } catch (SQLException e) {
-                    System.out.println("Error closing connection: " + e.getMessage());
-                }
-            }
-        }
-
-        return generatedDoctorID;
-    }
+//    public static int insertPatient(Patient patient) {
+//        // First, insert the user
+//        int userID = insertUser((Patient)patient);
+//        if (userID == -1) {
+//            System.out.println("Failed to insert user record for patient!");
+//            return -1;
+//        }
+//
+//        // Set the generated userID to the patient object
+//        patient.setUserID(userID);
+//
+//        // Now insert the patient record
+//        String query = "INSERT INTO patient (medicalAidNumber, balance, userID) VALUES (?, ?, ?)";
+//        int generatedPatientID = -1;
+//
+//        try (Connection conn = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
+//             PreparedStatement ps = conn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
+//
+//            ps.setInt(1, patient.getMedicalAidNumber());
+//            ps.setDouble(2, patient.getBalance());
+//            ps.setInt(3, userID);
+//
+//            int affectedRows = ps.executeUpdate();
+//
+//            if (affectedRows > 0) {
+//                ResultSet rs = ps.getGeneratedKeys();
+//                if (rs.next()) {
+//                    generatedPatientID = rs.getInt(1);
+//                    patient.setPatientID(generatedPatientID);
+//                    System.out.println("Generated Patient ID: " + generatedPatientID);
+//                }
+//            } else {
+//                System.out.println("No rows affected when inserting patient!");
+//            }
+//        } catch (SQLException e) {
+//            System.out.println("SQL Error when inserting patient: " + e.getMessage());
+//            e.printStackTrace();
+//        }
+//
+//        return generatedPatientID;
+//    }
+//    public static int insertDoctor(Doctor doctor) {
+//        // First, insert the user
+//        int userID = insertUser(doctor);
+//        if (userID == -1) {
+//            System.out.println("Failed to insert user record for doctor!");
+//            return -1;
+//        }
+//
+//        // Set the generated userID to the doctor object
+//        doctor.setUserID(userID);
+//
+//        // Now insert the doctor record
+//        String query = "INSERT INTO doctor (medicalCertificatePath, yearsOfExperience, specialisation, userID) VALUES (?, ?, ?, ?)";
+//        int generatedDoctorID = -1;
+//
+//        try (Connection conn = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
+//             PreparedStatement ps = conn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
+//
+//            ps.setString(1, doctor.getMedicalCertificate());
+//            ps.setInt(2, doctor.getYearsOfXP());
+//            ps.setString(3, doctor.getSpecialisation());
+//            ps.setInt(4, userID);
+//
+//            int affectedRows = ps.executeUpdate();
+//
+//            if (affectedRows > 0) {
+//                ResultSet rs = ps.getGeneratedKeys();
+//                if (rs.next()) {
+//                    generatedDoctorID = rs.getInt(1);
+//                    doctor.setDoctorID(generatedDoctorID);
+//                    System.out.println("Generated Doctor ID: " + generatedDoctorID);
+//                }
+//            } else {
+//                System.out.println("No rows affected when inserting doctor!");
+//            }
+//        } catch (SQLException e) {
+//            System.out.println("SQL Error when inserting doctor: " + e.getMessage());
+//            e.printStackTrace();
+//        }
+//
+//        return generatedDoctorID;
+//    }
 
     public static int insertOffice(String officeName, String location, Time openingHours, Time closingHours, double accountBalance, int doctorID) {
         String query = "INSERT INTO office (name, location, openingHours, closingHours, accountBalance, doctorID) VALUES (?, ?, ?, ?, ?, ?)";
@@ -563,34 +500,20 @@ public class DataBaseManager {
         }
 
 
-    // Update the insertAdmin method in DataBaseManager.java
-    public static int insertAdmin(Admin admin) {
+    public static int insertAdmin(Admin ad) {
         String query = "INSERT INTO admin (userID) VALUES (?)";
-        int generatedAdminID = -1;
 
         try (Connection conn = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
-             PreparedStatement ps = conn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
+             PreparedStatement ps = conn.prepareStatement(query)) {
 
-            ps.setInt(1, admin.getUserTypeID());
+            ps.setInt(1, ad.getUserTypeID());
 
-            int affectedRows = ps.executeUpdate();
 
-            if (affectedRows > 0) {
-                ResultSet rs = ps.getGeneratedKeys();
-                if (rs.next()) {
-                    generatedAdminID = rs.getInt(1);
-                    admin.setUserTypeID(generatedAdminID);
-                    System.out.println("Generated Admin ID: " + generatedAdminID);
-                }
-            } else {
-                System.out.println("No rows affected when inserting admin!");
-            }
+            ps.executeUpdate();
         } catch (SQLException e) {
-            System.out.println("SQL Error when inserting admin: " + e.getMessage());
             e.printStackTrace();
         }
-
-        return generatedAdminID;
+        return 0;
     }
 
     public static void insertRating(Rating rating) {

@@ -28,7 +28,7 @@ public class SystemManager {
 
     private static ArrayList<Doctor> approvedDoctors = new ArrayList<>();
     private static ArrayList<Doctor> pendingDoctors = new ArrayList<>();
-    private static ArrayList<Notification> allNotifications = new ArrayList<>();
+    // private static ArrayList<Notification> allNotifications = new ArrayList<>();
     private static ArrayList<Appointment> pendingAppointments = new ArrayList<>();
     private static ArrayList<Appointment> approvedAppointments = new ArrayList<>();
     private static ArrayList<Appointment> declinedAppointments = new ArrayList<>();
@@ -120,7 +120,7 @@ public class SystemManager {
             }
             return offices;
         } catch (Exception e) {
-            AlertHelper.showError("Error", "Error fetching Offices: " + e.getMessage());
+            // AlertHelper.showError("Error", "Error fetching Offices: " + e.getMessage());
 
             System.err.println("Error fetching offices: " + e.getMessage());
             return new ArrayList<>();
@@ -394,16 +394,29 @@ public class SystemManager {
         return doctors;
     }
 
-    public static ArrayList<Notification> getAllNotifications() {
-        return allNotifications;
-    }
+//    public static ArrayList<Notification> getAllNotifications() {
+//        return allNotifications;
+//    }
 
-    public static boolean addUser(User user) {
-        int generatedId = DataBaseManager.insertUser(user);
+    public static boolean addUser(Patient patient) {
+        int generatedId = DataBaseManager.insertUser(patient);
 
         if (generatedId != -1) {
+            patients.add(patient);
+            // users.add(patient);
+            return true;
+        } else {
+            // Insertion failed
+            return false;
+        }
+    }
 
-            users.add(user);
+    public static boolean addUser(Doctor doctor) {
+        int generatedId = DataBaseManager.insertUser(doctor);
+
+        if (generatedId != -1) {
+            doctors.add(doctor);
+            //users.add(doctor);
             return true;
         } else {
             // Insertion failed
@@ -425,7 +438,7 @@ public class SystemManager {
         return message;
     }
     public static void addDoctor(Doctor doctor) {
-        int doctorID = DataBaseManager.insertDoctor(doctor);
+        int doctorID = DataBaseManager.insertUser(doctor);
 
         if (doctorID != -1) {
             // doctor created, now set the generated doctor id
@@ -458,7 +471,6 @@ public class SystemManager {
 
     public static void addAdmin(Admin admin) {
         int adminID = DataBaseManager.insertAdmin(admin);
-
         if (adminID != -1) {
             admins.add(admin);
             System.out.println("Admin successfully added with ID: " + adminID);
@@ -467,14 +479,14 @@ public class SystemManager {
         }
     }
 
-    public static String addNotification(Notification notif){
-        String message = "Notification was added succesfully";
-        allNotifications.add(notif);
-
-        System.out.println(message);
-        return message;
-
-    }
+//    public static String addNotification(Notification notif){
+//        String message = "Notification was added succesfully";
+//        allNotifications.add(notif);
+//
+//        System.out.println(message);
+//        return message;
+//
+//    }
 
 
 
@@ -483,7 +495,7 @@ public class SystemManager {
     }
 
     public static String addPatient(Patient patient) {
-        int patientID = DataBaseManager.insertPatient(patient);
+        int patientID = DataBaseManager.insertUser(patient);
 
         if (patientID != -1) {
             patient.setPatientID(patientID);

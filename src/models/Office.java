@@ -16,8 +16,9 @@ public class Office {
     private ArrayList<Appointment> appointments;
     private int doctorID;
 
-    public Office(String officeName){
+    public Office(String officeName, int doctorID){
         this.officeName = officeName;
+        this.doctorID = doctorID;
     }
     public Office(int officeID, String officeName, String officeLocation, LocalTime openingHours, LocalTime closingHours, double accountBalance, int doctorID) {
         this.officeID = officeID;
@@ -35,9 +36,6 @@ public class Office {
 
 
         appointments = SystemManager.getAppointments();
-
-
-
 
     }
 

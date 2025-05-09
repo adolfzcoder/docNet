@@ -32,8 +32,6 @@ public class DoctorSignUpController {
     @FXML
     private TextField lastName;
 
-    @FXML
-    private TextField medicalCertificate;
 
     @FXML
     private TextField officeNameID;
@@ -69,7 +67,6 @@ public class DoctorSignUpController {
             String emailText = email.getText();
             String passwordText = password.getText();
             String confirmPasswordText = confirmPassword.getText();
-            String medicalCertificateText = medicalCertificate.getText();
             String specialisationText = specialisation.getText();
             String yearsOfXpText = yearsOfXp.getText();
             String officeNameText = officeNameID.getText(); // This is a PasswordField; consider renaming for clarity
@@ -82,7 +79,7 @@ public class DoctorSignUpController {
                 return;
             }
 
-            Doctor doctor = new Doctor(medicalCertificateText, years, specialisationText, firstNameText, lastNameText, phoneNumberText, telephoneText, birthDayText, emailText, passwordText, genderText);
+            Doctor doctor = new Doctor( years, specialisationText, firstNameText, lastNameText, phoneNumberText, telephoneText, birthDayText, emailText, passwordText, genderText);
             doctor.setOfficeName(officeNameText);
             AuthFunctions.signUp(doctor);
 

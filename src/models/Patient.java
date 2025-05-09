@@ -7,15 +7,13 @@ import java.util.ArrayList;
 public class Patient extends User {
     private int medicalAidNumber;
     private int patientID;
-    private double balance =0.0;
 
 
-    public Patient(int userID, int patientID, int medicalAidNumber, String firstName, String lastName, String phoneNumber, String telephone, String dob, boolean isApproved, String userType, String email, String password, String gender, double balance){
+    public Patient(int userID, int patientID, int medicalAidNumber, String firstName, String lastName, String phoneNumber, String telephone, String dob, boolean isApproved, String userType, String email, String password, String gender){
         super(userID,firstName, lastName, phoneNumber, telephone, dob, isApproved, userType, email, password, gender);
 
         this.medicalAidNumber = medicalAidNumber;
         this.patientID = patientID;
-        this.balance = balance;
 
         // AuthFunctions.signUp(this);
 
@@ -25,19 +23,11 @@ public class Patient extends User {
         super(firstName, lastName, phoneNumber, telephone, dob, "PATIENT", email, password, gender);
         this.medicalAidNumber = medicalAidNumber;
         this.patientID = 0;
-        this.balance = 0.0;
 
     }
     @Override
     public void setUserTypeID(int userTypeID){
         this.patientID = userTypeID;
-    }
-    public double getBalance() {
-        return balance;
-    }
-
-    public void setBalance(double balance) {
-        this.balance = balance;
     }
 
     public static void addAppointment(Doctor doctor, String beginTime, String endTime, String date, String dayOfWeek){
