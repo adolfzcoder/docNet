@@ -31,6 +31,13 @@ public class Appointment {
         }
     }
 
+    public Appointment(int patientID, LocalDate date, LocalTime time, String status) {
+        this.patientID = patientID;
+        this.appointmentDate = date;
+        this.appointmentTime = time;
+        this.status = status;
+    }
+
     public Appointment(int patientID, int doctorID, LocalDate appointmentDate, LocalTime appointmentTime, String reason, String status) {
 
 

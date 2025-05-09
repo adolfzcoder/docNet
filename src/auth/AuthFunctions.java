@@ -73,7 +73,7 @@ public class AuthFunctions {
                 // admin
                 // the admin is inserted into the system manager list, which also inserts into the db
                 SystemManager.addAdmin((Admin) registeringUser);
-                System.out.println("Inserted Admin Succesfully");
+                System.out.println("Inserted Admin Successfully");
                 AlertHelper.showSuccess("Successfully registered");
 
             }
@@ -88,6 +88,8 @@ public class AuthFunctions {
 
     public static boolean authenticateUser(String email, String password) {
         if (!checkIfEmailExists(email)) {
+
+            System.out.println("This email does not exist: " + email);
             AlertHelper.showError("Email does not exist");
             System.out.println("Email does not exist");
             return false;
@@ -176,6 +178,8 @@ public class AuthFunctions {
     public static boolean checkIfEmailExists(String email) {
         for (User userDB : SystemManager.getUsers()) {
             if (email.equalsIgnoreCase(userDB.getEmail())) {
+                System.out.println("Email from user: "+ email);
+                System.out.println("Email from DB: "+ userDB.getEmail());
                 return true;
             }
         }

@@ -14,7 +14,7 @@ public class App extends Application {
     @Override
     public void start(Stage stage) throws IOException {
         primaryStage = stage;
-
+        System.out.println("Initialising lists...");
         SystemManager.initializeLists();
         loadScene("auth/login.fxml", "Login");
         // loadScene("doctormodules/DoctorSignUp.fxml", "Doctor Sign up");
