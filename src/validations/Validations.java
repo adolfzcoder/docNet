@@ -1,5 +1,7 @@
 package validations;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeParseException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -59,7 +61,8 @@ public class Validations {
     // Regular expression patterns for validations
     private static final Pattern PATTERN_NON_ALPHNUM_USASCII = Pattern.compile("[^a-zA-Z0-9]+");
     private static final Pattern PATTERN_EMAIL = Pattern.compile("^[\\w.-]+@[\\w.-]+\\.\\w+$");
-    private static final Pattern PATTERN_PHONE = Pattern.compile("^\\+?\\d{10,15}$");
+    private static final Pattern PATTERN_PHONE = Pattern.compile("^(081|085)\\d{7}$");
+
     private static final Pattern PATTERN_MEDICAL_AID = Pattern.compile("^[0-9]{6,10}$");
 
     // Validate if the string contains non-alphanumeric characters
@@ -82,17 +85,14 @@ public class Validations {
         return false;
     }
 
-    // Validate phone number (10-15 digits with optional leading '+')
     public static boolean validatePhoneNumber(String phoneNumber) {
         return phoneNumber.matches(PATTERN_PHONE.pattern());
     }
 
-    // Validate medical aid number (6-10 digits)
     public static boolean validateMedicalAidNumber(String medicalAidNumber) {
         return medicalAidNumber.matches(PATTERN_MEDICAL_AID.pattern());
     }
 
-    // Validate if the string matches a valid gender
     public static boolean validateEnumGender(String gender) {
         for (Gender g : Gender.values()) {
             if (g.getDisplayGender().equalsIgnoreCase(gender)) {
@@ -103,45 +103,44 @@ public class Validations {
         return false;
     }
 
-    // Validate if the password and confirm password match
     public static boolean validatePasswordMatch(String password, String confirmPassword) {
         return password.equals(confirmPassword);
     }
 
-    // Validate the user name (first name, last name, etc.)
     public static boolean validateUserName(String name) {
         return !name.isEmpty() && name.length() > 1;
     }
 
-    // Validate that the date of birth is not in the future (assuming it is in YYYY-MM-DD format)
     public static boolean validateDateOfBirth(String dob) {
-        // Here we would compare the date to the current date
-        // But since it's a String, we assume it's already validated elsewhere or handled
-        return !dob.isEmpty();
+        if (dob == null || dob.isEmpty()) {
+            return false;
+        }
+
+        try {
+            LocalDate dateOfBirth = LocalDate.parse(dob); // Assuming format is YYYY-MM-DD
+            return !dateOfBirth.isAfter(LocalDate.now());
+        } catch (DateTimeParseException e) {
+            return false; // Invalid format
+        }
     }
 
-    // Validate that a given number (e.g., for appointment, etc.) is positive
     public static boolean validatePositiveNumber(int number) {
         return number > 0;
     }
 
-    // Validate if the provided first name is not empty
     public static boolean validateFirstName(String firstName) {
-        return !firstName.trim().isEmpty();
+        return firstName != null && firstName.matches("^[A-Za-z]+$");
     }
 
-    // Validate if the provided last name is not empty
     public static boolean validateLastName(String lastName) {
-        return !lastName.trim().isEmpty();
+        return lastName != null && lastName.matches("^[A-Za-z]+$");
     }
 
-    // Validate password strength (at least 8 characters, with uppercase, lowercase, number, and special character)
     public static boolean validatePasswordStrength(String password) {
         String regex = "^(?=.*[A-Z])(?=.*[a-z])(?=.*\\d)(?=.*[!@#$%^&*])[A-Za-z\\d!@#$%^&*]{8,}$";
         return password.matches(regex);
     }
 
-    // Validate that a field is not empty
     public static boolean validateNotEmpty(String field) {
         return field != null && !field.trim().isEmpty();
     }

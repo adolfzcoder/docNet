@@ -6,7 +6,7 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 
 public class Appointment {
-    private int appointmentID=-1;
+    private int appointmentID = -1;
     private int patientID;
     private int doctorID;
     private LocalDate appointmentDate;
@@ -15,19 +15,17 @@ public class Appointment {
     private String status;
 
     public Appointment(int appointmentID, int patientID, int doctorID, LocalDate appointmentDate, LocalTime appointmentTime, String reasonForVisit, String status) {
+        this.doctorID = doctorID; // Set doctorID first so checkBookingsDates can use it
 
-        if( checkBookingsDates(appointmentDate) ) {
+        if (checkBookingsDates(appointmentDate, appointmentTime)) {
             this.appointmentID = appointmentID;
             this.patientID = patientID;
-            this.doctorID = doctorID;
             this.appointmentDate = appointmentDate;
             this.appointmentTime = appointmentTime;
             this.reasonForVisit = reasonForVisit;
             this.status = status;
-        }{
-
-            System.out.println("Doctor is booked, added to waiting list. ");
-
+        } else {
+            System.out.println("Doctor is booked, added to waiting list.");
         }
     }
 
@@ -39,35 +37,24 @@ public class Appointment {
     }
 
     public Appointment(int patientID, int doctorID, LocalDate appointmentDate, LocalTime appointmentTime, String reason, String status) {
+        this.doctorID = doctorID; // Set doctorID first so checkBookingsDates can use it
 
-
-        if (checkBookingsDates(appointmentDate)) { // check if there are any bookings on that day
+        if (checkBookingsDates(appointmentDate, appointmentTime)) {
             this.patientID = patientID;
-            this.doctorID = doctorID;
             this.appointmentDate = appointmentDate;
             this.appointmentTime = appointmentTime;
             this.reasonForVisit = reason;
             this.status = status;
-
-            // SystemManager.addAppointment(this);
-
-
         } else {
-
-            System.out.println("Doctor is booked, added to waiting list. ");
-
+            System.out.println("Doctor is booked, added to waiting list.");
         }
-
-
-
-
     }
-    public boolean checkBookingsDates(LocalDate date) {
+
+    public boolean checkBookingsDates(LocalDate date, LocalTime time) {
         for (Appointment appt : SystemManager.getAppointments()) {
             if (appt.getDoctorID() == this.doctorID && appt.getAppointmentDate().equals(date)) {
-
-                long minutesBetween = Math.abs(java.time.Duration.between(appt.getAppointmentTime(), this.appointmentTime).toMinutes());
-                // all appotinments last 1 hour (our business rule)
+                long minutesBetween = Math.abs(java.time.Duration.between(appt.getAppointmentTime(), time).toMinutes());
+                // all appointments last 1 hour (our business rule)
                 if (minutesBetween < 60) {
                     System.out.println("Doctor has another appointment within an hour. Try another time or day.");
                     return false;
@@ -78,7 +65,6 @@ public class Appointment {
         System.out.println("Appointment slot is available.");
         return true;
     }
-
 
     public int getAppointmentID() {
         return appointmentID;

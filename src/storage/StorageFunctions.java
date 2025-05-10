@@ -82,7 +82,7 @@ public class StorageFunctions {
         for(Office office : sys.getOffices()){
 
             if(office.getOfficeID()==officeID){
-
+                System.out.println(office.getAccountBalance());
                 return office.getAccountBalance();
 
             }

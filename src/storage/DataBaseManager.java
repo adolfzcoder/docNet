@@ -48,6 +48,75 @@ public class DataBaseManager {
             }
             return users;
         }
+    public static Doctor getApprovedDoctorById(int doctorID) {
+        String query = """
+        SELECT u.userID, u.firstName, u.lastName, u.phoneNumber, u.telephone,
+               u.dob, u.isApproved, u.userType, u.email, u.password, u.gender,
+               d.doctorID, d.yearsOfExperience, d.specialisation
+        FROM doctor d
+        JOIN user u ON d.userID = u.userID
+        WHERE d.doctorID = ? AND u.isApproved = TRUE
+        """;
+
+        try (Connection conn = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
+             PreparedStatement ps = conn.prepareStatement(query)) {
+
+            ps.setInt(1, doctorID);
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    Doctor doctor = new Doctor();
+                    doctor.setUserID(rs.getInt("userID"));
+                    doctor.setDoctorID(rs.getInt("doctorID"));
+                    doctor.setFirstName(rs.getString("firstName"));
+                    doctor.setLastName(rs.getString("lastName"));
+                    doctor.setPhoneNumber(rs.getString("phoneNumber"));
+                    doctor.setTelephone(rs.getString("telephone"));
+                    doctor.setDob(rs.getString("dob"));
+                    doctor.setApproved(rs.getBoolean("isApproved"));
+                    doctor.setUserType(rs.getString("userType"));
+                    doctor.setEmail(rs.getString("email"));
+                    doctor.setPassword(rs.getString("password"));
+                    doctor.setGender(rs.getString("gender"));
+                    doctor.setYearsOfXP(rs.getInt("yearsOfExperience"));
+                    doctor.setSpecialisation(rs.getString("specialisation"));
+                    return doctor;
+                } else {
+                    System.out.println("No approved doctor found with ID: " + doctorID);
+                    return null;
+                }
+            }
+        } catch (SQLException e) {
+            System.out.println("SQL Error when retrieving doctor: " + e.getMessage());
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public static boolean approveDoctorById(int doctorID) {
+        String query = "UPDATE user SET isApproved = ? WHERE userID = (SELECT userID FROM doctor WHERE doctorID = ?)";
+
+        try (Connection conn = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
+             PreparedStatement ps = conn.prepareStatement(query)) {
+
+            ps.setBoolean(1, true); // Approve
+            ps.setInt(2, doctorID);
+
+            int rowsAffected = ps.executeUpdate();
+
+            if (rowsAffected > 0) {
+                System.out.println("Doctor with ID " + doctorID + " has been approved.");
+                return true;
+            } else {
+                System.out.println("No doctor found with ID: " + doctorID);
+                return false;
+            }
+
+        } catch (SQLException e) {
+            System.out.println("SQL Error when approving doctor: " + e.getMessage());
+            e.printStackTrace();
+            return false;
+        }
+    }
 
         public static ArrayList<Admin> getAdmins() {
             ArrayList<Admin> admins = new ArrayList<>();
@@ -298,68 +367,89 @@ public class DataBaseManager {
 
     public static int insertUser(Doctor doctor) {
         String query1 = "INSERT INTO user (firstName, lastName, phoneNumber, telephone, dob, isApproved, userType, email, password, gender) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-        String query2 = "INSERT INTO doctor (yearsOfExperience, specialisation, userID) VALUES (?, ?, ?)";
+        String query2 = "INSERT INTO doctor (yearsOfExperience, specialisation, userID, isBooked) VALUES (?, ?, ?, ?)";
         String query3 = "INSERT INTO office (name, accountBalance, doctorID) VALUES (?, ?, ?)";
 
         int generatedUserID = -1;
 
-        try (Connection conn = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
-             PreparedStatement ps = conn.prepareStatement(query1, Statement.RETURN_GENERATED_KEYS)) {
+        try (Connection conn = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD)) {
+            conn.setAutoCommit(false); // Start transaction
 
-            // Insert into user table
-            ps.setString(1, doctor.getFirstName());
-            ps.setString(2, doctor.getLastName());
-            ps.setString(3, doctor.getPhoneNumber());
-            ps.setString(4, doctor.getTelephone());
-            ps.setString(5, doctor.getDob());
-            ps.setBoolean(6, doctor.getApproved());
-            ps.setString(7, doctor.getUserType());
-            ps.setString(8, doctor.getEmail());
-            ps.setString(9, doctor.getPassword());
-            ps.setString(10, doctor.getGender());
+            try (PreparedStatement ps = conn.prepareStatement(query1, Statement.RETURN_GENERATED_KEYS)) {
+                ps.setString(1, doctor.getFirstName());
+                ps.setString(2, doctor.getLastName());
+                ps.setString(3, doctor.getPhoneNumber());
+                ps.setString(4, doctor.getTelephone());
+                ps.setString(5, doctor.getDob());
+                ps.setBoolean(6, doctor.getApproved());
+                ps.setString(7, doctor.getUserType());
+                ps.setString(8, doctor.getEmail());
+                ps.setString(9, doctor.getPassword());
+                ps.setString(10, doctor.getGender());
 
-            int affectedRows = ps.executeUpdate();
+                int affectedRows = ps.executeUpdate();
+                if (affectedRows == 0) {
+                    conn.rollback();
+                    throw new SQLException("Inserting user failed, no rows affected.");
+                }
 
-            if (affectedRows > 0) {
-                ResultSet rs = ps.getGeneratedKeys();
-                if (rs.next()) {
-                    generatedUserID = rs.getInt(1);
-                    System.out.println("Generated User ID: " + generatedUserID);
+                try (ResultSet rs = ps.getGeneratedKeys()) {
+                    if (rs.next()) {
+                        generatedUserID = rs.getInt(1);
+                        System.out.println("Generated User ID: " + generatedUserID);
+                    } else {
+                        conn.rollback();
+                        throw new SQLException("Inserting user failed, no ID obtained.");
+                    }
+                }
+            }
 
-                    // Insert into doctor table
-                    try (PreparedStatement ps2 = conn.prepareStatement(query2, Statement.RETURN_GENERATED_KEYS)) {
-                        ps2.setInt(1, doctor.getYearsOfXP());
-                        ps2.setString(2, doctor.getSpecialisation());
-                        ps2.setInt(3, generatedUserID);
+            int generatedDoctorID = -1;
+            try (PreparedStatement ps2 = conn.prepareStatement(query2)) {
+                ps2.setInt(1, doctor.getYearsOfXP());
+                ps2.setString(2, doctor.getSpecialisation());
+                ps2.setInt(3, generatedUserID);
+                ps2.setBoolean(4, false); // isBooked
 
-                        int affectedRows2 = ps2.executeUpdate();
-                        if (affectedRows2 > 0) {
-                            ResultSet rs2 = ps2.getGeneratedKeys();
-                            if (rs2.next()) {
-                                int doctorID = rs2.getInt(1);
-                                System.out.println("Generated Doctor ID: " + doctorID);
+                int affectedRows2 = ps2.executeUpdate();
+                if (affectedRows2 == 0) {
+                    conn.rollback();
+                    throw new SQLException("Inserting doctor failed, no rows affected.");
+                }
 
-                                // Insert into office table
-                                try (PreparedStatement ps3 = conn.prepareStatement(query3)) {
-                                    ps3.setString(1, doctor.getOfficeName());
-                                    ps3.setDouble(2, 1000.00);
-                                    ps3.setInt(3, doctorID);
-                                    ps3.executeUpdate();
-                                }
-                            }
+                try (PreparedStatement psFetch = conn.prepareStatement("SELECT doctorID FROM doctor WHERE userID = ?")) {
+                    psFetch.setInt(1, generatedUserID);
+                    try (ResultSet rs2 = psFetch.executeQuery()) {
+                        if (rs2.next()) {
+                            generatedDoctorID = rs2.getInt("doctorID");
+                            System.out.println("Resolved Doctor ID: " + generatedDoctorID);
+                        } else {
+                            conn.rollback();
+                            throw new SQLException("Failed to retrieve doctorID by userID.");
                         }
                     }
                 }
-            } else {
-                System.out.println("No rows affected when inserting user!");
             }
-        } catch (SQLException e) {
-            System.out.println("SQL Error when inserting user: " + e.getMessage());
-            e.printStackTrace();
-        }
 
-        return generatedUserID;
+            try (PreparedStatement ps3 = conn.prepareStatement(query3)) {
+                ps3.setString(1, doctor.getOfficeName());
+                ps3.setDouble(2, 1000.00); // Initial balance
+                ps3.setInt(3, generatedDoctorID);
+
+                ps3.executeUpdate();
+                System.out.println("Office inserted successfully.");
+            }
+            System.out.println("Inserted: User, Doctor and Office succsufly");
+
+            conn.commit();
+            return generatedUserID;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return -1;
+        }
     }
+
+
 //    public static int insertPatient(Patient patient) {
 //        // First, insert the user
 //        int userID = insertUser((Patient)patient);
@@ -481,25 +571,67 @@ public class DataBaseManager {
     }
 
     public static void insertAppointment(Appointment appointment) {
-            String query = "INSERT INTO appointment (appointmentDate, reasonForVisit, status, appointmentTime, patientID, doctorID) VALUES (?, ?, ?, ?, ?, ?)";
+        // First, get the patient ID from the user in the session
+        User currentUser = SystemManager.getSession().getFirst();
+        int userID = currentUser.getUserID();
+        int patientID = getPatientIDFromUserID(userID);
 
-            try (Connection conn = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
-                 PreparedStatement ps = conn.prepareStatement(query)) {
-
-                ps.setDate(1, java.sql.Date.valueOf(appointment.getAppointmentDate()));
-                ps.setString(2, appointment.getReasonForVisit());
-                ps.setString(3, appointment.getStatus());
-                ps.setTime(4, java.sql.Time.valueOf(appointment.getAppointmentTime()));
-                ps.setInt(5, appointment.getPatientID());
-                ps.setInt(6, appointment.getDoctorID());
-
-                ps.executeUpdate();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
+        if (patientID <= 0) {
+            System.out.println("Error: Could not find patient record for the current user.");
+            return;
         }
 
+        String query = "INSERT INTO appointment (appointmentDate, reasonForVisit, status, appointmentTime, patientID, doctorID) VALUES (?, ?, ?, ?, ?, ?)";
 
+        try (Connection conn = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
+             PreparedStatement ps = conn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
+
+            ps.setDate(1, java.sql.Date.valueOf(appointment.getAppointmentDate()));
+            ps.setString(2, appointment.getReasonForVisit());
+            ps.setString(3, appointment.getStatus());
+            ps.setTime(4, java.sql.Time.valueOf(appointment.getAppointmentTime()));
+            ps.setInt(5, patientID); // Use the patientID retrieved from the userID
+            ps.setInt(6, appointment.getDoctorID());
+
+            System.out.println("Inserting appointment with patientID: " + patientID);
+
+            int affectedRows = ps.executeUpdate();
+
+            if (affectedRows > 0) {
+                // Get the auto-generated appointment ID
+                try (ResultSet generatedKeys = ps.getGeneratedKeys()) {
+                    if (generatedKeys.next()) {
+                        appointment.setAppointmentID(generatedKeys.getInt(1));
+                        System.out.println("Appointment created with ID: " + appointment.getAppointmentID());
+                    }
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.out.println("Error inserting appointment: " + e.getMessage());
+        }
+    }
+
+    private static int getPatientIDFromUserID(int userID) {
+        String query = "SELECT patientID FROM patient WHERE userID = ?";
+
+        try (Connection conn = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
+             PreparedStatement ps = conn.prepareStatement(query)) {
+
+            ps.setInt(1, userID);
+
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    return rs.getInt("patientID");
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.out.println("Error finding patient ID: " + e.getMessage());
+        }
+
+        return -1;
+    }
     public static int insertAdmin(Admin ad) {
         String query = "INSERT INTO admin (userID) VALUES (?)";
 
@@ -542,4 +674,6 @@ public class DataBaseManager {
             e.printStackTrace();
         }
     }
+
+
 }

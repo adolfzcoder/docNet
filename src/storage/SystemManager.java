@@ -5,6 +5,7 @@ import models.Doctor;
 import models.*;
 import utils.AlertHelper;
 
+import javax.print.Doc;
 import javax.xml.crypto.Data;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -26,7 +27,19 @@ public class SystemManager {
     private static ArrayList<Office> offices = fetchOffices(); // goes to db and fetches all the offices
 
 
-    private static ArrayList<Doctor> approvedDoctors = new ArrayList<>();
+    private static ArrayList<Doctor> approvedDoctors = fetchApprovedDOctors();
+
+    private static ArrayList<Doctor> fetchApprovedDOctors() {
+        ArrayList<Doctor> approved = new ArrayList<>();
+        for (Doctor dr: doctors){
+            if(dr.getApproved()){
+                approved.add(dr);
+            }
+        }
+
+        return approved;
+    }
+
     private static ArrayList<Doctor> pendingDoctors = new ArrayList<>();
     // private static ArrayList<Notification> allNotifications = new ArrayList<>();
     private static ArrayList<Appointment> pendingAppointments = new ArrayList<>();
@@ -161,8 +174,8 @@ public class SystemManager {
     public static ArrayList<Doctor> fetchDoctors() {
         try {
             ArrayList<Doctor> doctors = DataBaseManager.getDoctors();
-            if (doctors == null || doctors.isEmpty()) {
-                doctors = new ArrayList<>();
+            for (Doctor doctor: doctors){
+                System.out.println("Doctor:" + doctor.getFirstName());
             }
             return doctors;
         } catch (Exception e) {
@@ -313,6 +326,20 @@ public class SystemManager {
     }
 
 
+    public static Doctor findApprovedDoctor(int doctorID){
+        for(Doctor dr: approvedDoctors){
+            for(Doctor dra: approvedDoctors){
+                System.out.println("Approved Doctor: "+dra.getFirstName());
+            }
+            if(dr.getDoctorID() == doctorID){
+                return dr;
+            }
+            else{
+                System.out.println("Doctor ID not found");;
+            }
+        }
+        return null;
+    }
     public static Doctor findDoctor(int doctorID){
         for(Doctor dr: doctors){
             if(dr.getDoctorID() == doctorID){

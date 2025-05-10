@@ -16,7 +16,9 @@ public class Doctor extends User {
 
 
 
+public Doctor(){
 
+}
     public DoctorValidate validate = new DoctorValidate();
 
     public Doctor(int userID, int doctorID,  int yearsOfXP, String specialisation, String firstName, String lastName, String phoneNumber, String telephone, String dob, boolean isApproved, String userType, String email, String password, String gender, boolean isBooked) {

@@ -1,7 +1,9 @@
 import auth.AuthFunctions;
 import models.*;
+import storage.DataBaseManager;
 import storage.StorageFunctions;
 import storage.SystemManager;
+import validations.Validations;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -131,25 +133,52 @@ public class Main {
 
             System.out.print("Enter First Name: ");
             String firstName = scanner.nextLine();
+            if(!Validations.validateUserName(firstName)){
+                System.out.println("Name not in right format, please try again, Name cannot be empty");
+
+                return;
+            }
 
             System.out.print("Enter Last Name: ");
             String lastName = scanner.nextLine();
-
+            if(!Validations.validateUserName(lastName)){
+                System.out.println("Name not in right format, please try again, cannot be empty");
+                return;
+            }
             System.out.print("Enter Phone Number: ");
             String phoneNumber = scanner.nextLine();
+            if(!Validations.validatePhoneNumber(phoneNumber) || phoneNumber.isEmpty()){
+                System.out.println("Phone number not in right format or is empty");
+            }
+
 
             System.out.print("Enter Telephone: ");
             String telephone = scanner.nextLine();
 
             System.out.print("Enter Date of Birth (YYYY-MM-DD): ");
             String dob = scanner.nextLine();
+            if(!Validations.validateDateOfBirth(dob) || dob.isEmpty()){
+                System.out.println("Date of birth not in right format or is empty");
+                return;
+            }
 
             System.out.print("Enter Gender (MALE/FEMALE): ");
             String gender = scanner.nextLine();
+            if(!Validations.validateEnumGender(gender) || gender.isEmpty()){
+                System.out.println("Gender not in right format");
+                return;
+            }
 
             System.out.print("Enter Email: ");
             String email = scanner.nextLine();
+            if(!Validations.validateEmail(email) || email.isEmpty()){
+                System.out.println("Email not in right format or is empty");
+                return;
+            }
 
+            if(!Validations.validateEmail(email)){
+                return;
+            }
             System.out.print("Enter Password: ");
             String password = scanner.nextLine();
 
@@ -245,7 +274,6 @@ public class Main {
                     searchDoctor(scan);
                     break;
                 case 6:
-                    // Return to main menu
                     break;
                 case 7:
                     AuthFunctions.logout();
@@ -260,12 +288,10 @@ public class Main {
 
     public  static void makeAppointment(Scanner scanner) {
         try {
-            // Get current patient ID from session
             int patientID = SystemManager.getSession().getFirst().getUserTypeID();
 
-            // Display available doctors
-            ArrayList<Doctor> doctors = SystemManager.getDoctors();
-            System.out.println("\nAvailable Doctors:");
+            ArrayList<Doctor> doctors = DataBaseManager.getDoctors();
+            System.out.println("\nAvailable (Approved) Doctors:");
             System.out.println("----------------------------------------");
             System.out.println("ID | Name | Specialization | Rating");
             System.out.println("----------------------------------------");
@@ -286,14 +312,12 @@ public class Main {
             System.out.println("Enter Doctor ID: ");
             int doctorID = scanner.nextInt();
 
-            // Validate doctor
-            Doctor selectedDoctor = SystemManager.findDoctor(doctorID);
+            Doctor selectedDoctor = DataBaseManager.getApprovedDoctorById(doctorID);
             if (selectedDoctor == null) {
                 System.out.println("Doctor not found. Please try again.");
                 return;
             }
 
-            // Date validation with proper format
             LocalDate appointmentDate = null;
             while (appointmentDate == null) {
                 try {
@@ -301,7 +325,6 @@ public class Main {
                     String dateString = scanner.next();
                     appointmentDate = LocalDate.parse(dateString);
 
-                    // Validate date is in the future
                     if (appointmentDate.isBefore(LocalDate.now())) {
                         System.out.println("Appointment date must be in the future.");
                         appointmentDate = null;
@@ -644,6 +667,7 @@ public class Main {
             for (Doctor doctor : pendingDoctors) {
                 if (doctor.getDoctorID() == doctorID) {
                     doctor.setApproved(true);
+                    DataBaseManager.approveDoctorById(doctorID);
                     System.out.println("Dr. " + doctor.getFirstName() + " " + doctor.getLastName() + " has been approved.");
                     return;
                 }
@@ -801,7 +825,7 @@ public class Main {
             User currentUser = SystemManager.getSession().getFirst();
             int doctorID = currentUser.getUserTypeID();
 
-            System.out.println("Welcome Dr. " + currentUser.getFirstName() + " " + currentUser.getLastName() + "!");
+            System.out.println("Welcome Dr. " + currentUser.getLastName() + "!");
             System.out.println("What would you like to do?");
 
             System.out.println("1. View pending appointments");
