@@ -36,7 +36,7 @@ public class Doctor extends User {
 
     }
 
-    public Doctor( int yearsOfXP, String specialisation, String firstName, String lastName, String phoneNumber, String telephone, String dob, String email, String password, String gender){
+    public Doctor( int yearsOfXP, String specialisation, String firstName, String lastName, String phoneNumber, String telephone, String dob, String email, String password, String gender, String officeName){
         super(firstName, lastName, phoneNumber, telephone, dob, "DOCTOR", email, password, gender);
         setYearsOfXP(yearsOfXP);
         this.doctorID = 0;
@@ -45,13 +45,23 @@ public class Doctor extends User {
         this.officeID = -1;
     }
 
-    public Doctor(int userID, int doctorID, String certificate, int yearsXP, String specialisation, String firstName, String lastName, String phoneNumber, String telephone, String dob, boolean b, String doctor, String email, String password, String gender, boolean isBooked) {
+    public Doctor(int userID, int doctorID, String certificate, int yearsXP, String specialisation, String firstName, String lastName, String phoneNumber, String telephone, String dob, boolean b, String doctor, String email, String password, String gender, boolean isBooked, String officeName) {
 
     super(userID,firstName, lastName, phoneNumber, telephone, dob, b, doctor, email, password, gender);
         setYearsOfXP(yearsXP);
         this.doctorID = doctorID;
         this.specialisation = specialisation;
         this.isBooked = isBooked;
+        this.officeName = officeName;
+    }
+
+    public Doctor(int userID, int doctorID, int yearsXP, String specialisation, String firstName, String lastName, String phoneNumber, String telephone, String dob, boolean b, String doctor, String email, String password, String gender, boolean isBooked, String officeName) {
+        super(userID,firstName, lastName, phoneNumber, telephone, dob, b, doctor, email, password, gender);
+        setYearsOfXP(yearsXP);
+        this.doctorID = doctorID;
+        this.specialisation = specialisation;
+        this.isBooked = isBooked;
+        this.officeName = officeName;
     }
 
     public String getOfficeName() {

@@ -75,11 +75,11 @@ public class DoctorSignUpController {
             String birthDayText = birthDay.getValue() != null ? birthDay.getValue().toString() : "";
             int years = Integer.parseInt(yearsOfXpText);
             if (!passwordText.equals(confirmPasswordText)) {
-                AlertHelper.showError("Registration Failed", "Passwords do not match.");
+              //   AlertHelper.showError("Registration Failed", "Passwords do not match.");
                 return;
             }
 
-            Doctor doctor = new Doctor( years, specialisationText, firstNameText, lastNameText, phoneNumberText, telephoneText, birthDayText, emailText, passwordText, genderText);
+            Doctor doctor = new Doctor( years, specialisationText, firstNameText, lastNameText, phoneNumberText, telephoneText, birthDayText, emailText, passwordText, genderText, officeNameText);
             doctor.setOfficeName(officeNameText);
             AuthFunctions.signUp(doctor);
 

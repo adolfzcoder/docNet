@@ -1,5 +1,5 @@
 package storage;
-
+import storage.DataBaseManager;
 import models.Admin;
 import models.Doctor;
 import models.*;
@@ -77,7 +77,7 @@ public class SystemManager {
             }
             return ratings;
         } catch (Exception e) {
-            AlertHelper.showError("Error", "Error fetching Ratings: " + e.getMessage());
+          //   AlertHelper.showError("Error", "Error fetching Ratings: " + e.getMessage());
 
             System.err.println("Error fetching Ratins: " + e.getMessage());
             return new ArrayList<>();
@@ -99,9 +99,10 @@ public class SystemManager {
     }
     public static ArrayList<User> fetchUsers() {
         try {
+
             ArrayList<User> users = DataBaseManager.getUsers();
             if (users == null || users.isEmpty()) {
-                users = new ArrayList<>(); // Initialize to avoid null issues
+                users = new ArrayList<>();
             }
             return users;
         } catch (Exception e) {

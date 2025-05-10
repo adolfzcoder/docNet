@@ -72,7 +72,7 @@ public class PatientSignUpController {
             int medAidNum = Integer.parseInt(medicalAidNumber.getText());
 
             if (!userPassword.equals(confirmPass)) {
-                AlertHelper.showError("Registration Failed", "Passwords do not match.");
+              //   AlertHelper.showError("Registration Failed", "Passwords do not match.");
                 return;
             }
 

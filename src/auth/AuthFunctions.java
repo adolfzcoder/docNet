@@ -65,27 +65,27 @@ public class AuthFunctions {
 
 
                 System.out.println("Inserted Doctor Successfully");
-                AlertHelper.showSuccess("Successfully registered");
+              //   AlertHelper.showSuccess("Successfully registered");
             }else if(registeringUser.getUserType().equalsIgnoreCase("PATIENT")){
                 // the admin is inserted into the system manager list, which also inserts into the db
 
                 SystemManager.addPatient((Patient)registeringUser);
 
                 System.out.println("Inserted Patient Successfully");
-                AlertHelper.showSuccess("Successfully registered");
+              //   AlertHelper.showSuccess("Successfully registered");
 
             } else {
                 // admin
                 // the admin is inserted into the system manager list, which also inserts into the db
                 SystemManager.addAdmin((Admin) registeringUser);
                 System.out.println("Inserted Admin Successfully");
-                AlertHelper.showSuccess("Successfully registered");
+              //   AlertHelper.showSuccess("Successfully registered");
 
             }
-            NavigatorHelper.loadScene("auth/login.fxml", "Login");
+            // NavigatorHelper.loadScene("auth/login.fxml", "Login");
         }else{
             System.out.println("Email exists");
-            AlertHelper.showError("Email already exists");
+          //   AlertHelper.showError("Email already exists");
         }
 
     }
@@ -95,14 +95,14 @@ public class AuthFunctions {
         if (!checkIfEmailExists(email)) {
 
             System.out.println("This email does not exist: " + email);
-            AlertHelper.showError("Email does not exist");
+          //   AlertHelper.showError("Email does not exist");
             System.out.println("Email does not exist");
             return false;
         }
 
         Optional<User> userOptional = SystemManager.findUser(email);
         if (userOptional.isEmpty()) {
-            AlertHelper.showError("User is not found");
+          //   AlertHelper.showError("User is not found");
             System.out.println("User is not found");
             return false;
         }
@@ -111,7 +111,7 @@ public class AuthFunctions {
         boolean passwordMatches = user.getPassword().equals(hash(password));
 
         if (!passwordMatches) {
-            AlertHelper.showError("Error", "Passwords do not match");
+          //   AlertHelper.showError("Error", "Passwords do not match");
             System.out.println("Passwords do not match");
             return false;
         }
@@ -121,10 +121,10 @@ public class AuthFunctions {
         System.out.println("Logged in user");
         System.out.println("Starting session...");
         System.out.println("User is a: " + user.getUserType());
-        AlertHelper.showSuccess("Successfully logged in");
+      //   AlertHelper.showSuccess("Successfully logged in");
 
 
-        decideUserJourney(user);
+        // decideUserJourney(user);
         return true;
     }
 

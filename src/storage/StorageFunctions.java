@@ -5,7 +5,7 @@ import models.*;
 import java.util.ArrayList;
 
 public class StorageFunctions {
-    private SystemManager sys = new SystemManager();
+    private static SystemManager sys = new SystemManager();
     public int countTotalAppointmentsForDoctor(int doctorID){
         int drCount = 0;
         for (Appointment appt : SystemManager.getAppointments()){
@@ -76,7 +76,7 @@ public class StorageFunctions {
         }
         return totalCount;
     }
-    public double getOfficeBalance(int drID){
+    public static double getOfficeBalance(int drID){
         double balance = 0;
         int officeID = sys.findOfficeIDByDoctorID(drID);
         for(Office office : sys.getOffices()){

@@ -1,12 +1,8 @@
-import storage.SystemManager;
-import models.Admin;
 import auth.AuthFunctions;
-import models.Doctor;
-import models.User;
-import models.Appointment;
-import models.Patient;
-import models.Prescription;
-import models.Rating;
+import models.*;
+import storage.StorageFunctions;
+import storage.SystemManager;
+
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
@@ -16,19 +12,23 @@ import java.util.Scanner;
 
 public class Main {
 
-    // Centralized error handling function
-    private static void displayError(String errorMessage, String errorType) {
+    private Main() {
+        // prevent instantiation, kept giving error that duplicate class, since all methods were static
+    }
+
+
+    public static void displayError(String errorMessage, String errorType) {
         System.err.println("[" + errorType + "] " + errorMessage);
-        // In a real application, you could replace this with your custom error display mechanism
-        // For example: ErrorDialog.show(errorMessage, errorType);
+
     }
 
     public static void main(String[] args) {
         try {
-            // Initialize all data lists from the database
+            // this takes some time, so to reduce latency, we initialise our lists at the begining of the app
+            System.out.println("Initialising lists, may take up to 10 seconds");
             SystemManager.initializeLists();
 
-            // Check if a session exists
+            // checking if session exists ie there is a user already logged in
             if (!SystemManager.getSession().isEmpty()) {
                 User sessionUser = SystemManager.getSession().getFirst();
                 String loggedInUserType = sessionUser.getUserType();
@@ -50,6 +50,7 @@ public class Main {
                 System.out.println("Enter 1 to login: ");
                 System.out.println("Enter 2 to register: ");
                 System.out.println("Enter 3 to logout: ");
+                System.out.println("Enter 4 to reload database lists");
                 System.out.println("Press 'q' to exit");
 
                 String input = scan.next();
@@ -62,11 +63,7 @@ public class Main {
                         int choice = Integer.parseInt(input);
                         switch (choice) {
                             case 1:
-                                System.out.println("enter email");
-                                String email = scan.nextLine();
-                                System.out.println("Enter pass");
-                                String pass = scan.nextLine();
-                                AuthFunctions.authenticateUser(email, pass);
+                                login();
                                 break;
                             case 2:
 
@@ -74,6 +71,10 @@ public class Main {
                                 break;
                             case 3:
                                 AuthFunctions.logout();
+                                break;
+                            case 4:
+                                SystemManager.initializeLists();
+                                System.out.println("Reloading lists");
                                 break;
                             default:
                                 displayError("Invalid option. Try again.", "Input Error");
@@ -105,7 +106,7 @@ public class Main {
     }
 
 
-    public static void login() {
+    public  static void login() {
         try {
             Scanner scan = new Scanner(System.in);
             System.out.println("Enter email: ");
@@ -123,7 +124,8 @@ public class Main {
             displayError("Error in login(): " + e.getMessage(), "Login Error");
         }
     }
-    public static void signup() {
+
+    public  static void signup() {
         try {
             Scanner scanner = new Scanner(System.in);
 
@@ -154,24 +156,32 @@ public class Main {
             System.out.print("Enter User Type (DOCTOR / PATIENT / ADMIN): ");
             String userType = scanner.nextLine().trim().toUpperCase();
 
+
+
             // make method do get the last inserted id, then incremenet (generateID)
             int userID = 0;
 
             switch (userType) {
                 case "DOCTOR":
-                    System.out.print("Enter Medical Certificate Path: ");
-                    String certificate = scanner.nextLine();
+//                    System.out.print("Enter Medical Certificate Path: ");
+//                    String certificate = scanner.nextLine();
 
                     System.out.print("Enter Years of Experience: ");
                     int yearsXP = Integer.parseInt(scanner.nextLine());
 
                     System.out.print("Enter Specialisation: ");
                     String specialisation = scanner.nextLine();
+
+                    System.out.print("Enter office name");
+                    String officeName = scanner.nextLine();
+
                     boolean isBooked = false;
 
                     int doctorID = 0;
-                    new Doctor(userID, doctorID, certificate, yearsXP, specialisation, firstName, lastName,
-                            phoneNumber, telephone, dob, false, "DOCTOR", email, password, gender, isBooked);
+
+
+                    AuthFunctions.signUp(new Doctor(userID, doctorID, yearsXP, specialisation, firstName, lastName,
+                            phoneNumber, telephone, dob, false, "DOCTOR", email, password, gender, isBooked, officeName ));
                     break;
 
                 case "PATIENT":
@@ -181,14 +191,14 @@ public class Main {
                     System.out.println("Enter balance: ");
                     double balance = scanner.nextDouble();
 
-                    new Patient(userID, patientID, medAidNumber, firstName, lastName, phoneNumber, telephone,
-                            dob, false, "PATIENT", email, password, gender, balance);
+                    AuthFunctions.signUp(new Patient(userID, patientID, medAidNumber, firstName, lastName, phoneNumber, telephone,
+                            dob, false, "PATIENT", email, password, gender, balance));
                     break;
 
                 case "ADMIN":
                     int adminID = 0;
-                    new Admin(userID, adminID, firstName, lastName, phoneNumber, telephone,
-                            dob, true, "ADMIN", email, password, gender);
+                    AuthFunctions.signUp(new Admin(userID, adminID, firstName, lastName, phoneNumber, telephone,
+                            dob, true, "ADMIN", email, password, gender));
                     break;
 
                 default:
@@ -198,7 +208,8 @@ public class Main {
             displayError("Error in signup(): " + e.getMessage(), "Signup Error");
         }
     }
-    public static void patientChoices() {
+
+    public  static void patientChoices() {
         try {
             Scanner scan = new Scanner(System.in);
             User currentUser = SystemManager.getSession().getFirst();
@@ -247,7 +258,7 @@ public class Main {
         }
     }
 
-    public static void makeAppointment(Scanner scanner) {
+    public  static void makeAppointment(Scanner scanner) {
         try {
             // Get current patient ID from session
             int patientID = SystemManager.getSession().getFirst().getUserTypeID();
@@ -300,7 +311,6 @@ public class Main {
                 }
             }
 
-            // Time validation with proper format
             LocalTime appointmentTime = null;
             while (appointmentTime == null) {
                 try {
@@ -312,12 +322,11 @@ public class Main {
                 }
             }
 
-            scanner.nextLine(); // Consume newline
+            scanner.nextLine();
 
             System.out.println("Enter Reason for Visit: ");
             String reason = scanner.nextLine();
 
-            // Create and save appointment
             Appointment newAppointment = new Appointment(0, patientID, doctorID, appointmentDate, appointmentTime, reason, "PENDING");
             SystemManager.addAppointment(newAppointment);
 
@@ -336,7 +345,7 @@ public class Main {
         }
     }
 
-    public static void viewAllPatientAppointments(int patientID) {
+    public  static void viewAllPatientAppointments(int patientID) {
         try {
             ArrayList<Appointment> patientAppointments = SystemManager.returnAppointmentsByPatientID(patientID);
 
@@ -415,7 +424,6 @@ public class Main {
 
     public static void rateDoctor(Scanner scanner, int patientID) {
         try {
-            // Get patient's previous appointments to find doctors they can rate
             ArrayList<Appointment> patientAppointments = SystemManager.returnAppointmentsByPatientID(patientID);
             ArrayList<Doctor> seenDoctors = new ArrayList<>();
 
@@ -447,7 +455,6 @@ public class Main {
             System.out.println("Enter Doctor ID to rate: ");
             int doctorID = scanner.nextInt();
 
-            // Validate doctor
             Doctor selectedDoctor = null;
             for (Doctor doctor : seenDoctors) {
                 if (doctor.getDoctorID() == doctorID) {
@@ -468,12 +475,11 @@ public class Main {
                 return;
             }
 
-            scanner.nextLine(); // Consume newline
+            scanner.nextLine();
 
             System.out.println("Enter review comment: ");
             String review = scanner.nextLine();
 
-            // Create and save rating
             Rating rating = new Rating(0, patientID, doctorID, review, score);
             SystemManager.addRating(rating);
 
@@ -491,7 +497,7 @@ public class Main {
             System.out.println("2. Search by name");
 
             int searchOption = scanner.nextInt();
-            scanner.nextLine(); // Consume newline
+            scanner.nextLine();
 
             ArrayList<Doctor> doctors = SystemManager.getDoctors();
             ArrayList<Doctor> searchResults = new ArrayList<>();
@@ -585,7 +591,6 @@ public class Main {
                     viewAllDoctors();
                     break;
                 case 6:
-                    // Return to main menu
                     break;
                 case 7:
                     AuthFunctions.logout();
@@ -603,7 +608,6 @@ public class Main {
             ArrayList<Doctor> doctors = SystemManager.getDoctors();
             ArrayList<Doctor> pendingDoctors = new ArrayList<>();
 
-            // Filter for unapproved doctors
             for (Doctor doctor : doctors) {
                 if (!doctor.getApproved()) {
                     pendingDoctors.add(doctor);
@@ -637,11 +641,9 @@ public class Main {
                 return;
             }
 
-            // Find the doctor and approve
             for (Doctor doctor : pendingDoctors) {
                 if (doctor.getDoctorID() == doctorID) {
                     doctor.setApproved(true);
-                    // Update in database would go here - SystemManager.updateDoctor(doctor);
                     System.out.println("Dr. " + doctor.getFirstName() + " " + doctor.getLastName() + " has been approved.");
                     return;
                 }
@@ -659,7 +661,6 @@ public class Main {
             ArrayList<Appointment> allAppointments = SystemManager.getAppointments();
             ArrayList<Appointment> pendingAppointments = new ArrayList<>();
 
-            // Filter for pending appointments
             for (Appointment appt : allAppointments) {
                 if (appt.getStatus().equals("PENDING")) {
                     pendingAppointments.add(appt);
@@ -805,7 +806,8 @@ public class Main {
 
             System.out.println("1. View pending appointments");
             System.out.println("2. View all appointments");
-            System.out.println("3. Logout");
+            System.out.println("3. View office balance");
+            System.out.println("4. Logout");
 
             int choice = scan.nextInt();
 
@@ -817,8 +819,13 @@ public class Main {
                     viewDoctorAppointments(doctorID);
                     break;
                 case 3:
+                    StorageFunctions.getOfficeBalance(doctorID);
+
+                    break;
+                case 4:
                     AuthFunctions.logout();
                     break;
+
                 default:
                     System.out.println("Invalid choice, please try again.");
             }
@@ -836,7 +843,6 @@ public class Main {
             ArrayList<Appointment> allAppointments = SystemManager.getAppointments();
             ArrayList<Appointment> doctorPendingAppointments = new ArrayList<>();
 
-            // Filter for this doctor's pending appointments
             for (Appointment appt : allAppointments) {
                 if (appt.getDoctorID() == doctorID && appt.getStatus().equals("PENDING")) {
                     doctorPendingAppointments.add(appt);
@@ -870,4 +876,9 @@ public class Main {
             displayError("Error viewing pending appointments: " + e.getMessage(), "View Error");
         }
     }
+
+
+
 }
+
+

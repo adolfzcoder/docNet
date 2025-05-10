@@ -32,13 +32,13 @@ public class LoginController {
         try{
 
             if(emailText.isEmpty()){
-                AlertHelper.showError("Empty Email", "Email cannot be empty");
+              //   AlertHelper.showError("Empty Email", "Email cannot be empty");
                 System.out.println("Email cannot be empty");
                 return;
             }
 
             if(passwordText.isEmpty()){
-                AlertHelper.showError("Empty Password", "Password cannot be empty");
+              //   AlertHelper.showError("Empty Password", "Password cannot be empty");
                 System.out.println("Password cannot be empty");
                 return;
             }
@@ -50,7 +50,7 @@ public class LoginController {
             System.out.println(session.getUserType());
             System.out.println("Successfully logged in");
 
-            AlertHelper.showSuccess("Logged in", "Successfully logged in");
+          //   AlertHelper.showSuccess("Logged in", "Successfully logged in");
 
 
         }catch(Exception e){

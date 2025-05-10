@@ -1,6 +1,5 @@
 package doctormodules;
 
-import Main.App;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -12,7 +11,6 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Text;
 import models.Appointment;
-import models.Doctor;
 import models.User;
 import storage.StorageFunctions;
 import storage.SystemManager;
