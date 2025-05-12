@@ -859,7 +859,173 @@ public class Main {
     }
 
     private static void viewDoctorAppointments(int doctorID) {
+        try {
+            // Get all appointments for this doctor
+            ArrayList<Appointment> doctorAppointments = new ArrayList<>();
+            ArrayList<Appointment> allAppointments = SystemManager.getAppointments();
 
+            for (Appointment appt : allAppointments) {
+                if (appt.getDoctorID() == doctorID) {
+                    doctorAppointments.add(appt);
+                }
+            }
+
+            if (doctorAppointments.isEmpty()) {
+                System.out.println("You have no appointments scheduled.");
+                return;
+            }
+
+            System.out.println("\nYour Appointments:");
+            System.out.println("----------------------------------------");
+            System.out.println("ID | Date       | Time    | Patient Name         | Status     | Reason");
+            System.out.println("----------------------------------------");
+
+            for (Appointment appt : doctorAppointments) {
+                // Get patient details
+                Patient patient = SystemManager.findPatient(appt.getPatientID());
+                String patientName = (patient != null) ?
+                        patient.getFirstName() + " " + patient.getLastName() : "Unknown";
+
+                // Format date and time
+                String formattedDate = appt.getAppointmentDate().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+                String formattedTime = appt.getAppointmentTime().format(DateTimeFormatter.ofPattern("HH:mm"));
+
+                // Truncate reason if too long
+                String reason = appt.getReasonForVisit();
+                if (reason.length() > 20) {
+                    reason = reason.substring(0, 17) + "...";
+                }
+
+                System.out.printf("%-3d| %-10s | %-7s | %-20s | %-10s | %-20s%n",
+                        appt.getAppointmentID(),
+                        formattedDate,
+                        formattedTime,
+                        patientName,
+                        appt.getStatus(),
+                        reason);
+            }
+            System.out.println("----------------------------------------");
+
+            // Show options to manage appointments
+            Scanner scan = new Scanner(System.in);
+            System.out.println("\nOptions:");
+            System.out.println("1. View appointment details");
+            System.out.println("2. Accept/Reject pending appointment");
+            System.out.println("3. Mark appointment as completed");
+            System.out.println("4. Return to main menu");
+            System.out.print("Enter your choice: ");
+
+            int choice = scan.nextInt();
+            scan.nextLine(); // consume newline
+
+            switch (choice) {
+                case 1:
+                    System.out.print("Enter appointment ID to view details: ");
+                    int viewId = scan.nextInt();
+                    scan.nextLine();
+                    viewAppointmentDetails(viewId, doctorID);
+                    break;
+                case 2:
+                    System.out.print("Enter appointment ID to accept/reject: ");
+                    int manageId = scan.nextInt();
+                    scan.nextLine();
+                    manageAppointmentStatus(manageId, doctorID);
+                    break;
+                case 3:
+                    System.out.print("Enter appointment ID to mark as completed: ");
+                    int completeId = scan.nextInt();
+                    scan.nextLine();
+                    completeAppointment(completeId, doctorID);
+                    break;
+                case 4:
+                    // Return to menu
+                    break;
+                default:
+                    System.out.println("Invalid choice.");
+            }
+        } catch (Exception e) {
+            displayError("Error viewing appointments: " + e.getMessage(), "View Error");
+        }
+    }
+
+    private static void viewAppointmentDetails(int appointmentID, int doctorID) {
+        Appointment appt = SystemManager.findAppointment(appointmentID);
+        if (appt == null || appt.getDoctorID() != doctorID) {
+            System.out.println("Appointment not found or not assigned to you.");
+            return;
+        }
+
+        Patient patient = SystemManager.findPatient(appt.getPatientID());
+        String patientName = (patient != null) ?
+                patient.getFirstName() + " " + patient.getLastName() : "Unknown";
+
+        System.out.println("\nAppointment Details:");
+        System.out.println("----------------------------------------");
+        System.out.println("ID:          " + appt.getAppointmentID());
+        System.out.println("Date:        " + appt.getAppointmentDate());
+        System.out.println("Time:        " + appt.getAppointmentTime());
+        System.out.println("Patient:     " + patientName);
+        System.out.println("Status:      " + appt.getStatus());
+        System.out.println("Reason:      " + appt.getReasonForVisit());
+        System.out.println("----------------------------------------");
+    }
+
+    private static void manageAppointmentStatus(int appointmentID, int doctorID) {
+        Appointment appt = SystemManager.findAppointment(appointmentID);
+        if (appt == null || appt.getDoctorID() != doctorID) {
+            System.out.println("Appointment not found or not assigned to you.");
+            return;
+        }
+
+        if (!appt.getStatus().equals("PENDING")) {
+            System.out.println("Only pending appointments can be accepted/rejected.");
+            return;
+        }
+
+        Scanner scan = new Scanner(System.in);
+        System.out.println("1. Accept appointment");
+        System.out.println("2. Reject appointment");
+        System.out.print("Enter your choice: ");
+        int choice = scan.nextInt();
+        scan.nextLine();
+
+        switch (choice) {
+            case 1:
+                DataBaseManager.updateAppointmentStatus(appointmentID, "ACCEPTED");
+                System.out.println("Appointment accepted successfully.");
+                break;
+            case 2:
+                DataBaseManager.updateAppointmentStatus(appointmentID, "REJECTED");
+                System.out.println("Appointment rejected.");
+                break;
+            default:
+                System.out.println("Invalid choice.");
+        }
+    }
+
+    private static void completeAppointment(int appointmentID, int doctorID) {
+        Appointment appt = SystemManager.findAppointment(appointmentID);
+        if (appt == null || appt.getDoctorID() != doctorID) {
+            System.out.println("Appointment not found or not assigned to you.");
+            return;
+        }
+
+        if (!appt.getStatus().equals("ACCEPTED")) {
+            System.out.println("Only accepted appointments can be marked as completed.");
+            return;
+        }
+
+        DataBaseManager.updateAppointmentStatus(appointmentID, "COMPLETED");
+        System.out.println("Appointment marked as completed.");
+
+        // Option to create prescription
+        Scanner scan = new Scanner(System.in);
+        System.out.print("Would you like to create a prescription for this appointment? (y/n): ");
+        String response = scan.nextLine();
+
+//        if (response.equalsIgnoreCase("y")) {
+//            createPrescription(doctorID, appointmentID);
+//        }
     }
 
     public static void viewDoctorPendingAppointments(int doctorID) {

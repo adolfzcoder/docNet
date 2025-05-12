@@ -91,7 +91,38 @@ public class DataBaseManager {
             return null;
         }
     }
+    public static boolean updateAppointmentStatus(int appointmentID, String status) {
+        // Validate the status input
+        if (!status.equals("PENDING") && !status.equals("ACCEPTED") &&
+                !status.equals("REJECTED") && !status.equals("COMPLETED")) {
+            System.out.println("Invalid appointment status: " + status);
+            return false;
+        }
 
+        String query = "UPDATE appointment SET status = ? WHERE appointmentID = ?";
+
+        try (Connection conn = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
+             PreparedStatement ps = conn.prepareStatement(query)) {
+
+            ps.setString(1, status);
+            ps.setInt(2, appointmentID);
+
+            int rowsAffected = ps.executeUpdate();
+
+            if (rowsAffected > 0) {
+                System.out.println("Appointment ID " + appointmentID + " status updated to: " + status);
+                return true;
+            } else {
+                System.out.println("No appointment found with ID: " + appointmentID);
+                return false;
+            }
+
+        } catch (SQLException e) {
+            System.out.println("SQL Error when updating appointment status: " + e.getMessage());
+            e.printStackTrace();
+            return false;
+        }
+    }
     public static boolean approveDoctorById(int doctorID) {
         String query = "UPDATE user SET isApproved = ? WHERE userID = (SELECT userID FROM doctor WHERE doctorID = ?)";
 
