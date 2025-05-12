@@ -80,6 +80,11 @@ public class Office {
                "\nOpening Hours: " + openingHours + "\nClosing Hours: " + closingHours;
     }
 
+    public int getDoctorID() {
+        return doctorID;
+    }
+
+
 //    public String listDoctors() {
 //        StringBuilder list = new StringBuilder("Doctors in Office:\n");
 //        for (Doctor doctor : doctors) {

@@ -1,7 +1,9 @@
 package models;
 
-import storage.SystemManager;
 import validations.DoctorValidate;
+
+import java.sql.Time;
+import java.time.LocalTime;
 
 public class Doctor extends User {
     private int doctorID;
@@ -13,6 +15,11 @@ public class Doctor extends User {
     private String officeName;
 
     private int officeID;
+
+    private String location;
+    private LocalTime openingHours;
+    private LocalTime closingHours;
+
 
 
 
@@ -64,6 +71,40 @@ public Doctor(){
         this.specialisation = specialisation;
         this.isBooked = isBooked;
         this.officeName = officeName;
+    }
+
+    public Doctor(int userID, int doctorID, int yearsXP, String specialisation, String firstName, String lastName, String phoneNumber, String telephone, String dob, boolean b, String doctor, String email, String password, String gender, boolean isBooked, String officeName, String location, LocalTime openingHours, LocalTime closingHours) {
+    super(userID,firstName, lastName, phoneNumber, telephone, dob, b, doctor, email, password, gender);
+    setYearsOfXP(yearsXP);
+        this.doctorID = doctorID;
+        this.specialisation = specialisation;
+        this.isBooked = isBooked;
+        this.officeName = officeName;
+        this.location = location;
+        this.openingHours = openingHours;
+        this.closingHours = closingHours;
+    }
+
+
+    public String getLocation() {
+        return location;
+    }
+    public LocalTime getOpeningHours() {
+        return openingHours;
+    }
+
+    public LocalTime getClosingHours() {
+        return closingHours;
+    }
+
+    public void setLocation(String location) {
+        this.location = location;
+    }
+    public void setOpeningHours(LocalTime openingHours) {
+        this.openingHours = openingHours;
+    }
+    public void setClosingHours(LocalTime closingHours) {
+        this.closingHours = closingHours;
     }
 
     public String getOfficeName() {

@@ -6,6 +6,7 @@ import models.*;
 import utils.EnvLoader;
 
 import java.sql.*;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -534,7 +535,7 @@ public class DataBaseManager {
 //        return generatedDoctorID;
 //    }
 
-    public static int insertOffice(String officeName, String location, Time openingHours, Time closingHours, double accountBalance, int doctorID) {
+    public static int insertOffice(String officeName, String location, LocalTime openingHours, LocalTime closingHours, double accountBalance, int doctorID) {
         String query = "INSERT INTO office (name, location, openingHours, closingHours, accountBalance, doctorID) VALUES (?, ?, ?, ?, ?, ?)";
         int generatedOfficeID = -1;
 
@@ -543,8 +544,8 @@ public class DataBaseManager {
 
             ps.setString(1, officeName);
             ps.setString(2, location != null ? location : "Default Location");
-            ps.setTime(3, openingHours != null ? openingHours : Time.valueOf("09:00:00"));
-            ps.setTime(4, closingHours != null ? closingHours : Time.valueOf("17:00:00"));
+            ps.setTime(3, openingHours != null ? Time.valueOf(openingHours) : Time.valueOf("09:00:00"));
+            ps.setTime(4, closingHours != null ? Time.valueOf(closingHours) : Time.valueOf("17:00:00"));
             ps.setDouble(5, accountBalance);
             ps.setInt(6, doctorID);
 
@@ -675,5 +676,200 @@ public class DataBaseManager {
         }
     }
 
+
+    public static void updateAppointmentStatus(int appointmentID, String status) {
+        try (Connection conn = DriverManager.getConnection(DataBaseManager.DB_URL,
+                DataBaseManager.DB_USER,
+                DataBaseManager.DB_PASSWORD)) {
+
+            String query = "UPDATE appointment SET status = ? WHERE appointmentID = ?";
+
+            try (PreparedStatement ps = conn.prepareStatement(query)) {
+                ps.setString(1, status);
+                ps.setInt(2, appointmentID);
+
+                int rowsAffected = ps.executeUpdate();
+
+                if (rowsAffected > 0) {
+                    // Also update the local appointment object in the array
+                    Appointment appt = SystemManager.findAppointment(appointmentID);
+                    if (appt != null) {
+                        appt.setStatus(status);
+                    }
+                } else {
+                    System.out.println("No appointment was updated. ID may be invalid.");
+                }
+            }
+        } catch (SQLException e) {
+            System.out.println("SQL Error when updating appointment: " + e.getMessage());
+            e.printStackTrace();
+        }
+    }
+
+
+
+    public static void updateUserField(int userID, String fieldName, String newValue) {
+        try (Connection conn = DriverManager.getConnection(DataBaseManager.DB_URL,
+                DataBaseManager.DB_USER,
+                DataBaseManager.DB_PASSWORD)) {
+
+            String query = "UPDATE user SET " + fieldName + " = ? WHERE userID = ?";
+
+            try (PreparedStatement ps = conn.prepareStatement(query)) {
+                ps.setString(1, newValue);
+                ps.setInt(2, userID);
+
+                int rowsAffected = ps.executeUpdate();
+
+                if (rowsAffected <= 0) {
+                    System.out.println("No user was updated. ID may be invalid.");
+                }
+            }
+        } catch (SQLException e) {
+            System.out.println("SQL Error when updating user: " + e.getMessage());
+            e.printStackTrace();
+        }
+    }
+
+    public static void updateDoctorSpecialization(int doctorID, String specialization) {
+        try (Connection conn = DriverManager.getConnection(DataBaseManager.DB_URL,
+                DataBaseManager.DB_USER,
+                DataBaseManager.DB_PASSWORD)) {
+
+            String query = "UPDATE doctor SET specialisation = ? WHERE doctorID = ?";
+
+            try (PreparedStatement ps = conn.prepareStatement(query)) {
+                ps.setString(1, specialization);
+                ps.setInt(2, doctorID);
+
+                int rowsAffected = ps.executeUpdate();
+
+                if (rowsAffected > 0) {
+                    // Update local object
+                    for (Doctor d : SystemManager.getDoctors()) {
+                        if (d.getDoctorID() == doctorID) {
+                            d.setSpecialisation(specialization);
+                            break;
+                        }
+                    }
+                } else {
+                    System.out.println("No doctor was updated. ID may be invalid.");
+                }
+            }
+        } catch (SQLException e) {
+            System.out.println("SQL Error when updating doctor: " + e.getMessage());
+            e.printStackTrace();
+        }
+    }
+
+    public static void updateDoctorExperience(int doctorID, int years) {
+        try (Connection conn = DriverManager.getConnection(DataBaseManager.DB_URL,
+                DataBaseManager.DB_USER,
+                DataBaseManager.DB_PASSWORD)) {
+
+            String query = "UPDATE doctor SET yearsOfExperience = ? WHERE doctorID = ?";
+
+            try (PreparedStatement ps = conn.prepareStatement(query)) {
+                ps.setInt(1, years);
+                ps.setInt(2, doctorID);
+
+                int rowsAffected = ps.executeUpdate();
+
+                if (rowsAffected > 0) {
+                    for (Doctor d : SystemManager.getDoctors()) {
+                        if (d.getDoctorID() == doctorID) {
+                            d.setYearsOfXP(years);
+                            break;
+                        }
+                    }
+                } else {
+                    System.out.println("No doctor was updated. ID may be invalid.");
+                }
+            }
+        } catch (SQLException e) {
+            System.out.println("SQL Error when updating doctor: " + e.getMessage());
+            e.printStackTrace();
+        }
+    }
+
+    public static void updatePatientMedicalAid(int patientID, int medicalAidNumber) {
+        try (Connection conn = DriverManager.getConnection(DataBaseManager.DB_URL,
+                DataBaseManager.DB_USER,
+                DataBaseManager.DB_PASSWORD)) {
+
+            String query = "UPDATE patient SET medicalAidNumber = ? WHERE patientID = ?";
+
+            try (PreparedStatement ps = conn.prepareStatement(query)) {
+                ps.setInt(1, medicalAidNumber);
+                ps.setInt(2, patientID);
+
+                int rowsAffected = ps.executeUpdate();
+
+                if (rowsAffected > 0) {
+                    for (Patient p : SystemManager.getPatients()) {
+                        if (p.getPatientID() == patientID) {
+                            p.setMedicalAidNumber(medicalAidNumber);
+                            break;
+                        }
+                    }
+                } else {
+                    System.out.println("No patient was updated. ID may be invalid.");
+                }
+            }
+        } catch (SQLException e) {
+            System.out.println("SQL Error when updating patient: " + e.getMessage());
+            e.printStackTrace();
+        }
+    }
+
+    public static void updateOfficeField(int officeID, String fieldName, String newValue) {
+        try (Connection conn = DriverManager.getConnection(DataBaseManager.DB_URL,
+                DataBaseManager.DB_USER,
+                DataBaseManager.DB_PASSWORD)) {
+
+            String query = "UPDATE office SET " + fieldName + " = ? WHERE officeID = ?";
+
+            try (PreparedStatement ps = conn.prepareStatement(query)) {
+                ps.setString(1, newValue);
+                ps.setInt(2, officeID);
+
+                int rowsAffected = ps.executeUpdate();
+
+                if (rowsAffected <= 0) {
+                    System.out.println("No office was updated. ID may be invalid.");
+                }
+            }
+        } catch (SQLException e) {
+            System.out.println("SQL Error when updating office: " + e.getMessage());
+            e.printStackTrace();
+        }
+    }
+
+    public static void updateOfficeTime(int officeID, String fieldName, LocalTime newTime) {
+        try (Connection conn = DriverManager.getConnection(DataBaseManager.DB_URL,
+                DataBaseManager.DB_USER,
+                DataBaseManager.DB_PASSWORD)) {
+
+            String query = "UPDATE office SET " + fieldName + " = ? WHERE officeID = ?";
+
+            try (PreparedStatement ps = conn.prepareStatement(query)) {
+                ps.setTime(1, java.sql.Time.valueOf(newTime));
+                ps.setInt(2, officeID);
+
+                int rowsAffected = ps.executeUpdate();
+
+                if (rowsAffected <= 0) {
+                    System.out.println("No office was updated. ID may be invalid.");
+                }
+            }
+        } catch (SQLException e) {
+            System.out.println("SQL Error when updating office: " + e.getMessage());
+            e.printStackTrace();
+        }
+    }
+
+    public static void markAppointmentCompleted(int appointmentID) {
+        updateAppointmentStatus(appointmentID, "COMPLETED");
+    }
 
 }

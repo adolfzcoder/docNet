@@ -5,12 +5,17 @@ import storage.StorageFunctions;
 import storage.SystemManager;
 import validations.Validations;
 
+import javax.xml.crypto.Data;
+import java.sql.Time;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Scanner;
+
+import static storage.DataBaseManager.updateAppointmentStatus;
 
 public class Main {
 
@@ -29,13 +34,15 @@ public class Main {
             // this takes some time, so to reduce latency, we initialise our lists at the begining of the app
             System.out.println("Initialising lists, may take up to 10 seconds");
             SystemManager.initializeLists();
-
+            System.out.println("lists initilised");
             // checking if session exists ie there is a user already logged in
             if (!SystemManager.getSession().isEmpty()) {
+                System.out.println("User is logged in ");
                 User sessionUser = SystemManager.getSession().getFirst();
                 String loggedInUserType = sessionUser.getUserType();
                 System.out.println("Current user: " + sessionUser.getFirstName() + " " + sessionUser.getLastName());
             }
+            System.out.println("Initialising lists complete");
         } catch (Exception e) {
             displayError("Error: " + e.getMessage(), "Start up error");
         }
@@ -204,13 +211,24 @@ public class Main {
                     System.out.print("Enter office name");
                     String officeName = scanner.nextLine();
 
+                    System.out.println("Enter office Location");
+                    String location = scanner.nextLine();
+
+                    System.out.println("Enter opening hours");
+                    String openingHours = scanner.nextLine();
+
+                    System.out.println("Enter closing hours");
+                    String closingHours = scanner.nextLine();
+
+
+
                     boolean isBooked = false;
 
                     int doctorID = 0;
 
 
                     AuthFunctions.signUp(new Doctor(userID, doctorID, yearsXP, specialisation, firstName, lastName,
-                            phoneNumber, telephone, dob, false, "DOCTOR", email, password, gender, isBooked, officeName ));
+                            phoneNumber, telephone, dob, false, "DOCTOR", email, password, gender, isBooked, officeName, location, Time.valueOf(openingHours).toLocalTime(), Time.valueOf(closingHours).toLocalTime()));
                     break;
 
                 case "PATIENT":
@@ -252,8 +270,9 @@ public class Main {
             System.out.println("3. View prescriptions");
             System.out.println("4. Rate a doctor");
             System.out.println("5. Search for a doctor");
-            System.out.println("6. Return to main menu");
-            System.out.println("7. Logout");
+            System.out.println("6. Edit your profile");
+            System.out.println("7. Return to main menu");
+            System.out.println("8. Logout");
 
             int choice = scan.nextInt();
 
@@ -274,10 +293,15 @@ public class Main {
                     searchDoctor(scan);
                     break;
                 case 6:
+                    editPatientProfile();
                     break;
                 case 7:
                     AuthFunctions.logout();
+
                     break;
+                case 8:
+                    System.out.println("Returning to main menu...");
+
                 default:
                     System.out.println("Invalid choice, please try again.");
             }
@@ -592,8 +616,9 @@ public class Main {
             System.out.println("3. View all appointments");
             System.out.println("4. View all patients");
             System.out.println("5. View all doctors");
-            System.out.println("6. Return to main menu");
-            System.out.println("7. Logout");
+            System.out.println("6. Edit your profile");
+            System.out.println("7. Return to main menu");
+            System.out.println("8. Logout");
 
             int choice = scan.nextInt();
 
@@ -614,10 +639,13 @@ public class Main {
                     viewAllDoctors();
                     break;
                 case 6:
+                    editAdminProfile();
                     break;
                 case 7:
-                    AuthFunctions.logout();
                     break;
+                case 8:
+                    AuthFunctions.logout();
+
                 default:
                     System.out.println("Invalid choice, please try again.");
             }
@@ -818,48 +846,303 @@ public class Main {
             displayError("Error viewing all doctors: " + e.getMessage(), "View Error");
         }
     }
+    public static void editDoctorProfile() {
+        User currentUser = SystemManager.getSession().getFirst();
+        Doctor doctor = null;
 
-    public static void doctorChoices() {
-        try {
-            Scanner scan = new Scanner(System.in);
-            User currentUser = SystemManager.getSession().getFirst();
-            int doctorID = currentUser.getUserTypeID();
-
-            System.out.println("Welcome Dr. " + currentUser.getLastName() + "!");
-            System.out.println("What would you like to do?");
-
-            System.out.println("1. View pending appointments");
-            System.out.println("2. View all appointments");
-            System.out.println("3. View office balance");
-            System.out.println("4. Logout");
-
-            int choice = scan.nextInt();
-
-            switch (choice) {
-                case 1:
-                    viewDoctorPendingAppointments(doctorID);
-                    break;
-                case 2:
-                    viewDoctorAppointments(doctorID);
-                    break;
-                case 3:
-                    StorageFunctions.getOfficeBalance(doctorID);
-
-                    break;
-                case 4:
-                    AuthFunctions.logout();
-                    break;
-
-                default:
-                    System.out.println("Invalid choice, please try again.");
+        for (Doctor d : SystemManager.getDoctors()) {
+            if (d.getUserID() == currentUser.getUserID()) {
+                doctor = d;
+                break;
             }
-        } catch (Exception e) {
-            displayError("Error in doctorChoices(): " + e.getMessage(), "Doctor Error");
+        }
+
+        if (doctor == null) {
+            System.out.println("Error: Doctor profile not found!");
+            return;
+        }
+
+        Scanner scan = new Scanner(System.in);
+
+        System.out.println("\n--- Edit Your Profile ---");
+        System.out.println("1. Edit Personal Information");
+        System.out.println("2. Edit Office Information");
+        System.out.println("3. Edit Specialization");
+        System.out.println("4. Edit Years of Experience");
+        System.out.println("5. Return to main menu");
+
+        int choice = scan.nextInt();
+        scan.nextLine(); // since getting value after a nextInt causes errors, just insert a new line
+        // the value leaves \n and itll cause trouble, so just insert a newline, let it consume a newline, so its blank
+
+        switch (choice) {
+            case 1:
+                editUserPersonalInfo(currentUser);
+                break;
+            case 2:
+                editOfficeInfo(doctor);
+                break;
+            case 3:
+                System.out.print("Enter new specialization: ");
+                String specialization = scan.nextLine();
+                DataBaseManager.updateDoctorSpecialization(doctor.getDoctorID(), specialization);
+                break;
+            case 4:
+                System.out.print("Enter new years of experience: ");
+                int years = scan.nextInt();
+                DataBaseManager.updateDoctorExperience(doctor.getDoctorID(), years);
+                break;
+            case 5:
+                return;
+            default:
+                System.out.println("Invalid option. Going back.");
         }
     }
 
-    private static void viewDoctorAppointments(int doctorID) {
+    public static void editPatientProfile() {
+        User currentUser = SystemManager.getSession().getFirst();
+        Patient patient = null;
 
+        //use the logged in user (session variable)
+        for (Patient p : SystemManager.getPatients()) {
+            if (p.getUserID() == currentUser.getUserID()) {
+                patient = p;
+                break;
+            }
+        }
+
+        if (patient == null) {
+            System.out.println("Error: Patient profile not found!");
+            return;
+        }
+
+        Scanner scan = new Scanner(System.in);
+
+        System.out.println("\n--- Edit Your Profile ---");
+        System.out.println("1. Edit Personal Information");
+        System.out.println("2. Edit Medical Aid Number");
+        System.out.println("3. Return to main menu");
+
+        int choice = scan.nextInt();
+        scan.nextLine(); // consume newline
+
+        switch (choice) {
+            case 1:
+                editUserPersonalInfo(currentUser);
+                break;
+            case 2:
+                System.out.print("Enter new Medical Aid Number: ");
+                int medicalAidNumber = scan.nextInt();
+                DataBaseManager.updatePatientMedicalAid(patient.getPatientID(), medicalAidNumber);
+                break;
+            case 3:
+                return;
+            default:
+                System.out.println("Invalid option. Going back.");
+        }
+    }
+
+    public static void editAdminProfile() {
+        User currentUser = SystemManager.getSession().getFirst();
+
+        Scanner scan = new Scanner(System.in);
+
+        System.out.println("\n--- Edit Your Profile ---");
+        System.out.println("1. Edit Personal Information");
+        System.out.println("2. Return to main menu");
+
+        int choice = scan.nextInt();
+        scan.nextLine();
+
+        switch (choice) {
+            case 1:
+                editUserPersonalInfo(currentUser);
+                break;
+            case 2:
+                return;
+            default:
+                System.out.println("Invalid option. Going back.");
+        }
+    }
+
+    private static void editUserPersonalInfo(User user) {
+        Scanner scan = new Scanner(System.in);
+
+        System.out.println("\n--- Edit Personal Information ---");
+        System.out.println("Current Information:");
+        System.out.println("1. First Name: " + user.getFirstName());
+        System.out.println("2. Last Name: " + user.getLastName());
+        System.out.println("3. Phone Number: " + user.getPhoneNumber());
+        System.out.println("4. Telephone: " + user.getTelephone());
+        System.out.println("5. Email: " + user.getEmail());
+        System.out.println("6. Change Password");
+        System.out.println("7. Go back");
+
+        System.out.print("\nSelect field to edit (1-7): ");
+        int choice = scan.nextInt();
+        scan.nextLine(); // consume newline
+
+        String newValue = "";
+        String field = "";
+
+        switch (choice) {
+            case 1:
+                System.out.print("Enter new first name: ");
+                newValue = scan.nextLine();
+                field = "firstName";
+                user.setFirstName(newValue);
+                break;
+            case 2:
+                System.out.print("Enter new last name: ");
+                newValue = scan.nextLine();
+                field = "lastName";
+                user.setLastName(newValue);
+                break;
+            case 3:
+                System.out.print("Enter new phone number: ");
+                newValue = scan.nextLine();
+                field = "phoneNumber";
+                user.setPhoneNumber(newValue);
+                break;
+            case 4:
+                System.out.print("Enter new telephone: ");
+                newValue = scan.nextLine();
+                field = "telephone";
+                user.setTelephone(newValue);
+                break;
+            case 5:
+                System.out.print("Enter new email: ");
+                newValue = scan.nextLine();
+                field = "email";
+                user.setEmail(newValue);
+                break;
+            case 6:
+                System.out.print("Enter new password: ");
+                newValue = scan.nextLine();
+                field = "password";
+                user.setPassword(newValue);
+                break;
+            case 7:
+                return;
+            default:
+                System.out.println("Invalid option. Going back.");
+                return;
+        }
+
+        DataBaseManager.updateUserField(user.getUserID(), field, newValue);
+        System.out.println("Information updated successfully!");
+    }
+
+    private static void editOfficeInfo(Doctor doctor) {
+        Scanner scan = new Scanner(System.in);
+        Office office = null;
+
+        // look for the office for this doctor
+        for (Office o : SystemManager.getOffices()) {
+            if (o.getDoctorID() == doctor.getDoctorID()) {
+                office = o;
+                break;
+            }
+        }
+
+        if (office == null) {
+            System.out.println("Error: Office not found!");
+            return;
+        }
+
+        System.out.println("\n--- Edit Office Information ---");
+        System.out.println("Current Information:");
+        System.out.println("1. Office Name: " + office.getOfficeName());
+        System.out.println("2. Location: " + office.getOfficeLocation());
+        System.out.println("3. Opening Hours: " + office.getOpeningHours());
+        System.out.println("4. Closing Hours: " + office.getClosingHours());
+        System.out.println("5. Go back");
+
+        System.out.print("\nSelect field to edit (1-5): ");
+        int choice = scan.nextInt();
+        scan.nextLine(); // consume newline
+
+        switch (choice) {
+            case 1:
+                System.out.print("Enter new office name: ");
+                String name = scan.nextLine();
+                DataBaseManager.updateOfficeField(office.getOfficeID(), "name", name);
+                office.setOfficeName(name);
+                break;
+            case 2:
+                System.out.print("Enter new location: ");
+                String location = scan.nextLine();
+                DataBaseManager.updateOfficeField(office.getOfficeID(), "location", location);
+                office.setOfficeLocation(location);
+                break;
+            case 3:
+                System.out.print("Enter new opening hours (HH:MM): ");
+                String openTime = scan.nextLine();
+                try {
+                    LocalTime openingTime = LocalTime.parse(openTime, DateTimeFormatter.ofPattern("HH:mm"));
+                    DataBaseManager.updateOfficeTime(office.getOfficeID(), "openingHours", openingTime);
+                    office.setOpeningHours(openingTime);
+                } catch (DateTimeParseException e) {
+                    System.out.println("Invalid time format. Please use HH:MM.");
+                }
+                break;
+            case 4:
+                System.out.print("Enter new closing hours (HH:MM): ");
+                String closeTime = scan.nextLine();
+                try {
+                    LocalTime closingTime = LocalTime.parse(closeTime, DateTimeFormatter.ofPattern("HH:mm"));
+                    DataBaseManager.updateOfficeTime(office.getOfficeID(), "closingHours", closingTime);
+                    office.setClosingHours(closingTime);
+                } catch (DateTimeParseException e) {
+                    System.out.println("Invalid time format. Please use HH:MM.");
+                }
+                break;
+            case 5:
+                return;
+            default:
+                System.out.println("Invalid option. Going back.");
+        }
+
+        System.out.println("Office information updated successfully!");
+    }
+
+    public static void viewDoctorAppointments(int doctorID) {
+        try {
+            ArrayList<Appointment> allAppointments = SystemManager.getAppointments();
+            ArrayList<Appointment> doctorAppointments = new ArrayList<>();
+
+            for (Appointment appt : allAppointments) {
+                if (appt.getDoctorID() == doctorID) {
+                    doctorAppointments.add(appt);
+                }
+            }
+
+            if (doctorAppointments.isEmpty()) {
+                System.out.println("You have no pending appointments.");
+                return;
+            }
+
+            System.out.println("\nYour Pending Appointments:");
+            System.out.println("----------------------------------------");
+            System.out.println("ID | Date | Time | Patient | Reason");
+            System.out.println("----------------------------------------");
+
+            for (Appointment appt : doctorAppointments) {
+                Patient patient = SystemManager.findPatient(appt.getPatientID());
+                String patientName = (patient != null) ? patient.getFirstName() + " " + patient.getLastName() : "Unknown";
+
+                System.out.printf("%d | %s | %s | %s | %s\n",
+                        appt.getAppointmentID(),
+                        appt.getAppointmentDate().format(DateTimeFormatter.ofPattern("MM/dd/yyyy")),
+                        appt.getAppointmentTime().format(DateTimeFormatter.ofPattern("h:mm a")),
+                        patientName,
+                        appt.getReasonForVisit());
+            }
+            System.out.println("----------------------------------------");
+
+        } catch (Exception e) {
+            displayError("Error viewing your appointments: " + e.getMessage(), "View Error");
+        }
     }
 
     public static void viewDoctorPendingAppointments(int doctorID) {
@@ -902,6 +1185,324 @@ public class Main {
     }
 
 
+    public static void doctorChoices() {
+        try {
+            Scanner scan = new Scanner(System.in);
+            User currentUser = SystemManager.getSession().getFirst();
+            int userID = currentUser.getUserID();
+            int doctorID = -1;
+
+            // Find the doctor ID from user ID
+            for (Doctor d : SystemManager.getDoctors()) {
+                if (d.getUserID() == userID) {
+                    doctorID = d.getDoctorID();
+                    break;
+                }
+            }
+
+            if (doctorID == -1) {
+                System.out.println("Error: Could not find doctor record for the current user.");
+                return;
+            }
+
+            System.out.println("\n--- Doctor Dashboard ---");
+            System.out.println("Welcome Dr. " + currentUser.getLastName() + "!");
+            System.out.println("What would you like to do?");
+
+            System.out.println("1. View pending appointments");
+            System.out.println("2. View all appointments");
+            System.out.println("3. View office details");
+            System.out.println("4. Complete appointment");
+            System.out.println("5. Create prescription");
+            System.out.println("6. Edit profile");
+            System.out.println("7. Edit office information");
+            System.out.println("8. Logout");
+
+            int choice = scan.nextInt();
+            scan.nextLine();
+
+            switch (choice) {
+                case 1:
+                    viewDoctorPendingAppointments(doctorID);
+                    break;
+                case 2:
+                    viewDoctorAppointments(doctorID);
+                    break;
+                case 3:
+                    viewOfficeDetails();
+                    break;
+                case 4:
+                    completeAppointment(doctorID);
+                    break;
+                case 5:
+                    createPrescription(doctorID);
+                    break;
+                case 6:
+                    editDoctorProfile();
+                    break;
+                case 7:
+                    editOfficeInfo(doctorID);
+                    break;
+                case 8:
+                    AuthFunctions.logout();
+                    break;
+                default:
+                    System.out.println("Invalid choice, please try again.");
+            }
+        } catch (Exception e) {
+            displayError("Error in doctorChoices(): " + e.getMessage(), "Doctor Error");
+            e.printStackTrace();
+        }
+    }
+
+    private static void viewOfficeDetails() {
+        Office office = null;
+
+
+        int loggedInDoctorID = SystemManager.getSession().getFirst().getUserID();
+        for (Office o : SystemManager.getOffices()) {
+
+            System.out.println("Logged-in doctor ID: " + loggedInDoctorID);
+            System.out.println("Checking office with doctor ID: " + o.getDoctorID());
+
+            if (o.getDoctorID() == SystemManager.getSession().getFirst().getUserID()) {
+                office = o;
+                break;
+            }
+        }
+
+        if (office == null) {
+            System.out.println("Error: Office not found!");
+            return;
+        }
+
+        System.out.println("\n--- Office Details ---");
+        System.out.println("Office Name: " + office.getOfficeName());
+        System.out.println("Location: " + office.getOfficeLocation());
+        System.out.println("Opening Hours: " + office.getOpeningHours());
+        System.out.println("Closing Hours: " + office.getClosingHours());
+        System.out.println("Account Balance: $" + office.getAccountBalance());
+
+        System.out.println("\nPress Enter to continue...");
+        new Scanner(System.in).nextLine();
+    }
+
+    private static void editOfficeInfo(int doctorID) {
+        Scanner scan = new Scanner(System.in);
+        Office office = null;
+
+        // get offce for this doctor
+        for (Office o : SystemManager.getOffices()) {
+            if (o.getDoctorID() == doctorID) {
+                office = o;
+                break;
+            }
+        }
+
+        if (office == null) {
+            System.out.println("Error: Office not found!");
+            return;
+        }
+
+        System.out.println("\n--- Edit Office Information ---");
+        System.out.println("Current Information:");
+        System.out.println("1. Office Name: " + office.getOfficeName());
+        System.out.println("2. Location: " + office.getOfficeLocation());
+        System.out.println("3. Opening Hours: " + office.getOpeningHours());
+        System.out.println("4. Closing Hours: " + office.getClosingHours());
+        System.out.println("5. Go back");
+
+        System.out.print("\nSelect one to edit (1-5): ");
+        int choice = scan.nextInt();
+        scan.nextLine();
+
+        switch (choice) {
+            case 1:
+                System.out.print("Enter new office name: ");
+                String name = scan.nextLine();
+                DataBaseManager.updateOfficeField(office.getOfficeID(), "name", name);
+                office.setOfficeName(name);
+                break;
+            case 2:
+                System.out.print("Enter new location: ");
+                String location = scan.nextLine();
+                DataBaseManager.updateOfficeField(office.getOfficeID(), "location", location);
+                office.setOfficeLocation(location);
+                break;
+            case 3:
+                System.out.print("Enter new opening hours (HH:MM): ");
+                String openTime = scan.nextLine();
+                try {
+                    LocalTime openingTime = LocalTime.parse(openTime, DateTimeFormatter.ofPattern("HH:mm"));
+                    DataBaseManager.updateOfficeTime(office.getOfficeID(), "openingHours", openingTime);
+                    office.setOpeningHours(openingTime);
+                } catch (DateTimeParseException e) {
+                    System.out.println("Invalid time format. Please use HH:MM.");
+                }
+                break;
+            case 4:
+                System.out.print("Enter new closing hours (HH:MM): ");
+                String closeTime = scan.nextLine();
+                try {
+                    LocalTime closingTime = LocalTime.parse(closeTime, DateTimeFormatter.ofPattern("HH:mm"));
+                    DataBaseManager.updateOfficeTime(office.getOfficeID(), "openingHours", closingTime);
+                    office.setOpeningHours(closingTime);
+                } catch (DateTimeParseException e) {
+                    System.out.println("Invalid time format. Please use HH:MM.");
+                }
+                break;
+            case 5:
+                break;
+            default:
+                System.out.println("Invalid option. Going back.");
+                return;
+
+        }
+    }
+    private static void completeAppointment(int doctorID) {
+        Scanner scan = new Scanner(System.in);
+        ArrayList<Appointment> appointments = SystemManager.getAppointments();
+        boolean hasAccepted = false;
+
+        System.out.println("\n--- Complete Appointment ---");
+
+        for (Appointment appt : appointments) {
+            if (appt.getDoctorID() == doctorID && appt.getStatus().equals("ACCEPTED")) {
+                hasAccepted = true;
+                displayAppointmentDetails(appt);
+            }
+        }
+
+        if (!hasAccepted) {
+            System.out.println("No accepted appointments available to complete.");
+            return;
+        }
+
+        System.out.print("\nEnter the Appointment ID to mark as completed or 0 to go back: ");
+        int id = scan.nextInt();
+        scan.nextLine();
+
+        if (id == 0) return;
+
+        Appointment apptToComplete = SystemManager.findAppointment(id);
+
+        if (apptToComplete != null && apptToComplete.getDoctorID() == doctorID) {
+            updateAppointmentStatus(id, "COMPLETED");
+            System.out.println("Appointment marked as COMPLETED.");
+        } else {
+            System.out.println("Invalid appointment ID or not assigned to you.");
+        }
+    }
+
+    private static void createPrescription(int doctorID) {
+        Scanner scan = new Scanner(System.in);
+        ArrayList<Appointment> appointments = SystemManager.getAppointments();
+        boolean hasCompleted = false;
+
+        System.out.println("\n--- Create Prescription ---");
+
+        for (Appointment appt : appointments) {
+            if (appt.getDoctorID() == doctorID && appt.getStatus().equals("COMPLETED")) {
+                hasCompleted = true;
+                displayAppointmentDetails(appt);
+            }
+        }
+
+        if (!hasCompleted) {
+            System.out.println("No completed appointments found.");
+            return;
+        }
+
+        System.out.print("\nEnter the Appointment ID to write a prescription for or 0 to go back: ");
+        int apptID = scan.nextInt();
+        scan.nextLine();
+
+        if (apptID == 0) return;
+
+        Appointment selectedAppt = SystemManager.findAppointment(apptID);
+        if (selectedAppt == null || selectedAppt.getDoctorID() != doctorID || !selectedAppt.getStatus().equals("COMPLETED")) {
+            System.out.println("Invalid appointment selection.");
+            return;
+        }
+
+        System.out.print("Enter prescription instructions: ");
+        String instructions = scan.nextLine();
+
+        int patientID = selectedAppt.getPatientID();
+        Date issueDate = new Date();
+
+        Prescription prescription = new Prescription(
+                instructions,
+                doctorID,
+                patientID,
+                apptID,
+                issueDate
+        );
+
+        SystemManager.addPrescription(prescription);
+        System.out.println("Prescription created successfully!");
+    }
+
+    private static void manageAppointment(int appointmentID, int doctorID) {
+        Scanner scan = new Scanner(System.in);
+        Appointment appt = SystemManager.findAppointment(appointmentID);
+
+        if (appt == null) {
+            System.out.println("Appointment not found.");
+            return;
+        }
+
+        if (appt.getDoctorID() != doctorID) {
+            System.out.println("This appointment is not assigned to you.");
+            return;
+        }
+
+        System.out.println("\n--- Appointment Details ---");
+        Patient patient = SystemManager.findPatient(appt.getPatientID());
+        String patientName = (patient != null) ?
+                patient.getFirstName() + " " + patient.getLastName() : "Unknown Patient";
+
+        System.out.println("Patient: " + patientName);
+        System.out.println("Date: " + appt.getAppointmentDate());
+        System.out.println("Time: " + appt.getAppointmentTime());
+        System.out.println("Reason: " + appt.getReasonForVisit());
+        System.out.println("Status: " + appt.getStatus());
+
+        System.out.println("\nWhat would you like to do?");
+        System.out.println("1. Accept appointment");
+        System.out.println("2. Decline appointment");
+        System.out.println("3. Go back");
+
+        int choice = scan.nextInt();
+
+        switch (choice) {
+            case 1:
+                updateAppointmentStatus(appointmentID, "ACCEPTED");
+                System.out.println("Appointment accepted successfully!");
+                break;
+            case 2:
+                updateAppointmentStatus(appointmentID, "REJECTED");
+                System.out.println("Appointment declined.");
+                break;
+            case 3:
+                return;
+            default:
+                System.out.println("Invalid option. Going back.");
+        }
+    }
+
+    private static void displayAppointmentDetails(Appointment appt) {
+        Patient patient = SystemManager.findPatient(appt.getPatientID());
+        String patientName = (patient != null) ?
+                patient.getFirstName() + " " + patient.getLastName() : "Unknown Patient";
+
+        System.out.println("ID: " + appt.getAppointmentID() +
+                " | Patient: " + patientName +
+                " | Date: " + appt.getAppointmentDate() +
+                " | Time: " + appt.getAppointmentTime() +
+                " | Reason: " + appt.getReasonForVisit() +
+                " | Status: " + appt.getStatus());
+    }
 
 }
 

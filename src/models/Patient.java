@@ -87,4 +87,8 @@ public class Patient extends User {
     public int getUserTypeID(){
         return patientID;
     }
+
+    public void setMedicalAidNumber(int medicalAidNumber) {
+        this.medicalAidNumber = medicalAidNumber;
+    }
 }

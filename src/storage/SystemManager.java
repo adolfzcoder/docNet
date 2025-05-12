@@ -156,6 +156,7 @@ public class SystemManager {
         }
     }
 
+
     public static ArrayList<Patient> fetchPatients() {
         try {
             ArrayList<Patient> patients = DataBaseManager.getPatients();
@@ -209,9 +210,9 @@ public class SystemManager {
 
         int officeID = DataBaseManager.insertOffice(
                 doctor.getOfficeName(),
-                "Default Location",
-                java.sql.Time.valueOf("09:00:00"),
-                java.sql.Time.valueOf("17:00:00"),
+                doctor.getLocation(),
+                doctor.getOpeningHours(),
+                doctor.getClosingHours(),
                 1000.0,
                 doctor.getDoctorID()
         );
@@ -278,22 +279,29 @@ public class SystemManager {
 
 
 
-    public static ArrayList<Doctor> getOfficeDoctors(int officeID){
+    public static ArrayList<Doctor> getOfficeDoctors(int officeID) {
+        officeDoctors = new ArrayList<>();
 
-        for(Office office: offices){
+        if (offices == null) {
+            offices = fetchOffices();
+        }
 
-            if(office.getOfficeID() ==  officeID){
-                int doctorID = office.getDoctorID;
-                officeDoctors.add(findDoctor(doctorID));
-
-
-            }else{
-                System.out.println("Office id not found");
+        for (Office office : offices) {
+            if (office.getOfficeID() == officeID) {
+                int doctorID = office.getDoctorID();
+                Doctor doctor = findDoctor(doctorID);
+                if (doctor != null) {
+                    officeDoctors.add(doctor);
+                }
             }
         }
+
+        if (officeDoctors.isEmpty()) {
+            System.out.println("No doctors found for office ID: " + officeID);
+        }
+
         return officeDoctors;
     }
-
     public static Patient findPatient(int patientID){
         for(Patient pt: patients){
             if(pt.getPatientID() == patientID){
@@ -351,7 +359,10 @@ public class SystemManager {
         }
         return null;
     }
-    public static ArrayList<Office> getOffices(){
+    public static ArrayList<Office> getOffices() {
+        if (offices == null) {
+            offices = fetchOffices();
+        }
         return offices;
     }
 

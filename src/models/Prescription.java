@@ -22,6 +22,14 @@ public class Prescription {
             setIssueDate(issueDate);
         }
 
+    public Prescription(String instruction, int doctorID, int patientID, int appointmentID, Date issueDate) {
+        setInstruction(instruction);
+        setDoctorID(doctorID);
+        setPatientID(patientID);
+        setAppointmentID(appointmentID);
+        setIssueDate(issueDate);
+    }
+
         // Getters
         public int getPrescriptionID() {
             return prescriptionID;
