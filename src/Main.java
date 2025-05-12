@@ -12,6 +12,8 @@ import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+import static storage.DataBaseManager.testDatabaseConnection;
+
 public class Main {
 
     private Main() {
@@ -26,6 +28,7 @@ public class Main {
 
     public static void main(String[] args) {
         try {
+            testDatabaseConnection();
             // this takes some time, so to reduce latency, we initialise our lists at the begining of the app
             System.out.println("Initialising lists, may take up to 10 seconds");
             SystemManager.initializeLists();
@@ -370,13 +373,13 @@ public class Main {
 
     public  static void viewAllPatientAppointments(int patientID) {
         try {
-            System.out.println("USer ID: "+ SystemManager.getSession().getFirst().getUserTypeID());
-            System.out.println("Patient ID: "+ patientID);
+            // System.out.println("USer ID: "+ SystemManager.getSession().getFirst().getUserTypeID());
+            // System.out.println("Patient ID: "+ patientID);
             ArrayList<Appointment> patientAppointments = SystemManager.returnAppointmentsByPatientID(patientID);
-            System.out.println("DEBUG: Found " + patientAppointments.size() + " appointments for patient " + SystemManager.getSession().getFirst().getUserTypeID());
-            for (Appointment a : patientAppointments) {
-                System.out.println("DEBUG: Appointment ID=" + a.getAppointmentID() + ", DoctorID=" + a.getDoctorID());
-            }
+//            System.out.println("DEBUG: Found " + patientAppointments.size() + " appointments for patient " + SystemManager.getSession().getFirst().getUserTypeID());
+//            for (Appointment a : patientAppointments) {
+//                System.out.println("DEBUG: Appointment ID=" + a.getAppointmentID() + ", DoctorID=" + a.getDoctorID());
+//            }
             if (patientAppointments.isEmpty()) {
                 System.out.println("You have no appointments scheduled.");
                 return;
@@ -863,11 +866,10 @@ public class Main {
         }
     }
 
-    private static void viewDoctorAppointments(int doctorID) {
+    public static void viewDoctorAppointments(int doctorID) {
         try {
-            // Get all appointments for this doctor
             ArrayList<Appointment> doctorAppointments = new ArrayList<>();
-            ArrayList<Appointment> allAppointments = SystemManager.getAppointments();
+            ArrayList<Appointment> allAppointments = DataBaseManager.getAppointments();
 
             for (Appointment appt : allAppointments) {
                 if (appt.getDoctorID() == doctorID) {
@@ -882,16 +884,14 @@ public class Main {
 
             System.out.println("\nYour Appointments:");
             System.out.println("----------------------------------------");
-            System.out.println("ID | Date       | Time    | Patient Name         | Status     | Reason");
+            System.out.println("Appointment ID | Date       | Time    | Patient Name         | Status     | Reason");
             System.out.println("----------------------------------------");
 
             for (Appointment appt : doctorAppointments) {
-                // Get patient details
                 Patient patient = SystemManager.findPatient(appt.getPatientID());
                 String patientName = (patient != null) ?
                         patient.getFirstName() + " " + patient.getLastName() : "Unknown";
 
-                // Format date and time
                 String formattedDate = appt.getAppointmentDate().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
                 String formattedTime = appt.getAppointmentTime().format(DateTimeFormatter.ofPattern("HH:mm"));
 
@@ -911,7 +911,6 @@ public class Main {
             }
             System.out.println("----------------------------------------");
 
-            // Show options to manage appointments
             Scanner scan = new Scanner(System.in);
             System.out.println("\nOptions:");
             System.out.println("1. View appointment details");
@@ -921,7 +920,7 @@ public class Main {
             System.out.print("Enter your choice: ");
 
             int choice = scan.nextInt();
-            scan.nextLine(); // consume newline
+            scan.nextLine(); // consume newline innit
 
             switch (choice) {
                 case 1:
@@ -953,7 +952,7 @@ public class Main {
         }
     }
 
-    private static void viewAppointmentDetails(int appointmentID, int doctorID) {
+    public static void viewAppointmentDetails(int appointmentID, int doctorID) {
         Appointment appt = SystemManager.findAppointment(appointmentID);
         if (appt == null || appt.getDoctorID() != doctorID) {
             System.out.println("Appointment not found or not assigned to you.");
@@ -975,40 +974,31 @@ public class Main {
         System.out.println("----------------------------------------");
     }
 
-    private static void manageAppointmentStatus(int appointmentID, int doctorID) {
-        Appointment appt = SystemManager.findAppointment(appointmentID);
-        if (appt == null || appt.getDoctorID() != doctorID) {
-            System.out.println("Appointment not found or not assigned to you.");
+    public static void manageAppointmentStatus(int appointmentID, int doctorID) {
+        // System.out.println("DEBUG: Managing appointment " + appointmentID + " for doctor " + doctorID);
+
+        Appointment appt = DataBaseManager.getAppointmentById(appointmentID);
+
+        if (appt == null) {
+            System.out.println("Error: Appointment ID " + appointmentID + " not found in database");
             return;
         }
 
-        if (!appt.getStatus().equals("PENDING")) {
-            System.out.println("Only pending appointments can be accepted/rejected.");
+        System.out.println("DEBUG: Found appointment - DoctorID: " + appt.getDoctorID() +
+                ", Status: " + appt.getStatus());
+
+        if (appt.getDoctorID() != doctorID) {
+            System.out.println("Error: Appointment not assigned to you (your ID: " + doctorID + ")");
             return;
         }
 
-        Scanner scan = new Scanner(System.in);
-        System.out.println("1. Accept appointment");
-        System.out.println("2. Reject appointment");
-        System.out.print("Enter your choice: ");
-        int choice = scan.nextInt();
-        scan.nextLine();
-
-        switch (choice) {
-            case 1:
-                DataBaseManager.updateAppointmentStatus(appointmentID, "ACCEPTED");
-                System.out.println("Appointment accepted successfully.");
-                break;
-            case 2:
-                DataBaseManager.updateAppointmentStatus(appointmentID, "REJECTED");
-                System.out.println("Appointment rejected.");
-                break;
-            default:
-                System.out.println("Invalid choice.");
+        if (!"PENDING".equalsIgnoreCase(appt.getStatus())) {
+            System.out.println("Error: Only pending appointments can be modified");
+            return;
         }
+
     }
-
-    private static void completeAppointment(int appointmentID, int doctorID) {
+    public static void completeAppointment(int appointmentID, int doctorID) {
         Appointment appt = SystemManager.findAppointment(appointmentID);
         if (appt == null || appt.getDoctorID() != doctorID) {
             System.out.println("Appointment not found or not assigned to you.");
@@ -1043,7 +1033,7 @@ public class Main {
                     doctorPendingAppointments.add(appt);
                 }
             }
-
+            System.out.println("Size of appoitnemnt array list: "+ allAppointments.size());
             if (doctorPendingAppointments.isEmpty()) {
                 System.out.println("You have no pending appointments.");
                 return;

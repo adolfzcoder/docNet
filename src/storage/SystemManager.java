@@ -12,6 +12,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import static storage.DataBaseManager.testDatabaseConnection;
+
 public class SystemManager {
 
     // this class stores array lists of our data, it also has helper methods to get or add data, like addDoctor()
@@ -136,7 +138,7 @@ public class SystemManager {
         } catch (Exception e) {
             // AlertHelper.showError("Error", "Error fetching Offices: " + e.getMessage());
 
-            System.err.println("Error fetching offices: " + e.getMessage());
+            // System.err.println("Error fetching offices: " + e.getMessage());
             return new ArrayList<>();
         }
     }
@@ -387,13 +389,13 @@ public class SystemManager {
     }
 
     public static Doctor findDoctor(int doctorID) {
-        for (Doctor dr : doctors) {
+        for (Doctor dr : DataBaseManager.getDoctors()) {
             if (dr.getDoctorID() == doctorID) {
                 return dr;
             }
         }
-        // Only print if we've checked ALL doctors and found none
-        System.out.println("Doctor ID not found");
+        // Only show this if we've checked ALL doctors
+        System.out.println("Doctor ID " + doctorID + " not found in system");
         return null;
     }
     public static ArrayList<Office> getOffices(){

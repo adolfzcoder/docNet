@@ -48,6 +48,8 @@ public class DataBaseManager {
             }
             return users;
         }
+
+
     public static Doctor getApprovedDoctorById(int doctorID) {
         String query = """
         SELECT u.userID, u.firstName, u.lastName, u.phoneNumber, u.telephone,
@@ -252,31 +254,34 @@ public class DataBaseManager {
         }
 
 
-        public static ArrayList<Appointment> getAppointments() {
-            ArrayList<Appointment> appointments = new ArrayList<>();
-            try (Connection conn = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
-                 Statement stmt = conn.createStatement();
-                 ResultSet rs = stmt.executeQuery("SELECT * FROM appointment")) {
+    public static ArrayList<Appointment> getAppointments() {
+        ArrayList<Appointment> appointments = new ArrayList<>();
+        try (Connection conn = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
+             Statement stmt = conn.createStatement();
+             ResultSet rs = stmt.executeQuery("SELECT * FROM appointment")) {
 
-                while (rs.next()) {
-                    Appointment appointment = new Appointment(
-                            rs.getInt("appointmentID"),
-                            rs.getInt("patientID"),
-                            rs.getInt("doctorID"),
-                            rs.getDate("appointmentDate").toLocalDate(),
-                            rs.getTime("appointmentTime").toLocalTime(),
-                            rs.getString("reasonForVisit"),
-                            rs.getString("status")
-                    );
-                    appointments.add(appointment);
-                }
-            } catch (SQLException e) {
-                e.printStackTrace();
+            while (rs.next()) {
+                Appointment appointment = new Appointment(
+                        rs.getInt("appointmentID"),
+                        rs.getInt("patientID"),
+                        rs.getInt("doctorID"),
+                        rs.getDate("appointmentDate").toLocalDate(),
+                        rs.getTime("appointmentTime").toLocalTime(),
+                        rs.getString("reasonForVisit"),
+                        rs.getString("status")
+                );
+                appointments.add(appointment);
             }
-            return appointments;
-        }
 
-        public static ArrayList<Office> getOffices() {
+
+            System.out.println("Appointments retrieved from database: " + appointments.size());
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return appointments;
+    }
+
+    public static ArrayList<Office> getOffices() {
             ArrayList<Office> offices = new ArrayList<>();
             try (Connection conn = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
                  Statement stmt = conn.createStatement();
@@ -326,7 +331,32 @@ public class DataBaseManager {
         }
         return ratings;
     }
+    public static Appointment getAppointmentById(int appointmentID) {
+        String sql = "SELECT * FROM appointment WHERE appointmentID = ?";
 
+        try (Connection conn = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setInt(1, appointmentID);
+            ResultSet rs = stmt.executeQuery();
+
+            if (rs.next()) {
+                return new Appointment(
+                        rs.getInt("appointmentID"),
+                        rs.getInt("patientID"),
+                        rs.getInt("doctorID"),
+                        rs.getDate("appointmentDate").toLocalDate(),
+                        rs.getTime("appointmentTime").toLocalTime(),
+                        rs.getString("reasonForVisit"),
+                        rs.getString("status")
+                );
+            }
+        } catch (SQLException e) {
+            System.err.println("Error getting appointment by ID:");
+            e.printStackTrace();
+        }
+        return null;
+    }
     public static ArrayList<Prescription> getPrescriptions() {
         ArrayList<Prescription> prescriptions = new ArrayList<>();
         try (Connection conn = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
@@ -706,5 +736,14 @@ public class DataBaseManager {
         }
     }
 
+    public static void testDatabaseConnection() {
+        try (Connection conn = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD)) {
+            System.out.println("Database connection successful!");
+            System.out.println("Database URL: " + DB_URL);
+        } catch (SQLException e) {
+            System.err.println("ERROR connecting to database:");
+            e.printStackTrace();
+        }
+    }
 
 }
