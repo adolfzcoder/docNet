@@ -370,8 +370,13 @@ public class Main {
 
     public  static void viewAllPatientAppointments(int patientID) {
         try {
+            System.out.println("USer ID: "+ SystemManager.getSession().getFirst().getUserTypeID());
+            System.out.println("Patient ID: "+ patientID);
             ArrayList<Appointment> patientAppointments = SystemManager.returnAppointmentsByPatientID(patientID);
-
+            System.out.println("DEBUG: Found " + patientAppointments.size() + " appointments for patient " + SystemManager.getSession().getFirst().getUserTypeID());
+            for (Appointment a : patientAppointments) {
+                System.out.println("DEBUG: Appointment ID=" + a.getAppointmentID() + ", DoctorID=" + a.getDoctorID());
+            }
             if (patientAppointments.isEmpty()) {
                 System.out.println("You have no appointments scheduled.");
                 return;

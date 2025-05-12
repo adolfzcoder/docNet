@@ -1,5 +1,6 @@
 package models;
 
+import storage.SystemManager;
 import validations.Validations;
 
 public class User {
@@ -179,7 +180,9 @@ public class User {
     }
 
     public  int getUserTypeID(){
-        return userID;
+
+        return SystemManager.getUserTypeID(userID);
+
     }
     public boolean getApproved(){
         return this.isApproved;

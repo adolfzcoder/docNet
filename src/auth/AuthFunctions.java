@@ -96,7 +96,7 @@ public class AuthFunctions {
 
             System.out.println("This email does not exist: " + email);
           //   AlertHelper.showError("Email does not exist");
-            System.out.println("Email does not exist");
+            // System.out.println("Email does not exist");
             return false;
         }
 
@@ -183,21 +183,21 @@ public class AuthFunctions {
 
         for(Doctor drd : SystemManager.getDoctors()){
             if(email.equalsIgnoreCase(drd.getEmail())){
-                System.out.println("Email from doctor: "+ email);
-                System.out.println("Email from DB: "+ drd.getEmail());
+                // System.out.println("Email from doctor: "+ email);
+                // System.out.println("Email from DB: "+ drd.getEmail());
                 return true;
             }
         }
         for(Patient ptp : SystemManager.getPatients()){
             if(email.equalsIgnoreCase(ptp.getEmail())){
-                System.out.println("Email from patient: "+ email);
-                System.out.println("Email from DB: "+ ptp.getEmail());
+                // System.out.println("Email from patient: "+ email);
+                // System.out.println("Email from DB: "+ ptp.getEmail());
             }
         }
         for(Admin admn : SystemManager.getAdmins()){
             if(email.equalsIgnoreCase(admn.getEmail())){
-                System.out.println("Email from admin: "+ email);
-                System.out.println("Email from DB: "+ admn.getEmail());
+                // System.out.println("Email from admin: "+ email);
+                // System.out.println("Email from DB: "+ admn.getEmail());
                 return true;
             }
         }

@@ -317,7 +317,7 @@ public class SystemManager {
 
     public static ArrayList<Appointment> returnAppointmentsByPatientID(int patientID){
         ArrayList<Appointment> a = new ArrayList<>();
-        for(Appointment appt: appointments){
+        for(Appointment appt: DataBaseManager.getAppointments()){
             if(appt.getPatientID() == patientID){
                 a.add(appt);
             }
@@ -340,15 +340,60 @@ public class SystemManager {
         }
         return null;
     }
-    public static Doctor findDoctor(int doctorID){
-        for(Doctor dr: doctors){
-            if(dr.getDoctorID() == doctorID){
+
+    public static User findUser(int userID){
+        for(User user: users){
+            if(user.getUserID() == userID){
+                // System.out.println("User found");
+                return user;
+            }
+
+        }
+        return null;
+    }
+    public static int getUserTypeID(int userID) {
+        User user = findUser(userID);
+
+        if (user == null) {
+            throw new IllegalArgumentException("User not found");
+        }
+
+        String userType = user.getUserType().toUpperCase();
+        switch (userType) {
+            case "PATIENT":
+                for (Patient patient : DataBaseManager.getPatients()) {
+                    if (patient.getUserID() == userID) {
+                        return patient.getPatientID();
+                    }
+                }
+                break;
+
+            case "DOCTOR":
+                for (Doctor doctor : DataBaseManager.getDoctors()) {
+                    if (doctor.getUserID() == userID) {
+                        return doctor.getDoctorID();
+                    }
+                }
+                break;
+
+            case "ADMIN":
+                return userID;
+
+            default:
+                throw new IllegalArgumentException("Unknown user type: " + userType);
+        }
+
+        throw new IllegalStateException(userType + " record not found for user ID " + userID);
+    }
+
+    public static Doctor findDoctor(int doctorID) {
+        for (Doctor dr : doctors) {
+            if (dr.getDoctorID() == doctorID) {
                 return dr;
             }
-            else{
-                System.out.println("Doctor ID not found");;
-            }
         }
+        // Only print if we've checked ALL doctors and found none
+        System.out.println("Doctor ID not found");
         return null;
     }
     public static ArrayList<Office> getOffices(){
