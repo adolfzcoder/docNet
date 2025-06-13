@@ -3,7 +3,7 @@ package models;
 import storage.SystemManager;
 import validations.Validations;
 
-public class User {
+public class User implements UserInterface {
     private int userID;
     private String firstName;
     private String lastName;
@@ -78,7 +78,7 @@ public class User {
     public void setUserTypeID(int userTypeID){
         this.userID = userTypeID;
     }
-
+// we ovveride this because in java there is a native toString() method already, so since we want to use it we do that
     @Override
     public String toString() {
         return "User{" +

@@ -20,7 +20,7 @@ public class SystemManager {
     private static ArrayList<User> users = fetchUsers(); //fetch all users from the db
 
 
-    private static ArrayList<Admin> admins= fetchAdmins();
+    private static ArrayList<Admin> admins = fetchAdmins();
     private static ArrayList<Patient> patients = fetchPatients();
     private static ArrayList<Doctor> doctors = fetchDoctors();
     private static ArrayList<Appointment> appointments = fetchAppointments();

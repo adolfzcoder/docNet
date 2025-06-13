@@ -3,7 +3,7 @@ package models;
 import storage.SystemManager;
 import validations.DoctorValidate;
 
-public class Doctor extends User {
+public class Doctor extends User implements UserInterface {
     private int doctorID;
     private int yearsOfXP =0;
     private String specialisation;

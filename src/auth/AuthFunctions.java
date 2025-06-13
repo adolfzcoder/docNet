@@ -121,7 +121,7 @@ public class AuthFunctions {
         System.out.println("Logged in user");
         System.out.println("Starting session...");
         System.out.println("User is a: " + user.getUserType());
-      //   AlertHelper.showSuccess("Successfully logged in");
+        // AlertHelper.showSuccess("Successfully logged in");
 
 
         // decideUserJourney(user);

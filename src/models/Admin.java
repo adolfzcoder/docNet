@@ -2,7 +2,7 @@ package models;
 
 import storage.SystemManager;
 
-public class Admin extends User {
+public class Admin extends User implements UserInterface{
     private int adminID;
     // SystemManager sys = new SystemManager();
 

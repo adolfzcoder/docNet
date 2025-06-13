@@ -4,7 +4,7 @@ import storage.SystemManager;
 
 import java.util.ArrayList;
 
-public class Patient extends User {
+public class Patient extends User implements UserInterface{
     private int medicalAidNumber;
     private int patientID;
 

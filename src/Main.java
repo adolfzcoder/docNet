@@ -1,3 +1,4 @@
+import Run.App;
 import auth.AuthFunctions;
 import models.*;
 import storage.DataBaseManager;
@@ -28,17 +29,23 @@ public class Main {
 
     public static void main(String[] args) {
         try {
+
+
+            
+
+
             testDatabaseConnection();
             // this takes some time, so to reduce latency, we initialise our lists at the begining of the app
             System.out.println("Initialising lists, may take up to 10 seconds");
             SystemManager.initializeLists();
-
-            // checking if session exists ie there is a user already logged in
+            // App.launch();
+            // checking if session exists i.e. there is a user already logged in
             if (!SystemManager.getSession().isEmpty()) {
                 User sessionUser = SystemManager.getSession().getFirst();
                 String loggedInUserType = sessionUser.getUserType();
                 System.out.println("Current user: " + sessionUser.getFirstName() + " " + sessionUser.getLastName());
             }
+
         } catch (Exception e) {
             displayError("Error: " + e.getMessage(), "Start up error");
         }
@@ -895,13 +902,14 @@ public class Main {
                 String formattedDate = appt.getAppointmentDate().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
                 String formattedTime = appt.getAppointmentTime().format(DateTimeFormatter.ofPattern("HH:mm"));
 
-                // Truncate reason if too long
+                // reason should only be 20 characters long, if it longer, remove the remaining, and replace last 3
+                // with elipses i.e ...
                 String reason = appt.getReasonForVisit();
                 if (reason.length() > 20) {
                     reason = reason.substring(0, 17) + "...";
                 }
 
-                System.out.printf("%-3d| %-10s | %-7s | %-20s | %-10s | %-20s%n",
+                System.out.printf("\t%d| \t%10s | \t%7s | \t%20s | \t%10s | \t%20s \n",
                         appt.getAppointmentID(),
                         formattedDate,
                         formattedTime,
